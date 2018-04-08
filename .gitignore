@@ -101,5 +101,5 @@ ENV/
 .mypy_cache/
 
 
-# database config 
-config/database.config
+# database config
+application/config/database.config
