@@ -91,7 +91,7 @@ class Postman:
 
         return None
 
-    def list(self, sql, params = [], show_sql = False):
+    def getList(self, sql, params = [], show_sql = False):
 
         result = self.execute(sql, params, show_sql)
 
