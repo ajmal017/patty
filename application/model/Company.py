@@ -59,12 +59,12 @@ class Company(DataModel, BusinessModel):
 
     def getList(self, **kwargs):
 
-        sort_by     = kwargs['idx'] if kwargs['idx'] else 'idx'
-        sdirection  = kwargs['sort_by'] if kwargs['sort_by'] else 'desc'
-        limit       = kwargs['limit'] if kwargs['limit'] else 20
-        nolimit     = kwargs['nolimit'] if kwargs['nolimit'] else False
-        offset      = kwargs['offset'] if kwargs['offset'] else 0
-        select      = kwargs['select'] if kwargs['select'] else ' idx,name,code,market,need_history '
+        sort_by     = kwargs['idx']             if 'sort_by'        in kwargs else 'idx'
+        sdirection  = kwargs['sort_direction']  if 'sort_direction' in kwargs else 'desc'
+        limit       = kwargs['limit']           if 'limit'          in kwargs else 20
+        nolimit     = kwargs['nolimit']         if 'nolimit'        in kwargs else False
+        offset      = kwargs['offset']          if 'offset'         in kwargs else 0
+        select      = kwargs['select']          if 'select'         in kwargs else ' idx,name,code,market,need_history '
 
         query  = "SELECT "
         query +=    select
@@ -75,18 +75,18 @@ class Company(DataModel, BusinessModel):
         if self.market:         query += "`market`=%s AND "
         if self.last_updated:   query += "`last_updated`<%s AND "
         query +=    "`status`=%s "
-        query += "ORDER BY {0} {1} ".format(sort_by, sort_direction)
+        query += "ORDER BY {0} {1} ".format(sort_by, sdirection)
         if not nolimit:         query += "LIMIT %s offset %s "
 
         params = []
-        if self.need_history:   params.append(need_history)
-        if self.market:         params.append(market)
-        if self.last_updated:   params.append(last_updated)
+        if self.need_history:   params.append(self.need_history)
+        if self.market:         params.append(self.market)
+        if self.last_updated:   params.append(self.last_updated)
         params.append('1')
-        if not nolimit:         params.extend(limit, offset)
+        if not nolimit:         params.extend((limit, offset))
 
-        list        = self.postman.getList(query, params)
-        return_list = list(map(lambda x: Company.new(x), list))
+        sqllist     = self.postman.getList(query, params)
+        return_list = list(map(lambda x: Company.new(x), sqllist))
 
         return return_list
 
