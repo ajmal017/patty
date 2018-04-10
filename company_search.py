@@ -11,7 +11,7 @@ class CompanySearch:
 
     progress_sofar = 0
     progress_total = 0
-    create_list = []
+    create_list = {}
     result_list = []
 
     def search_key(self):
@@ -203,10 +203,10 @@ class CompanySearch:
         print('-----------------------------------------------------------------------------')
 
 
-    def addcreate(self, company):
+    def addcreate(self, item):
 
-        # add item to create list
-        self.create_list.append(company)
+        if item.code not in self.create_list:
+            self.create_list[item.code] = item
 
         # loop through list
         if len(self.create_list) > 1000:
@@ -217,7 +217,7 @@ class CompanySearch:
     def loop_createlist(self):
 
         # go through create list
-        for company in self.create_list:
+        for k,company in self.create_list.items():
 
             # create company
             company.create()
