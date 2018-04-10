@@ -72,7 +72,7 @@ class Company(DataModel, BusinessModel):
 
     def getList(self, **kwargs):
 
-        sort_by     = kwargs['idx']             if 'sort_by'        in kwargs else 'idx'
+        sort_by     = kwargs['sort_by']         if 'sort_by'        in kwargs else 'idx'
         sdirection  = kwargs['sort_direction']  if 'sort_direction' in kwargs else 'desc'
         limit       = kwargs['limit']           if 'limit'          in kwargs else 20
         nolimit     = kwargs['nolimit']         if 'nolimit'        in kwargs else False
