@@ -153,7 +153,7 @@ class CompanyHistory:
         # loop through company list change need_history status
         for company in company_list:
             company.need_history = COMPANY_NEED_HISTORY.NO
-            # company.updateNeedHistory()
+            company.updateNeedHistory()
 
         # loop through company list
         for company in company_list:
