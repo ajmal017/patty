@@ -83,7 +83,7 @@ class CompanyStock(DataModel, BusinessModel):
         if self.search_end_date:    params.append(self.search_end_date)
         params.append('1')
         if not nolimit:             params.extend((limit, offset))
-        print(query)
+        
         sqllist     = self.postman.getList(query, params)
         return_list = list(map(lambda x: CompanyStock.new(x), sqllist))
 
