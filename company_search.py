@@ -12,6 +12,7 @@ class CompanySearch:
     progress_sofar = 0
     progress_total = 0
     create_list = []
+    result_list = []
 
     def search_key(self):
         alphabet = [
@@ -47,6 +48,7 @@ class CompanySearch:
         # return page content
         return BeautifulSoup(document, "html.parser")
 
+
     def getPagination(self, soup):
 
         div = soup.find("div", class_="paging")
@@ -69,6 +71,7 @@ class CompanySearch:
                 pass
 
         return lastpage
+
 
     def getCompanySearchResults(self, soup):
 
@@ -103,6 +106,7 @@ class CompanySearch:
 
         return data_list
 
+
     def save_results(self, key, page, max_page):
 
         # set total search count
@@ -126,6 +130,13 @@ class CompanySearch:
                 # update progress so far
                 self.progress_sofar = (self.progress_sofar + 1)
 
+                # check if its only we have already processed
+                if row['code'] in self.result_list:
+                    continue
+
+                # add to processsed list
+                self.result_list.append(row['code'])
+
                 # create company
                 company = Company().new(row)
 
@@ -138,7 +149,7 @@ class CompanySearch:
                 # check if company exists
                 if not check.idx:
                     msg = '신규: ' + company.name
-                    self.create_list.append(company)
+                    self.addcreate(company)
 
                 # update progress
                 progressbar(self.progress_sofar, self.progress_total, "검색:{0} ({1} / {2}) 시간: {3}  {4} ".format(key, self.progress_sofar, self.progress_total, Stopwatch.init().check("company_search"), msg))
@@ -180,11 +191,8 @@ class CompanySearch:
                 # update max page
                 current_max_page = check_max_page
 
-        # go through create list
-        for company in self.create_list:
-
-            # create company
-            company.create()
+        # loop through create list
+        self.loop_createlist()
 
         print('-----------------------------------------------------------------------------')
         print('-----------------------------------------------------------------------------')
@@ -193,6 +201,20 @@ class CompanySearch:
         print("total run time: {0}s ".format(stopwatch.end("company_search")))
         print('-----------------------------------------------------------------------------')
         print('-----------------------------------------------------------------------------')
+
+
+    def addcreate(self, company):
+        self.create_list.append(company)
+        if len(self.create_list) > 1000:
+            self.loop_createlist()
+
+    def loop_createlist(self):
+
+        # go through create list
+        for company in self.create_list:
+
+            # create company
+            company.create()
 
 cs = CompanySearch()
 cs.init()
