@@ -28,6 +28,19 @@ class Company(DataModel, BusinessModel):
         new.extend(data)
         return new
 
+    def dailyStockUpdate(self):
+
+        query  = "UPDATE "
+        query +=    "`company` "
+        query += "SET "
+        query +=    "last_updated=%s "
+        query += "WHERE "
+        query +=    "`status`=%s "
+
+        self.postman.execute(query, [
+            str(datetime.now().strftime("%Y-%m-%d")), '1'
+        ])
+
     def create(self):
 
         query  = "INSERT INTO `company` "
