@@ -204,8 +204,14 @@ class CompanySearch:
 
 
     def addcreate(self, company):
+
+        # add item to create list
         self.create_list.append(company)
+
+        # loop through list
         if len(self.create_list) > 1000:
+
+            # create item
             self.loop_createlist()
 
     def loop_createlist(self):
@@ -215,6 +221,9 @@ class CompanySearch:
 
             # create company
             company.create()
+
+        # remove all item
+        self.create_list.clear()
 
 cs = CompanySearch()
 cs.init()
