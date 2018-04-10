@@ -15,6 +15,9 @@ class CompanyStock(DataModel, BusinessModel):
     date                = None
     created_date_time   = None
 
+    search_start_date   = None
+    search_end_date     = None
+
     @staticmethod
     def new(data = {}):
         new = CompanyStock()
@@ -39,15 +42,49 @@ class CompanyStock(DataModel, BusinessModel):
         query += " FROM "
         query +=    "`company_stock` "
         query += "WHERE "
-        if self.idx:            query += "`idx`=%s AND "
-        if self.company_idx:    query += "`company_idx`=%s AND "
-        if self.date:           query += "`date`=%s AND "
+        if self.idx:                query += "`idx`=%s AND "
+        if self.company_idx:        query += "`company_idx`=%s AND "
+        if self.date:               query += "`date`=%s AND "
         query +=    "`status`=%s "
 
         params = []
-        if self.idx:            params.append(self.idx)
-        if self.company_idx:    params.append(self.company_idx)
-        if self.date:           params.append(self.date)
+        if self.idx:                params.append(self.idx)
+        if self.company_idx:        params.append(self.company_idx)
+        if self.date:               params.append(self.date)
         params.append('1')
 
         return CompanyStock.new(self.postman.get(query, params))
+
+
+    def getList(self, **kwargs):
+
+        sort_by     = kwargs['sort_by']         if 'sort_by'        in kwargs else 'idx'
+        sdirection  = kwargs['sort_direction']  if 'sort_direction' in kwargs else 'desc'
+        limit       = kwargs['limit']           if 'limit'          in kwargs else 20
+        nolimit     = kwargs['nolimit']         if 'nolimit'        in kwargs else False
+        offset      = kwargs['offset']          if 'offset'         in kwargs else 0
+        select      = kwargs['select']          if 'select'         in kwargs else ' idx,company_idx,price,prev_diff,open,high,low,volume,date '
+
+        query  = "SELECT "
+        query +=    select
+        query += " FROM "
+        query +=    "`company_stock` "
+        query += "WHERE "
+        if self.company_idx:        query += "`company_idx`=%s AND "
+        if self.search_start_date:  query += "`date`>=%s AND "
+        if self.search_end_date:    query += "`date`<=%s AND "
+        query +=    "`status`=%s "
+        query += "ORDER BY {0} {1} ".format(sort_by, sdirection)
+        if not nolimit:             query += "LIMIT %s offset %s "
+
+        params = []
+        if self.company_idx:        params.append(self.company_idx)
+        if self.search_start_date:  params.append(self.search_start_date)
+        if self.search_end_date:    params.append(self.search_end_date)
+        params.append('1')
+        if not nolimit:             params.extend((limit, offset))
+        print(query)
+        sqllist     = self.postman.getList(query, params)
+        return_list = list(map(lambda x: CompanyStock.new(x), sqllist))
+
+        return return_list
