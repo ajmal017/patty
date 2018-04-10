@@ -76,7 +76,9 @@ class MatrixCron:
                     if not check.idx:
                         self.addcreate(matrix_item)
 
+        self.loop_create()
 
+        
     def addcreate(self, matrix_item):
 
         self.create_list.append(matrix_item)
