@@ -121,7 +121,7 @@ class CompanyHistory:
                 # check if company exists
                 if not check.idx:
                     msg = '신규: ' + row["date"]
-                    self.create_list.append(CompanyStock.new({
+                    self.addcreate(CompanyStock.new({
                         "company_idx"   : company.idx,
                         "price"         : row["price"],
                         "prev_diff"     : row["prev_diff"],
@@ -153,7 +153,7 @@ class CompanyHistory:
         # loop through company list change need_history status
         for company in company_list:
             company.need_history = COMPANY_NEED_HISTORY.NO
-            company.updateNeedHistory()
+            # company.updateNeedHistory()
 
         # loop through company list
         for company in company_list:
@@ -179,11 +179,7 @@ class CompanyHistory:
                 current_max_page = check_max_page
 
         # go through create list
-        for company_stock in self.create_list:
-
-            # create company
-            company_stock.create()
-
+        self.loop_createlist()
 
         print('-----------------------------------------------------------------------------')
         print('-----------------------------------------------------------------------------')
@@ -192,6 +188,34 @@ class CompanyHistory:
         print("total run time: {0}s ".format(stopwatch.end("company_history")))
         print('-----------------------------------------------------------------------------')
         print('-----------------------------------------------------------------------------')
+
+
+    def addcreate(self, item):
+
+        # add item to create list
+        self.create_list.append(item)
+
+        if len(self.create_list) > 1000:
+
+            # go create list
+            self.loop_createlist()
+
+
+    def loop_createlist(self):
+
+        self.progress_total = (self.progress_total + len(self.create_list))
+
+        # loop through and create list
+        for company_stock in self.create_list:
+
+            # create company
+            company_stock.create()
+
+            progressbar(self.progress_sofar, self.progress_total, "createing..........")
+
+        # empty the list
+        self.create_list.clear()
+
 
 cs = CompanyHistory()
 cs.init()
