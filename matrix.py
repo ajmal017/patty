@@ -74,8 +74,20 @@ class MatrixCron:
                 for id,stock in enumerate(stock_list):
 
                     # type 1
-                    max = stock.high    if max < stock.high else max
-                    min = stock.low     if min < stock.low  else min
+                    # use that day with highest value and lowest
+                    # max     = stock.high    if max < stock.high else max
+                    # min     = stock.low     if min > stock.low  else min
+
+                    # type 2
+                    # use stock price & open as guides
+
+                    # find largest
+                    high    = stock.open   if stock.price < stock.open else stock.price
+                    max     = high         if max < high               else max
+
+                    # find lowest
+                    low     = stock.open   if stock.price > stock.open else stock.price
+                    min     = low          if min > low or min == 0    else min
 
                 # price,open,high,low
                 for id,stock in enumerate(stock_list):
