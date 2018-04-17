@@ -42,14 +42,16 @@ class MatrixItem(DataModel, BusinessModel):
         query +=    "`matrix_item` "
         query += "WHERE "
         if self.idx:                query += "`idx`=%s AND "
+        if self.matrix_idx:         query += "`matrix_idx`=%s AND "
         if self.company_idx:        query += "`company_idx`=%s AND "
-        if self.date:               query += "`date`=%s AND "
+        if self.company_stock_idx:  query += "`company_stock_idx`=%s AND "
         query +=    "`status`=%s "
 
         params = []
         if self.idx:                params.append(self.idx)
+        if self.matrix_idx:         params.append(self.matrix_idx)
         if self.company_idx:        params.append(self.company_idx)
-        if self.date:               params.append(self.date)
+        if self.company_stock_idx:  params.append(self.company_stock_idx)
         params.append('1')
 
-        return CompanyStock.new(self.postman.get(query, params))
+        return MatrixItem.new(self.postman.get(query, params))
