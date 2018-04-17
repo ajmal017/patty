@@ -9,13 +9,16 @@ from application.model.Company import Company
 from application.model.CompanyStock import CompanyStock
 from application.model.Matrix import MATRIX_PROCESSED
 from application.model.Matrix import Matrix
+from application.model.MatrixMatch import MATRIX_MATCH_PROCESSED
+from application.model.MatrixMatch import MatrixMatch
 from application.model.MatrixItem import MatrixItem
 
 class MatrixCron:
 
-    progress_sofar  = 0
-    progress_total  = 0
-    create_list     = []
+    progress_sofar      = 0
+    progress_total      = 0
+    create_list         = []
+    create_match_list   = []
 
     def init(self):
 
@@ -37,13 +40,32 @@ class MatrixCron:
             company_stock.search_end_date   = matrix.end_date
 
             # loop through company
-            for i in range(1, 3500):
+            for i in range(1, 4000):
 
                 # set search company stock
                 company_stock.company_idx = i
 
                 # stock list
                 stock_list = company_stock.getList(sort_by = 'date', sort_direction = 'desc', nolimit = True, select = ' idx,company_idx,price,open,high,low ')
+
+                # check if such company exists
+                if len(stock_list) > 0:
+
+                    # create matrix match item
+                    matrix_match = MatrixMatch.new({
+                       'matrix_idx'    : matrix.idx,
+                       'company_idx'   : i,
+                       'processed'     : MATRIX_MATCH_PROCESSED.NO
+                    })
+
+                    # get match from database
+                    check = matrix_match.get(' idx ')
+
+                    # check if item exists
+                    if not check.idx:
+
+                        # add to match list stack
+                        self.create_match_list.append(matrix_match)
 
                 max = 0
                 min = 0
@@ -62,9 +84,9 @@ class MatrixCron:
                     min     = low          if min < low                else min
 
                     matrix_item                     = MatrixItem()
-                    matrix_item.matrix_idx          = matrix.idx
-                    matrix_item.company_idx         = stock.company_idx
-                    matrix_item.company_stock_idx   = stock.idx
+                    matrix_item.matrix_idx          = matrix.idx                # matrix idx
+                    matrix_item.company_idx         = stock.company_idx         # company idx
+                    matrix_item.company_stock_idx   = stock.idx                 # company stock idx 기준으로
                     matrix_item.col                 = id
                     matrix_item.max                 = max
                     matrix_item.min                 = min
@@ -78,7 +100,7 @@ class MatrixCron:
 
         self.loop_create()
 
-        
+
     def addcreate(self, matrix_item):
 
         self.create_list.append(matrix_item)
@@ -89,9 +111,16 @@ class MatrixCron:
 
     def loop_create(self):
 
+        # matrix stock item create
         for matrix_item in self.create_list:
             matrix_item.create()
 
+        # create matrix match
+        for match in self.create_match_list:
+            match.create()
+
+        # create list
+        self.create_match_list.clear()
         self.create_list.clear()
 
 cs = MatrixCron()
