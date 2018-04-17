@@ -77,11 +77,11 @@ class MatrixCron:
                     max = stock.high    if max < stock.high else max
                     min = stock.low     if min < stock.low  else min
 
-                    # type 2
+                # price,open,high,low
+                for id,stock in enumerate(stock_list):
+
                     high    = stock.open   if stock.price < stock.open else stock.price
                     low     = stock.open   if stock.price > stock.open else stock.price
-                    max     = high         if max < high               else max
-                    min     = low          if min < low                else min
 
                     matrix_item                     = MatrixItem()
                     matrix_item.matrix_idx          = matrix.idx                # matrix idx
