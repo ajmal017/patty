@@ -34,7 +34,7 @@ class Postman:
         config = self.get_config()
 
         # connection to database
-        self.mysqlConnection = mysql.connector.connect(user=config["user"], password=config["password"], host=config["host"], database=config["database"], charset=config["charset"], raise_on_warnings=True)
+        self.mysqlConnection = mysql.connector.connect(user=config["user"], password=config["password"], host=config["host"], database=config["database"], charset=config["charset"], port=config["port"], raise_on_warnings=True)
 
         # makes life easy
         self.mysqlConnection.autocommit = True
