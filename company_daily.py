@@ -152,5 +152,5 @@ class CompanyDaily:
         # remove all item
         self.create_list.clear()
 
-cs = CompanyHistory()
+cs = CompanyDaily()
 cs.init()
