@@ -144,39 +144,41 @@ class CompanyHistory:
         # start time
         stopwatch.start("company_history")
 
-        # self.progress_sofar
-        company_list = Company.new({"need_history":COMPANY_NEED_HISTORY.YES}).getList(limit = 100, offset = 0, select = ' idx,name,code ')
+        for i in range(1, 8):
 
-        # set company count
-        self.progress_total = len(company_list)
+            # self.progress_sofar
+            company_list = Company.new({"need_history":COMPANY_NEED_HISTORY.YES}).getList(limit = (500 * i), offset = 0, select = ' idx,name,code ')
 
-        # loop through company list change need_history status
-        for company in company_list:
-            company.need_history = COMPANY_NEED_HISTORY.NO
-            company.updateNeedHistory()
+            # set company count
+            self.progress_total = len(company_list)
 
-        # loop through company list
-        for company in company_list:
+            # loop through company list change need_history status
+            for company in company_list:
+                company.need_history = COMPANY_NEED_HISTORY.NO
+                company.updateNeedHistory()
 
-            current_page        = 0
-            current_max_page    = 2
+            # loop through company list
+            for company in company_list:
 
-            while True:
+                current_page        = 0
+                current_max_page    = 2
 
-                # save results
-                self.save_results(company, current_page, current_max_page)
+                while True:
 
-                # update current page
-                current_page = current_max_page
+                    # save results
+                    self.save_results(company, current_page, current_max_page)
 
-                # see what the next max page number is
-                check_max_page = int(self.getPagination(self.getPage(company, (current_page + 1))))
+                    # update current page
+                    current_page = current_max_page
 
-                # check to see if there is any new higher max
-                if current_max_page >= check_max_page: break
+                    # see what the next max page number is
+                    check_max_page = int(self.getPagination(self.getPage(company, (current_page + 1))))
 
-                # update max page
-                current_max_page = check_max_page
+                    # check to see if there is any new higher max
+                    if current_max_page >= check_max_page: break
+
+                    # update max page
+                    current_max_page = check_max_page
 
         # go through create list
         self.loop_createlist()
