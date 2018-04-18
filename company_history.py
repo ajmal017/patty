@@ -144,10 +144,10 @@ class CompanyHistory:
         # start time
         stopwatch.start("company_history")
 
-        for i in range(1, 8):
+        for i in range(0, 8):
 
             # self.progress_sofar
-            company_list = Company.new({"need_history":COMPANY_NEED_HISTORY.YES}).getList(limit = (500 * i), offset = 0, select = ' idx,name,code ')
+            company_list = Company.new({"need_history":COMPANY_NEED_HISTORY.YES}).getList(limit = 500, offset = (500 * i), select = ' idx,name,code ')
 
             # set company count
             self.progress_total = len(company_list)
