@@ -30,7 +30,7 @@ class MatrixCron:
 
         # get matrix list
         matrix = Matrix.new({ "processed" : MATRIX_PROCESSED.NO })
-        matrix_list = matrix.getList(sort_by = 'idx', sort_direction = 'asc', limit = 1, offset = 0, select = ' idx,start_date,end_date ')
+        matrix_list = matrix.getList(sort_by = 'idx', sort_direction = 'asc', limit = 2, offset = 0, select = ' idx,start_date,end_date ')
 
         # set matrix processed
         for matrix in matrix_list:
