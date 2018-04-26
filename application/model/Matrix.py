@@ -20,6 +20,37 @@ class Matrix(DataModel, BusinessModel):
         new.extend(data)
         return new
 
+    def create(self):
+
+        query  = "INSERT INTO `matrix` "
+        query +=    "( `start_date`, `end_date`, `processed`, `created_date_time`, `status` ) "
+        query += "VALUES "
+        query +=    "( %s, %s, %s, %s, %s ) "
+
+        return self.postman.create(query, [
+            self.start_date, self.end_date, self.processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+        ])
+
+    def get(self, select = ' idx,start_date,end_date,processed '):
+
+        query  = "SELECT "
+        query +=    select
+        query += " FROM "
+        query +=    "`matrix` "
+        query += "WHERE "
+        if self.idx:            query += "`idx`=%s AND "
+        if self.start_date:     query += "`start_date`=%s AND "
+        if self.end_date:       query += "`end_date`=%s AND "
+        query +=    "`status`=%s "
+
+        params = []
+        if self.idx:            params.append(self.idx)
+        if self.start_date:     params.append(self.start_date)
+        if self.end_date:       params.append(self.end_date)
+        params.append('1')
+
+        return Matrix.new(self.postman.get(query, params))
+
     def getList(self, **kwargs):
 
         sort_by     = kwargs['sort_by']         if 'sort_by'        in kwargs else 'idx'
@@ -48,3 +79,16 @@ class Matrix(DataModel, BusinessModel):
         return_list = list(map(lambda x: Matrix.new(x), sqllist))
 
         return return_list
+
+    def updateProcessed(self):
+
+        query  = "UPDATE "
+        query +=    "`matrix` "
+        query += "SET "
+        query +=    "processed=%s "
+        query += "WHERE "
+        query +=    "`idx`=%s "
+
+        self.postman.execute(query, [
+            self.processed, self.idx
+        ])
