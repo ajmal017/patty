@@ -20,7 +20,7 @@ class MatrixPreload:
         stopwatch.start("company_history")
 
         # loop through 60 days
-        for i in range(1, 3):
+        for i in range(1, 90):
 
             finddate = datetime.now()
             finddate -= timedelta(days = i)
