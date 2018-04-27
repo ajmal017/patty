@@ -58,20 +58,21 @@ class MatrixMatchCreate:
                     "company_idx"   : idx
                 }).getList(sort_by = 'col', sort_direction = 'asc', nolimit = True, select = ' idx,max,min,high,low ')
 
-                if len(sub_matrix_item_list) <= 0:
-                    continue
+                # only if there is enough data, match them
+                # or else lets just through it away
+                if len(sub_matrix_item_list) == len(main_matrix_item_list):
 
-                matrix_sub = MatrixItem.converMatrix(sub_matrix_item_list, days_count)
+                    matrix_sub = MatrixItem.converMatrix(sub_matrix_item_list, days_count)
 
-                abs_matrix = np.absolute(matrix_main - matrix_sub)
+                    abs_matrix = np.absolute(matrix_main - matrix_sub)
 
-                sum_val = np.sum(abs_matrix)
+                    sum_val = np.sum(abs_matrix)
 
-                MatrixMatchItem.new({
-                    "matrix_match_idx"      : match.idx,
-                    "company_idx"           : idx,
-                    "point"                 : str(sum_val)
-                }).create()
+                    MatrixMatchItem.new({
+                        "matrix_match_idx"      : match.idx,
+                        "company_idx"           : idx,
+                        "point"                 : str(sum_val)
+                    }).create()
 
 cs = MatrixMatchCreate()
 cs.init()
