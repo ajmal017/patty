@@ -19,7 +19,7 @@ from datetime import datetime
 
 class MatrixMatchCreate:
 
-    local_list = {}
+    create_list = {}
 
     def init(self):
 
@@ -28,7 +28,7 @@ class MatrixMatchCreate:
         # change their status to processed
         for match in match_list:
             match.processed = MATRIX_MATCH_PROCESSED.YES
-            # match.updateProcessed()
+            match.updateProcessed()
 
         # loop through match list
         for match in match_list:
@@ -68,11 +68,34 @@ class MatrixMatchCreate:
 
                     sum_val = np.sum(abs_matrix)
 
-                    MatrixMatchItem.new({
+                    matrix_match_item = MatrixMatchItem.new({
                         "matrix_match_idx"      : match.idx,
                         "company_idx"           : idx,
                         "point"                 : str(sum_val)
-                    }).create()
+                    })
+                    self.addcreate(matrix_match_item)
+
+        self.loop_createlist()
+
+    def addcreate(self, item):
+
+        self.create_list.append(matrix_item)
+
+        # loop through list
+        if len(self.create_list) > 1000:
+
+            # create item
+            self.loop_createlist()
+
+    def loop_createlist(self):
+
+        # matrix stock item create
+        for matrix_item in self.create_list:
+            matrix_item.create()
+
+        # remove all item
+        self.create_list.clear()
+
 
 cs = MatrixMatchCreate()
 cs.init()
