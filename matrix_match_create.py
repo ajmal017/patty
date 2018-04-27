@@ -19,11 +19,23 @@ from datetime import datetime
 
 class MatrixMatchCreate:
 
-    create_list = {}
+    progress_sofar      = 0
+    progress_total      = 0
+    create_list         = []
 
     def init(self):
 
-        match_list = MatrixMatch.new({ "processed" : MATRIX_MATCH_PROCESSED.NO }).getList(sort_by = 'idx', sort_direction = 'asc', limit = 50, select = ' idx,matrix_idx,company_idx ')
+        # start stopwatch
+        stopwatch = Stopwatch.init()
+
+        # start time
+        stopwatch.start("MatrixMatch")
+
+        # get match list
+        match_list = MatrixMatch.new({ "processed" : MATRIX_MATCH_PROCESSED.NO }).getList(sort_by = 'idx', sort_direction = 'asc', limit = 1, select = ' idx,matrix_idx,company_idx ')
+
+        # set total progress
+        self.progress_total = (len(match_list) * 4000)
 
         # change their status to processed
         for match in match_list:
@@ -75,11 +87,17 @@ class MatrixMatchCreate:
                     })
                     self.addcreate(matrix_match_item)
 
+                    # increase progress amount
+                    self.progress_sofar = self.progress_sofar + 1
+
+                    # show progress bar
+                    progressbar(self.progress_sofar, self.progress_total, "{0} / {1} - {2} ".format(self.progress_sofar, self.progress_total, Stopwatch.init().check("MatrixMatch")))
+
         self.loop_createlist()
 
     def addcreate(self, item):
 
-        self.create_list.append(matrix_item)
+        self.create_list.append(item)
 
         # loop through list
         if len(self.create_list) > 1000:
@@ -88,6 +106,9 @@ class MatrixMatchCreate:
             self.loop_createlist()
 
     def loop_createlist(self):
+
+        # show progress bar
+        progressbar(self.progress_sofar, self.progress_total, "{0} / {1} - {2} looping through create ".format(self.progress_sofar, self.progress_total, Stopwatch.init().check("MatrixMatch")))
 
         # matrix stock item create
         for matrix_item in self.create_list:
