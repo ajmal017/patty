@@ -23,7 +23,7 @@ class MatrixItem(DataModel, BusinessModel):
         return new
 
     @staticmethod
-    def converMatrix(match_list):
+    def converMatrix(match_list, days_count):
 
         matrix_col = []
 
@@ -63,6 +63,10 @@ class MatrixItem(DataModel, BusinessModel):
                     col.append(0)
 
             matrix_col.append(col)
+
+        if len(matrix_col) < days_count:
+            for i in range(days_count):
+                matrix_col.append([ 0 for i in range(1000) ])
 
         ######################
 
