@@ -64,9 +64,9 @@ class MatrixItem(DataModel, BusinessModel):
 
             matrix_col.append(col)
 
-        if len(matrix_col) < days_count:
-            for i in range(days_count):
-                matrix_col.append([ 0 for i in range(1000) ])
+#        if len(matrix_col) < days_count:
+#            for i in range(days_count):
+#                matrix_col.append([ 0 for i in range(1000) ])
 
         ######################
 
