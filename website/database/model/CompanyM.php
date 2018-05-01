@@ -1,6 +1,6 @@
 <?php
 
-class CategoryM extends BusinessModel {
+class CompanyM extends BusinessModel {
 
     // public variables
     public $idx                 = null;
@@ -38,86 +38,24 @@ class CategoryM extends BusinessModel {
     public function setCreatedDateTime( $created_date_time ) { $this->created_date_time = $created_date_time; return $this; }
     public function getCreatedDateTime($format = 'Y-m-d H:i:s') { $d = new DateTime($this->created_date_time); return $d->format($format); }
 
+    public function setStatus($status) { $this->status = $status; return $this; }
+    public function getStatus() { return $this->status; }
+
     //// ------------------------------ action function
 
-    public function getList() {
+    public function getDailyUpdateWaitingCount() {
 
         $query	= "SELECT ";
-        $query .=   " `a`.`idx`, ";
-        $query .=   " `m`.`nickname`, ";
-        $query .=   " `a`.`title`, ";
-        $query .=   " `a`.`views`, ";
-        $query .=   " `a`.`release_date_time`, ";
-        $query .=   " `a`.`updated_date_time` ";
+        $query .=   " count(*) as cnt ";
 		$query .= "FROM ";
-        $query .=   "`article` as `a`, ";
-        $query .=   "`member` as `m` ";
+        $query .=   "`company` ";
 		$query .= "WHERE ";
-        $query .=	"`a`.`member_idx`=`m`.`idx` AND ";
-        if ($this->member_idx!=null) { $query .= "`a`.`member_idx`=? AND "; }
-		$query .=	"`a`.`status`=? ";
-		$query .=	"ORDER BY `a`.`idx` desc ";
+        $query .=	"`last_updated`!=? AND ";
+		$query .=	"`status`=? ";
 
+        $last_updated = date('Y-m-d');
         $status = 1;
 
-		$fmt = "";
-        if ($this->member_idx!=null) {
-            $fmt .= "i";
-        }
-
-		$params = array($fmt."i");
-        if ($this->member_idx!=null) {
-            $params[] = &$this->member_idx;
-        }
-		$params[] = &$status;
-
-        return $this->postman->returnDataList( $query, $params );
-    }
-
-    public function get() {
-
-        $query	= "SELECT ";
-        $query .=   " `a`.`idx`, ";
-        $query .=   " `a`.`title`, ";
-        $query .=   " `a`.`content`, ";
-        $query .=   " `a`.`release_date_time` ";
-		$query .= "FROM ";
-        $query .=   "`article` as `a` ";
-		$query .= "WHERE ";
-        if ($this->idx!=null) { $query .= "`a`.`idx`=? AND "; }
-        if ($this->member_idx!=null) { $query .= "`a`.`member_idx`=? AND "; }
-		$query .=	"`a`.`status`=? ";
-
-        $status = 1;
-
-		$fmt = "";
-        if ($this->idx!=null) { $fmt .= "i"; }
-        if ($this->member_idx!=null) { $fmt .= "i"; }
-
-		$params = array($fmt."i");
-        if ($this->idx!=null) { $params[] = &$this->idx; }
-        if ($this->member_idx!=null) { $params[] = &$this->member_idx; }
-		$params[] = &$status;
-
-        return ArticleM::new($this->postman->returnDataObject( $query, $params ));
-    }
-
-    public function update() {
-
-        $query	= "UPDATE ";
-        $query .=   "`article` ";
-        $query .= "SET ";
-        $query .=	"`title`=?, ";
-        $query .=	"`content`=?, ";
-        $query .=	"`release_date_time`=?, ";
-        $query .=	"`updated_date_time`=? ";
-        $query .= "WHERE ";
-        $query .=	"`idx`=? ";
-
-        $updated_date_time = date('Y-m-d H:i:s');
-
-        $this->postman->execute($query, array(
-            'ssssi', &$this->title, &$this->content, &$this->release_date_time, &$this->updated_date_time, &$this->idx
-        ));
+        return ($this->postman->returnDataObject($query, array("si", &$last_updated, &$status)))->cnt;
     }
 }
