@@ -1,6 +1,6 @@
-</div>
-<!--/.content-->
-</div>
-<!--/.container-->
-</body>
+            </div>
+            <!--/.content-->
+        </div>
+        <!--/.container-->
+    </body>
 </html>
