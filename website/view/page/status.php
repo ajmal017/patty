@@ -2,24 +2,43 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th rowspan="2" style="width: 100px;">지급일</th>
-			<th>회사명</th>
-			<th style="width: 50px;">이자</th>
-			<th style="width: 50px;">회차</th>
-            <th style="width: 50px;">기간</th>
-            <th style="width: 120px;">원금</th>
-            <th style="width: 120px;">이자</th>
-            <th style="width: 120px;">상품권</th>
-            <th rowspan="2" style="width: 110px;">실지급금액</th>
+            <th rowspan="2">Name</th>
+			<th colspan="2">Status</th>
         </tr>
         <tr>
-            <th>상품명</th>
-            <th colspan="3">투자금</th>
-            <th>연체이자</th>
-            <th>세금(-)</th>
-            <th>수수료(-)</th>
+			<th style="width: 130px;">No</th>
+            <th style="width: 130px;">Yes</th>
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td>
+                Stock Daily
+                <div class="explain">
+                    Once a day, 4:22, update all stocks day for previous day
+                </div>
+            </td>
+            <td colspan="2" class="text-center"><?php echo number_format($company_daily_update_waiting_count); ?></td>
+        </tr>
+        <tr>
+            <td>
+                Matrix Period
+                <div class="explain">
+                    Companies during the time frame (start_date, end_date) generate their matrix size
+                </div>
+            </td>
+            <td class="text-right"><?php echo number_format($matrix_not_processed_count); ?></td>
+			<td class="text-right"><?php echo number_format($matrix_processed_count); ?></td>
+        </tr>
+        <tr>
+            <td>
+                Matrix Match
+                <div class="explain">
+                    During a matrix perioud, check check company most similar items
+                </div>
+            </td>
+            <td class="text-right"><?php echo number_format($matrix_match_not_processed_count); ?></td>
+			<td class="text-right"><?php echo number_format($matrix_match_processed_count); ?></td>
+        </tr>
     </tbody>
 </table>
