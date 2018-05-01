@@ -22,5 +22,7 @@ class BusinessModel extends DataModel {
                 $this->$variable = $data[$variable];
             }
         }
+
+        return $this;
     }
 }
