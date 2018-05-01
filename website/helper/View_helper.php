@@ -3,7 +3,8 @@
 function load_view($file, $args = array(), $return = false, $minify = false) {
     extract($args);
     ob_start();
-    include $file;
+    $file = str_replace('.php', '', $file);
+    include dirname(__FILE__).'/../view/'.$file.'.php';
     $html = ob_get_clean();
     if ($minify) {
         $html = minify_html($html);
