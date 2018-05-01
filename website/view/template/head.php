@@ -9,12 +9,12 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
         <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="/res/css/new.css"/>
+        <link rel="stylesheet" type="text/css" href="/public/style.css"/>
 
         <!-- JS -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-		<title>강필구 P2P</title>
+		<title>Phil Goo Kang</title>
 	</head>
 	<body>
 		<div class="container">
@@ -23,30 +23,7 @@
 		            <h1 class="title">Navigation</h1>
 		            <ul>
 		                <li>
-		                    <a href="#">P2P</a>
-		                    <ul>
-		                        <li>
-									<a href="/p2p/report/" <?php if (isset($menu)&&($menu=="p2p->report")){ echo 'class="active"' ;} ?>>Report</a>
-								</li>
-		                        <li>
-									<a href="/p2p/company/" <?php if (isset($menu)&&($menu=="p2p->company")){ echo 'class="active"' ;} ?>>Company</a>
-								</li>
-		                        <li><a href="">Late</a></li>
-		                    </ul>
-		                </li>
-		                <li>
-		                    <a href="#">Stock</a>
-		                </li>
-		                <li>
-		                    <a href="#">Leasing</a>
-							<ul>
-		                        <li>
-									<a href="/leasing/report/" <?php if (isset($menu)&&($menu=="learing->report")){ echo 'class="active"' ;} ?>>Report</a>
-								</li>
-		                        <li>
-									<a href="/leasing/contract/" <?php if (isset($menu)&&($menu=="leasing->contract")){ echo 'class="active"' ;} ?>>Contract</a>
-								</li>
-		                    </ul>
+		                    <a href="status.php">Status</a>
 		                </li>
 		            </ul>
 		        </div>
