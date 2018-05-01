@@ -11,7 +11,7 @@ class MatrixM extends BusinessModel {
     public $status              = null;
 
     // help to create quick objects
-    public static function new( $data = array() ) { return (new CompanyM())->extend($data); }
+    public static function new( $data = array() ) { return (new MatrixM())->extend($data); }
 
     //// ------------------------------ create setter & getters
 
