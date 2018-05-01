@@ -178,6 +178,10 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
 	padding: 10px 14px;
 	box-sizing: border-box;
 }
+.table-bordered tbody tr td .explain {
+	font-size: 11px;
+    padding-top: 6px;
+}
 .table-bordered tbody tr td a {
 	color: inherit;
 }
