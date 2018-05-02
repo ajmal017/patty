@@ -32,7 +32,7 @@ class MatrixMatchCreate:
         stopwatch.start("MatrixMatch")
 
         # get match list
-        match_list = MatrixMatch.new({ "processed" : MATRIX_MATCH_PROCESSED.NO }).getList(sort_by = 'idx', sort_direction = 'asc', limit = 4, select = ' idx,matrix_idx,company_idx ')
+        match_list = MatrixMatch.new({ "processed" : MATRIX_MATCH_PROCESSED.NO }).getList(sort_by = 'idx', sort_direction = 'asc', limit = 5, select = ' idx,matrix_idx,company_idx ')
 
         # set total progress
         self.progress_total = (len(match_list) * 4000)
