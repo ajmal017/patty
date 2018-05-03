@@ -84,10 +84,16 @@ class CompanyDaily:
             # check if company exists
             if not check.idx:
                 msg = '신규: ' + row["date"]
+                percentage = 0
+                if row["open"] == '0':
+                    percentage = 0
+                else:
+                    percentage = ( (int(row["prev_diff"]) * 100) / int(row["open"]) )
                 self.addcreate(CompanyStock.new({
                     "company_idx"   : company.idx,
                     "price"         : row["price"],
                     "prev_diff"     : row["prev_diff"],
+                    "percentage"   : str(percentage),
                     "open"          : row["open"],
                     "high"          : row["high"],
                     "low"           : row["low"],
