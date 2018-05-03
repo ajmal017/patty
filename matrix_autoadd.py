@@ -37,5 +37,6 @@ class MatrixPreload:
             if not check.idx:
                 matrix.create()
 
-mp = MatrixPreload()
-mp.init()
+if __name__ == '__main__':
+    mp = MatrixPreload()
+    mp.init()
