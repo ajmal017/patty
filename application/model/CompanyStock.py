@@ -8,6 +8,7 @@ class CompanyStock(DataModel, BusinessModel):
     company_idx         = None
     price               = None
     prev_diff           = None
+    percentage          = None
     open                = None
     high                = None
     low                 = None
@@ -27,12 +28,12 @@ class CompanyStock(DataModel, BusinessModel):
     def create(self):
 
         query  = "INSERT INTO `company_stock` "
-        query +=    "( `company_idx`, `price`, `prev_diff`, `open`, `high`, `low`, `volume`, `date`, `created_date_time`, `status` ) "
+        query +=    "( `company_idx`, `price`, `prev_diff`, `percentage`, `open`, `high`, `low`, `volume`, `date`, `created_date_time`, `status` ) "
         query += "VALUES "
-        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
+        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
 
         return self.postman.create(query, [
-            self.company_idx, self.price, self.prev_diff, self.open, self.high, self.low, self.volume, self.date, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+            self.company_idx, self.price, self.prev_diff, self.percentage, self.open, self.high, self.low, self.volume, self.date, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
         ])
 
     def get(self, select = ' idx,price '):
@@ -63,7 +64,7 @@ class CompanyStock(DataModel, BusinessModel):
         limit       = kwargs['limit']           if 'limit'          in kwargs else 20
         nolimit     = kwargs['nolimit']         if 'nolimit'        in kwargs else False
         offset      = kwargs['offset']          if 'offset'         in kwargs else 0
-        select      = kwargs['select']          if 'select'         in kwargs else ' idx,company_idx,price,prev_diff,open,high,low,volume,date '
+        select      = kwargs['select']          if 'select'         in kwargs else ' idx,company_idx,price,prev_diff,percentage,open,high,low,volume,date '
 
         query  = "SELECT "
         query +=    select
@@ -71,6 +72,7 @@ class CompanyStock(DataModel, BusinessModel):
         query +=    "`company_stock` "
         query += "WHERE "
         if self.company_idx:        query += "`company_idx`=%s AND "
+        if self.date:               query += "`date`=%s AND "
         if self.search_start_date:  query += "`date`>=%s AND "
         if self.search_end_date:    query += "`date`<=%s AND "
         query +=    "`status`=%s "
@@ -79,11 +81,12 @@ class CompanyStock(DataModel, BusinessModel):
 
         params = []
         if self.company_idx:        params.append(self.company_idx)
+        if self.date:               params.append(self.date)
         if self.search_start_date:  params.append(self.search_start_date)
         if self.search_end_date:    params.append(self.search_end_date)
         params.append('1')
         if not nolimit:             params.extend((limit, offset))
-        
+
         sqllist     = self.postman.getList(query, params)
         return_list = list(map(lambda x: CompanyStock.new(x), sqllist))
 
