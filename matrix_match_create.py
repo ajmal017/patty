@@ -91,7 +91,7 @@ class MatrixMatchCreate:
                     self.progress_sofar = self.progress_sofar + 1
 
                     # show progress bar
-                    #progressbar(self.progress_sofar, self.progress_total, "{0} / {1} - {2} ".format(self.progress_sofar, self.progress_total, Stopwatch.init().check("MatrixMatch")))
+                    progressbar(self.progress_sofar, self.progress_total, "{0} / {1} - {2} ".format(self.progress_sofar, self.progress_total, Stopwatch.init().check("MatrixMatch")))
 
         self.loop_createlist()
 
@@ -108,7 +108,7 @@ class MatrixMatchCreate:
     def loop_createlist(self):
 
         # show progress bar
-        #progressbar(self.progress_sofar, self.progress_total, "{0} / {1} - {2} looping through create ".format(self.progress_sofar, self.progress_total, Stopwatch.init().check("MatrixMatch")))
+        progressbar(self.progress_sofar, self.progress_total, "{0} / {1} - {2} looping through create ".format(self.progress_sofar, self.progress_total, Stopwatch.init().check("MatrixMatch")))
 
         # matrix stock item create
         for matrix_item in self.create_list:
@@ -118,5 +118,6 @@ class MatrixMatchCreate:
         self.create_list.clear()
 
 
-cs = MatrixMatchCreate()
-cs.init()
+if __name__ == '__main__':
+    cs = MatrixMatchCreate()
+    cs.init()
