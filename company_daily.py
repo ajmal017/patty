@@ -40,8 +40,12 @@ class CompanyDaily:
                 s = element.text.replace('\\xa0', '')
                 if i == 0 and len(s) <= 3:
                     skip = True
+                if i == 2:
+                    s = s.replace(',','').strip()
+                    img = element.find('img')
+                    if img != None and img['alt'] == '하락':
+                        s = "-" + s
                 row.append(s)
-
             if len(row) > 2:
                 if skip:
                     pass
@@ -88,8 +92,9 @@ class CompanyDaily:
                 if row["open"] == '0':
                     percentage = 0
                 else:
-                    yesterday_price = int(row["price"]) + int(row["prev_diff"])
+                    yesterday_price = int(row["price"]) + (int(row["prev_diff"]) * -1)
                     percentage = ((int(row["price"]) - yesterday_price) / yesterday_price) * 100
+
                 self.addcreate(CompanyStock.new({
                     "company_idx"   : company.idx,
                     "price"         : row["price"],
@@ -123,7 +128,7 @@ class CompanyDaily:
                 self.save_results(company)
 
         # update all companies with last_updated
-        Company.new().dailyStockUpdate()
+        # Company.new().dailyStockUpdate()
 
         # go through create list
         self.loop_createlist()
@@ -151,10 +156,10 @@ class CompanyDaily:
     def loop_createlist(self):
 
         # loop through and create list
-        for company_stock in self.create_list:
+        # for company_stock in self.create_list:
 
             # create company
-            company_stock.create()
+            # company_stock.create()
 
         # remove all item
         self.create_list.clear()
