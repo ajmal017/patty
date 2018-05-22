@@ -128,7 +128,7 @@ class CompanyDaily:
                 self.save_results(company)
 
         # update all companies with last_updated
-        # Company.new().dailyStockUpdate()
+        Company.new().dailyStockUpdate()
 
         # go through create list
         self.loop_createlist()
@@ -156,10 +156,10 @@ class CompanyDaily:
     def loop_createlist(self):
 
         # loop through and create list
-        # for company_stock in self.create_list:
+        for company_stock in self.create_list:
 
             # create company
-            # company_stock.create()
+            company_stock.create()
 
         # remove all item
         self.create_list.clear()
