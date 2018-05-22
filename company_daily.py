@@ -88,12 +88,13 @@ class CompanyDaily:
                 if row["open"] == '0':
                     percentage = 0
                 else:
-                    percentage = ( (int(row["prev_diff"]) * 100) / int(row["open"]) )
+                    yesterday_price = int(row["price"]) + int(row["prev_diff"])
+                    percentage = ((int(row["price"]) - yesterday_price) / yesterday_price) * 100
                 self.addcreate(CompanyStock.new({
                     "company_idx"   : company.idx,
                     "price"         : row["price"],
                     "prev_diff"     : row["prev_diff"],
-                    "percentage"   : str(percentage),
+                    "percentage"    : str(percentage),
                     "open"          : row["open"],
                     "high"          : row["high"],
                     "low"           : row["low"],
