@@ -63,6 +63,7 @@ class CompanyStock(DataModel, BusinessModel):
         sdirection  = kwargs['sort_direction']  if 'sort_direction' in kwargs else 'desc'
         limit       = kwargs['limit']           if 'limit'          in kwargs else 20
         nolimit     = kwargs['nolimit']         if 'nolimit'        in kwargs else False
+        noclass     = kwargs['noclass']         if 'noclass'        in kwargs else False
         offset      = kwargs['offset']          if 'offset'         in kwargs else 0
         select      = kwargs['select']          if 'select'         in kwargs else ' idx,company_idx,price,prev_diff,percentage,open,high,low,volume,date '
 
@@ -73,6 +74,7 @@ class CompanyStock(DataModel, BusinessModel):
         query += "WHERE "
         if self.company_idx:        query += "`company_idx`=%s AND "
         if self.date:               query += "`date`=%s AND "
+        if self.percentage:         query += "`percentage`=%s AND "
         if self.search_start_date:  query += "`date`>=%s AND "
         if self.search_end_date:    query += "`date`<=%s AND "
         query +=    "`status`=%s "
@@ -82,12 +84,13 @@ class CompanyStock(DataModel, BusinessModel):
         params = []
         if self.company_idx:        params.append(self.company_idx)
         if self.date:               params.append(self.date)
+        if self.percentage:         params.append(self.percentage)
         if self.search_start_date:  params.append(self.search_start_date)
         if self.search_end_date:    params.append(self.search_end_date)
         params.append('1')
         if not nolimit:             params.extend((limit, offset))
-
+        
         sqllist     = self.postman.getList(query, params)
-        return_list = list(map(lambda x: CompanyStock.new(x), sqllist))
-
-        return return_list
+        if not noclass:
+            return list(map(lambda x: CompanyStock.new(x), sqllist))
+        return sqllist
