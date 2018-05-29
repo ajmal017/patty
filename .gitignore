@@ -102,4 +102,4 @@ ENV/
 
 
 # database config
-application/config/database.config
+config/database.config
