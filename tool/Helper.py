@@ -1,4 +1,5 @@
 import sys
+from datetime import date, timedelta
 
 def progressbar(count, total, status=''):
     bar_len = 60
@@ -9,3 +10,9 @@ def progressbar(count, total, status=''):
 
     sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
     sys.stdout.flush()  # As suggested by Rom Ruben (see: http://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console/27871113#comment50529068_27871113)
+
+def dformat(format = "%Y-%m-%d", subtract_date = 0):
+    if subtract_date == 0:
+        return str(date.today().strftime(format))
+    find_date = date.today() - timedelta(subtract_date)
+    return str(find_date.strftime("%Y-%m-%d"))
