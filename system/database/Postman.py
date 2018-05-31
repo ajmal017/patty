@@ -50,7 +50,7 @@ class Postman:
 
         try:
             # load config file
-            config = open("/var/www/project/patty/application/config/database.config")
+            config = open("/var/www/project/patty/config/database.config")
 
             # decode to json
             return json.load(config)
