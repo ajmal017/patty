@@ -1,16 +1,24 @@
-from component.CompanyDaily import CompanyDaily
-from component.CompanySearch import CompanySearch
-from component.CompanyHistory import CompanyHistory
+import sys
+from component import *
 
 def daily():
-    daily_update = CompanyDaily()
-    daily_update.init()
+    """this function should be called only once daily"""
 
-    search_for_new = CompanySearch()
-    search_for_new.init()
+    # get yesterday's company stock information
+    CompanyDaily().init()
 
-    get_full_history = CompanyHistory()
-    get_full_history.init()
+    # search for new company added to the KOSPI & KOSDAK Index
+    # do not need to get stock information (Do this after daily)
+    CompanySearch().init()
 
-def minute():
-    pass
+
+def hourly():
+    """this function should be called hourly"""
+
+    # get the full history for any new stock added to the database
+    CompanyHistory().init()
+
+
+"""check if the function that needs to be called has been passed """
+if len(sys.argv) >= 2:
+    locals()[sys.argv[1]]()
