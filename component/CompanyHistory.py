@@ -2,11 +2,8 @@ from urllib.parse import quote_plus, unquote_plus, urlparse, parse_qs
 from bs4 import BeautifulSoup
 import requests
 import sys
-from system.Helper import progressbar
-from system.analytics.Stopwatch import Stopwatch
-from application.model.Company import COMPANY_NEED_HISTORY
-from application.model.Company import Company
-from application.model.CompanyStock import CompanyStock
+from database import *
+from tool import *
 
 class CompanyHistory:
 
