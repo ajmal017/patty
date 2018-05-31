@@ -25,6 +25,26 @@ class CompanyStock(DataModel, BusinessModel):
         new.extend(data)
         return new
 
+    @staticmethod
+    def getOCHLV(stock_list):
+        return_list = []
+        for stock in stock_list:
+            return_list.append([
+                stock.open,
+                stock.high,
+                stock.low,
+                stock.price, # close
+                stock.volume
+            ])
+        return return_list
+
+    @staticmethod
+    def getP(stock_list):
+        return_list = []
+        for stock in stock_list:
+            return_list.append(stock.percentage)
+        return return_list
+
     def create(self):
 
         query  = "INSERT INTO `company_stock` "
@@ -89,7 +109,7 @@ class CompanyStock(DataModel, BusinessModel):
         if self.search_end_date:    params.append(self.search_end_date)
         params.append('1')
         if not nolimit:             params.extend((limit, offset))
-        
+
         sqllist     = self.postman.getList(query, params)
         if not noclass:
             return list(map(lambda x: CompanyStock.new(x), sqllist))
