@@ -224,6 +224,3 @@ class CompanySearch:
 
         # remove all item
         self.create_list.clear()
-
-cs = CompanySearch()
-cs.init()
