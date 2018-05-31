@@ -53,13 +53,16 @@ class SVMWrapper:
         pred_y = self.model.predict(self.test_data_x_scaled)
 
         # Accuracy = (TP + TN) / (TP + TN + FP + FN)
-        # accuracy_score(self.test_data_y, pred_y)
+        accuracy = accuracy_score(self.test_data_y, pred_y)
 
         # Recall = TP / (TP+FN)
-        # recall_score(self.test_data_y, pred_y)
+        recall = recall_score(self.test_data_y, pred_y)
 
-        # Precision = TP / (TP+FP)
+        #
         f1 = f1_score(self.test_data_y, pred_y)
 
+        # Precision = TP / (TP+FP)
+        precise = precision_score(self.test_data_y, pred_y)
+
         # return precision/f1 score
-        return f1
+        return (accuracy, recall, f1, precise)
