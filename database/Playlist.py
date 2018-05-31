@@ -22,13 +22,16 @@ class Playlist(DataModel, BusinessModel):
 
     def create(self):
 
+        # default values
+        self.svm_processed = "0"
+
         query  = "INSERT INTO `playlist` "
-        query +=    "( `type`, `rank`, `company_idx`, `date`, `created_date_time`, `status` ) "
+        query +=    "( `type`, `rank`, `company_idx`, `date`, `svm_processed`, `created_date_time`, `status` ) "
         query += "VALUES "
-        query +=    "( %s, %s, %s, %s, %s, %s ) "
-        
+        query +=    "( %s, %s, %s, %s, %s, %s, %s ) "
+
         return self.postman.create(query, [
-            self.type, self.rank, self.company_idx, self.date, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+            self.type, self.rank, self.company_idx, self.date, self.svm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
         ])
 
     def get(self, select = ' idx,type,rank,company_idx,date '):
