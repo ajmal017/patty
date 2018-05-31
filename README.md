@@ -4,15 +4,11 @@ Stock Market Comparison
 
 
 ## CRON Schedule
-1. look for new companies on list
+1. Call for daily processing features
 ```
-10 4 * * * /usr/bin/python3 /~/patty/company_search.py
+10 4 * * * /usr/bin/python3 /~/patty/company.py daily
 ```
-2. get daily updates for each company
+2. Call hourly for updates requiring hourly check
 ```
-4 22 * * * /usr/bin/python3 /~/patty/company_daily.py
-```
-3. get history for new companies
-```
-50 * * * * /usr/bin/python3 /~/patty/company_history.py
+40 * * * * /usr/bin/python3 /~/patty/company.py hourly
 ```
