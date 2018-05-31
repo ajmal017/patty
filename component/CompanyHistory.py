@@ -227,7 +227,3 @@ class CompanyHistory:
 
         # empty the list
         self.create_list.clear()
-
-
-cs = CompanyHistory()
-cs.init()
