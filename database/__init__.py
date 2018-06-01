@@ -10,3 +10,4 @@ from database.MatrixMatch import MATRIX_MATCH_PROCESSED
 from database.MatrixMatchItem import MatrixMatchItem
 from database.Playlist import Playlist
 from database.Playlist import PLAYLIST_TYPE
+from database.Playlist import PLAYLIST_PROCESS
