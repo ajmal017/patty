@@ -16,8 +16,7 @@ class PlaylistFindTopVolume:
         yesterday = str(yesterday.strftime("%Y-%m-%d"))
 
         # get the top 100
-        stock_list = CompanyStock.new({ "date" : yesterday })
-                                 .getList(sort_by = 'percentage', sort_direction = 'desc', limit = limit)
+        stock_list = CompanyStock.new({ "date" : yesterday }).getList(sort_by = 'percentage', sort_direction = 'desc', limit = limit)
 
         # loop through top list
         for i,stock in enumerate(stock_list):
