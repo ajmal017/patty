@@ -2,6 +2,10 @@ from system.database.DataModel import DataModel
 from system.database.BusinessModel import BusinessModel
 from datetime import datetime
 
+class MODEL_TYPE:
+    SVM = 1
+    HMM = 2
+
 class ModelResult(DataModel, BusinessModel):
 
     idx                 = None
