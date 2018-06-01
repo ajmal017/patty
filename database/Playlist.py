@@ -5,6 +5,11 @@ from datetime import datetime
 class PLAYLIST_TYPE:
     TOP  = 1
 
+class PLAYLIST_PROCESS:
+    WAIT    = 0
+    PROCESS = 1
+    DONE    = 2
+
 class Playlist(DataModel, BusinessModel):
 
     idx                 = None
@@ -12,6 +17,8 @@ class Playlist(DataModel, BusinessModel):
     rank                = None
     company_idx         = None
     date                = None
+    svm_processed       = None
+    hmm_processed       = None
     created_date_time   = None
 
     @staticmethod
@@ -24,14 +31,15 @@ class Playlist(DataModel, BusinessModel):
 
         # default values
         self.svm_processed = "0"
+        self.hmm_processed = "0"
 
         query  = "INSERT INTO `playlist` "
-        query +=    "( `type`, `rank`, `company_idx`, `date`, `svm_processed`, `created_date_time`, `status` ) "
+        query +=    "( `type`, `rank`, `company_idx`, `date`, `svm_processed`, `hmm_processed`, `created_date_time`, `status` ) "
         query += "VALUES "
-        query +=    "( %s, %s, %s, %s, %s, %s, %s ) "
+        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s ) "
 
         return self.postman.create(query, [
-            self.type, self.rank, self.company_idx, self.date, self.svm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+            self.type, self.rank, self.company_idx, self.date, self.svm_processed, self.hmm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
         ])
 
     def get(self, select = ' idx,type,rank,company_idx,date '):
@@ -70,13 +78,13 @@ class Playlist(DataModel, BusinessModel):
         query += " FROM "
         query +=    "`playlist` "
         query += "WHERE "
-        if self.processed:      query += "`processed`=%s AND "
+        if self.svm_processed:  query += "`svm_processed`=%s AND "
         query +=    "`status`=%s "
         query += "ORDER BY {0} {1} ".format(sort_by, sdirection)
         if not nolimit:         query += "LIMIT %s offset %s "
 
         params = []
-        if self.processed:      params.append(self.processed)
+        if self.svm_processed:  params.append(self.svm_processed)
         params.append('1')
         if not nolimit:         params.extend((limit, offset))
 
@@ -84,3 +92,9 @@ class Playlist(DataModel, BusinessModel):
         return_list = list(map(lambda x: Matrix.new(x), sqllist))
 
         return return_list
+
+    def update_svm_process(self):
+        self.postman.execute(
+            " UPDATE `playlist` SET `svm_processed`=%s WHERE `idx`=%s ",
+            [self.svm_processed, self.idx]
+        )
