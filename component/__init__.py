@@ -5,3 +5,4 @@ from component.CompanyHistory import CompanyHistory
 
 # playlist
 from component.PlaylistFindTopVolume import PlaylistFindTopVolume
+from component.PlaylistTopSVM import PlaylistTopSVM
