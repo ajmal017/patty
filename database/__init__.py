@@ -11,3 +11,5 @@ from database.MatrixMatchItem import MatrixMatchItem
 from database.Playlist import Playlist
 from database.Playlist import PLAYLIST_TYPE
 from database.Playlist import PLAYLIST_PROCESS
+from database.ModelResult import ModelResult
+from database.ModelResult import MODEL_TYPE
