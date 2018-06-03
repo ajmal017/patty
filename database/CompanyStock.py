@@ -26,24 +26,28 @@ class CompanyStock(DataModel, BusinessModel):
         return new
 
     @staticmethod
-    def getOCHLV(stock_list):
-        return_list = []
-        for stock in stock_list:
-            return_list.append([
-                stock.open,
-                stock.high,
-                stock.low,
-                stock.price, # close
-                stock.volume
-            ])
-        return return_list
+    def getOCHLV(stock_list, match_size):
+        a = len(stock_list)
+        frontend = []
+        if match_size > a:
+            for i in range(match_size - a):
+                frontend.append([0,0,0,0,0])
+        return frontend + list(map(lambda stock:[
+            int(stock.open),
+            int(stock.high),
+            int(stock.low),
+            int(stock.price), # close
+            int(stock.volume)
+        ], stock_list))
 
     @staticmethod
-    def getP(stock_list):
-        return_list = []
-        for stock in stock_list:
-            return_list.append(stock.percentage)
-        return return_list
+    def getP(stock_list, match_size):
+        a = len(stock_list)
+        frontend = []
+        if match_size > a:
+            for i in range(match_size - a):
+                frontend.append(0)
+        return frontend + list(map(lambda stock: round(stock.percentage), stock_list))
 
     def create(self):
 
