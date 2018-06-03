@@ -87,9 +87,8 @@ class Playlist(DataModel, BusinessModel):
         if self.svm_processed:  params.append(self.svm_processed)
         params.append('1')
         if not nolimit:         params.extend((limit, offset))
-
         sqllist     = self.postman.getList(query, params)
-        return_list = list(map(lambda x: Matrix.new(x), sqllist))
+        return_list = list(map(lambda x: Playlist.new(x), sqllist))
 
         return return_list
 
