@@ -6,11 +6,13 @@ class COMPANY_NEED_HISTORY:
     NO  = 1
     YES = 2
 
+
 class COMPANY_MARKET:
     UNKNOWN     = 0
     KOSPI       = 1
     KODAK       = 2
     KONEK       = 3
+
 
 class Company(DataModel, BusinessModel):
 
@@ -79,6 +81,8 @@ class Company(DataModel, BusinessModel):
         offset      = kwargs['offset']          if 'offset'         in kwargs else 0
         select      = kwargs['select']          if 'select'         in kwargs else ' idx,name,code,market,need_history '
 
+        skip_idx    = kwargs['skip_idx']        if 'skip_idx'       in kwargs else False
+
         query  = "SELECT "
         query +=    select
         query += " FROM "
@@ -87,6 +91,7 @@ class Company(DataModel, BusinessModel):
         if self.need_history:   query += "`need_history`=%s AND "
         if self.market:         query += "`market`=%s AND "
         if self.last_updated:   query += "`last_updated`<%s AND "
+        if skip_idx:            query += "`idx` NOT IN (%s) AND "
         query +=    "`status`=%s "
         query += "ORDER BY {0} {1} ".format(sort_by, sdirection)
         if not nolimit:         query += "LIMIT %s offset %s "
@@ -95,6 +100,7 @@ class Company(DataModel, BusinessModel):
         if self.need_history:   params.append(self.need_history)
         if self.market:         params.append(self.market)
         if self.last_updated:   params.append(self.last_updated)
+        if skip_idx:            params.append(','.join(map(str, skip_idx)) )
         params.append('1')
         if not nolimit:         params.extend((limit, offset))
 
