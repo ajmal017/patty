@@ -9,6 +9,7 @@ from sklearn import preprocessing
 from sklearn import svm
 from sklearn.svm import SVC
 import pickle
+from sklearn.metrics import *
 
 
 class SVMWrapper:
@@ -35,7 +36,8 @@ class SVMWrapper:
     def train(self):
 
         # scale data prior to predict
-        train_data_x_scaled = preprocessing.StandardScaler().fix(self.train_data_x)
+        scaler = preprocessing.StandardScaler()
+        train_data_x_scaled = scaler.fit_transform(self.train_data_x)
 
         # create SVC object
         self.model = svm.SVC()
@@ -47,22 +49,27 @@ class SVMWrapper:
     def test(self):
 
         # scale data prior to predict
-        test_data_x_scaled = preprocessing.StandardScaler().fix(self.test_data_x)
+        scaler = preprocessing.StandardScaler()
+        test_data_x_scaled = scaler.fit_transform(self.test_data_x)
 
         # get predicted volumes
-        pred_y = self.model.predict(self.test_data_x_scaled)
-
+        score = self.model.score(test_data_x_scaled, self.test_data_y)
+        
         # Accuracy = (TP + TN) / (TP + TN + FP + FN)
-        accuracy = accuracy_score(self.test_data_y, pred_y)
+        # accuracy = accuracy_score(self.test_data_y, pred_y)
+        # print(accuracy)
 
         # Recall = TP / (TP+FN)
-        recall = recall_score(self.test_data_y, pred_y)
-
-        #
-        f1 = f1_score(self.test_data_y, pred_y)
+        # recall = recall_score(self.test_data_y, pred_y)
+        # print(recall)
 
         # Precision = TP / (TP+FP)
-        precise = precision_score(self.test_data_y, pred_y)
+        #precise = precision_score(self.test_data_y, pred_y)
+
+        # F1 = 2 (PxR/P+R)
+        #f1 = f1_score(self.test_data_y, pred_y)
 
         # return precision/f1 score
-        return (accuracy, recall, f1, precise)
+        #return (accuracy, recall, f1, precise)
+
+        return score
