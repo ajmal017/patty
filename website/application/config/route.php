@@ -10,7 +10,7 @@ $config = array();
 | The default route when the user visits the index.html page
 |
 */
-$config['default'] = 'dashboard';
+$config['default'] = 'calendar';
 
 /*
 |--------------------------------------------------------------------------
