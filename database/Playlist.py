@@ -6,9 +6,9 @@ class PLAYLIST_TYPE:
     TOP  = 1
 
 class PLAYLIST_PROCESS:
-    WAIT    = 0
-    PROCESS = 1
-    DONE    = 2
+    WAIT    = 1
+    PROCESS = 2
+    DONE    = 3
 
 class Playlist(DataModel, BusinessModel):
 
@@ -31,8 +31,8 @@ class Playlist(DataModel, BusinessModel):
     def create(self):
 
         # default values
-        self.svm_processed = "0"
-        self.hmm_processed = "0"
+        self.svm_processed = PLAYLIST_PROCESS.WAIT
+        self.hmm_processed = PLAYLIST_PROCESS.WAIT
 
         query  = "INSERT INTO `playlist` "
         query +=    "( `type`, `rank`, `company_idx`, `company_stock_idx`, `date`, `svm_processed`, `hmm_processed`, `created_date_time`, `status` ) "
@@ -75,7 +75,7 @@ class Playlist(DataModel, BusinessModel):
         nolimit     = kwargs['nolimit']         if 'nolimit'        in kwargs else False
         offset      = kwargs['offset']          if 'offset'         in kwargs else 0
         select      = kwargs['select']          if 'select'         in kwargs else ' idx,start_date,end_date,processed '
-
+        
         query  = "SELECT "
         query +=    select
         query += " FROM "
