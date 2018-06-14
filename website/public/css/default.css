@@ -309,6 +309,51 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
     padding: 8px 0px;
 }
 
+.calender-table {
+    width: 100%;
+}
+.calender-table th {
+    border: 1px solid #dfdfdf;
+    background-color: #dfdfdf;
+    font-weight: 900;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 6px 0px;
+}
+.calender-table td {
+    width: 14.28%;
+    font-size: 12px;
+    border: 1px solid #dfdfdf;
+    box-sizing: border-box;
+    padding: 5px;
+    color: #000;
+    vertical-align: top;
+}
+.calender-table td.off {
+    color: #888;
+}
+.calender-table td .date {
+    display: block;
+}
+.calender-table td .list-wrapper {
+    display: block;
+    box-sizing: border-box;
+    padding: 15px 0px;
+}
+.calender-table td .list-wrapper .list-title {
+    box-sizing: border-box;
+}
+.calender-table td .list-wrapper ul {
+    list-style: none;
+}
+.calender-table td .list-wrapper ul li {
+    box-sizing: border-box;
+    padding-top: 5px;
+}
+.calender-table td .list-wrapper ul li span {
+    float: right;
+}
+
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10 {
     display: inline-block;
     vertical-align: top;
