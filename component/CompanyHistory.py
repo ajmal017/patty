@@ -66,7 +66,7 @@ class CompanyHistory:
                 if i == 2:
                     s = s.replace(',','').strip()
                     img = element.find('img')
-                    if img != None and img['alt'] == '하락':
+                    if img != None and img.has_attr('alt') and img['alt'] == '하락':
                         s = "-" + s
                 row.append(s)
             if len(row) > 2:
