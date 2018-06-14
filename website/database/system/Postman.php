@@ -29,12 +29,12 @@ class Postman {
 			$this->mysqlConnection = mysqli_init();
 
 			// load database connection information
-			$config = json_decode(file_get_contents('/var/www/database.config'));
+			$config = json_decode(file_get_contents('/var/www/project/patty/config/database.config'));
 
 			// create connection
-			if(mysqli_real_connect($this->mysqlConnection, $config->aws_1->host, $config->aws_1->user, $config->aws_1->password, 'stock', $config->aws_1->port)) {
-				mysqli_set_charset( $this->mysqlConnection, $config->aws_1->charset );
-				mysqli_query($this->mysqlConnection, 'SET NAMES ' . $config->aws_1->connection);
+			if(mysqli_real_connect($this->mysqlConnection, $config->host, $config->user, $config->password, $config->database, $config->port)) {
+				mysqli_set_charset( $this->mysqlConnection, $config->charset );
+				mysqli_query($this->mysqlConnection, 'SET NAMES ' . $config->connection);
 			}
 		}
 
