@@ -100,7 +100,3 @@ class PlaylistTopSVM:
 
             playlist.svm_processed = PLAYLIST_PROCESS.DONE
             playlist.update_svm_process()
-
-    def get_list(self):
-        list = []
-        return list
