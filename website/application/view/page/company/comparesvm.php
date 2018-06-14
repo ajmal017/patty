@@ -27,7 +27,9 @@
                     <?php echo number_format($target['model']->getScore()*100, 4); ?>%
                 </td>
                 <td>
-                    <?php echo $target['company']->getName(); ?>
+                    <a href="/company/view/<?php echo $target['company']->getIdx(); ?>">
+                        <?php echo $target['company']->getName(); ?>
+                    </a>
                 </td>
                 <td class="text-right">
                     <?php echo number_format($target['detail']->getPrice()); ?> 원
