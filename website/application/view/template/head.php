@@ -24,6 +24,9 @@
 		            <h1 class="title">Navigation</h1>
 		            <ul>
 						<li>
+		                    <a href="/calendar/">Calendar</a>
+		                </li>
+						<li>
 		                    <a href="/company/search/">Company</a>
 		                </li>
 		                <li>
