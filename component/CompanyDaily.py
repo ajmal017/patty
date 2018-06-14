@@ -116,7 +116,7 @@ class CompanyDaily:
         for i in range(0, 4):
 
             # self.progress_sofar
-            company_list = Company.new().getList(sort_by = 'idx', sort_direction = 'desc', limit = 1000, offset = (i*1000), select = ' idx,code ')
+            company_list = Company.new({"need_history":COMPANY_NEED_HISTORY.NO}).getList(sort_by = 'idx', sort_direction = 'desc', limit = 1000, offset = (i*1000), select = ' idx,code ')
 
             # loop through company list
             for company in company_list:
