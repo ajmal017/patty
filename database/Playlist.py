@@ -16,6 +16,7 @@ class Playlist(DataModel, BusinessModel):
     type                = None
     rank                = None
     company_idx         = None
+    company_stock_idx   = None
     date                = None
     svm_processed       = None
     hmm_processed       = None
@@ -34,12 +35,12 @@ class Playlist(DataModel, BusinessModel):
         self.hmm_processed = "0"
 
         query  = "INSERT INTO `playlist` "
-        query +=    "( `type`, `rank`, `company_idx`, `date`, `svm_processed`, `hmm_processed`, `created_date_time`, `status` ) "
+        query +=    "( `type`, `rank`, `company_idx`, `company_stock_idx`, `date`, `svm_processed`, `hmm_processed`, `created_date_time`, `status` ) "
         query += "VALUES "
-        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s ) "
+        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
 
         return self.postman.create(query, [
-            self.type, self.rank, self.company_idx, self.date, self.svm_processed, self.hmm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+            self.type, self.rank, self.company_idx, self.company_stock_idx, self.date, self.svm_processed, self.hmm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
         ])
 
     def get(self, select = ' idx,type,rank,company_idx,date '):
@@ -49,17 +50,19 @@ class Playlist(DataModel, BusinessModel):
         query += " FROM "
         query +=    "`playlist` "
         query += "WHERE "
-        if self.idx:            query += "`idx`=%s AND "
-        if self.type:           query += "`type`=%s AND "
-        if self.company_idx:    query += "`company_idx`=%s AND "
-        if self.date:           query += "`date`=%s AND "
+        if self.idx:                query += "`idx`=%s AND "
+        if self.type:               query += "`type`=%s AND "
+        if self.company_idx:        query += "`company_idx`=%s AND "
+        if self.company_stock_idx:  query += "`company_stock_idx`=%s AND "
+        if self.date:               query += "`date`=%s AND "
         query +=    "`status`=%s "
 
         params = []
-        if self.idx:            params.append(self.idx)
-        if self.type:           params.append(self.type)
-        if self.company_idx:    params.append(self.company_idx)
-        if self.date:           params.append(self.date)
+        if self.idx:                params.append(self.idx)
+        if self.type:               params.append(self.type)
+        if self.company_idx:        params.append(self.company_idx)
+        if self.company_stock_idx:  params.append(self.company_stock_idx)
+        if self.date:               params.append(self.date)
         params.append('1')
 
         return Playlist.new(self.postman.get(query, params))
