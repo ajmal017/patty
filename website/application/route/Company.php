@@ -21,8 +21,19 @@ Map::path('company/view/{integer}', function($idx) {
 });
 
 Map::path('company/search', function() {
+    $this->load->html('template/head');
+    $this->load->html('page/company/search');
+    $this->load->html('template/foot');
+});
+
+Map::path('POST', 'company/search', function() {
+
+    $search = (isset($_POST['search'])) ? $_POST['search'] : null;
+    $company_list = CompanyM::new()->setName($search)->getList();
 
     $data = array();
+    $data['search'] = $search;
+    $data['company_list'] = $company_list;
 
     $this->load->html('template/head');
     $this->load->html('page/company/search', $data);
@@ -60,18 +71,3 @@ Map::path('company/comparesvm/{integer}/{integer}', function($playlist_idx,$comp
     $this->load->html('page/company/comparesvm', $data);
     $this->load->html('template/foot');
 });
-
-/*
-
-<form class="searchbox">
-    <div class="search-icon">
-        <div class="circle"></div>
-        <!--/.circle-->
-        <div class="bar"></div>
-        <!--/.bar-->
-    </div>
-    <!--/.search-icon-->
-    <input type="text" name="search" value="" placeholder="Name,Code"/>
-</form>
-
- */
