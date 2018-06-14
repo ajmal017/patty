@@ -23,10 +23,11 @@ class PlaylistFindTopVolume:
 
             # create playlist item
             playlist = Playlist.new({
-                "type"          : PLAYLIST_TYPE.TOP,
-                "rank"          : i,
-                "company_idx"   : stock.company_idx,
-                "date"          : yesterday
+                "type"              : PLAYLIST_TYPE.TOP,
+                "rank"              : i,
+                "company_idx"       : stock.company_idx,
+                "company_stock_idx" : stock.idx
+                "date"              : yesterday
             })
 
             # check if playlist item is in database
