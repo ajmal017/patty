@@ -26,7 +26,7 @@ class PlaylistFindTopVolume:
                 "type"              : PLAYLIST_TYPE.TOP,
                 "rank"              : i,
                 "company_idx"       : stock.company_idx,
-                "company_stock_idx" : stock.idx
+                "company_stock_idx" : stock.idx,
                 "date"              : yesterday
             })
 
