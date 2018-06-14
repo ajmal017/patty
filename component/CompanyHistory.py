@@ -127,7 +127,11 @@ class CompanyHistory:
                         percentage = 0
                     else:
                         yesterday_price = int(row["price"]) + (int(row["prev_diff"]) * -1)
-                        percentage = ((int(row["price"]) - yesterday_price) / yesterday_price) * 100
+                        try:
+                            percentage = ((int(row["price"]) - yesterday_price) / yesterday_price) * 100
+                        except ZeroDivisionError as err:
+                            percentage = 0
+
 
                     self.addcreate(CompanyStock.new({
                         "company_idx"   : company.idx,
