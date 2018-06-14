@@ -73,6 +73,40 @@ class CompanyM extends BusinessModel {
         return CompanyM::new($this->postman->returnDataObject($query, $params));
     }
 
+    public function getList( $sortBy = 'name', $sortDirection = 'asc', $limit = '-1', $offset = '-1', $total_count = false ) {
+
+        $query	= "SELECT ";
+        $query .=   ($total_count)?"count(*) as cnt ":"idx,name,code,market,need_history,last_updated ";
+		$query .= "FROM ";
+        $query .=   "`company` ";
+		$query .= "WHERE ";
+        if ($this->name!=null){ $query .= "name=? AND "; }
+		$query .=	"status=? ";
+		$query .=	"ORDER BY $sortBy $sortDirection ";
+        if (!$total_count) { $query .= (($limit=='-1')&&($offset=='-1'))?'':"limit ? offset ? "; }
+
+		$fmt = "";
+        if ($this->name!=null){ $fmt .= "s"; }
+        $fmt .= "i";
+        if (!$total_count) { $fmt .= (($limit=='-1')&&($offset=='-1'))?'':"ii";  }
+
+		$params = array($fmt);
+        if ($this->name!=null){ $params[] = &$this->name; }
+		$params[] = &$this->status;
+
+		if ( $total_count ) {
+            return $this->postman->returnDataObject( $query, $params );
+        } else {
+            if (($limit!='-1')&&($offset!='-1')) {
+                $params[] = &$limit;
+                $params[] = &$offset;
+            }
+            return array_map(function($item) {
+                return CompanyM::new($item);
+            }, $this->postman->returnDataList( $query, $params ));
+		}
+    }
+
     public function getDailyUpdateWaitingCount() {
 
         $query	= "SELECT ";
