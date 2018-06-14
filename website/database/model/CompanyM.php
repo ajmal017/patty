@@ -81,11 +81,27 @@ class CompanyM extends BusinessModel {
         $query .=   "`company` ";
 		$query .= "WHERE ";
         $query .=	"`last_updated`!=? AND ";
+        $query .=	"`need_history`=? AND ";
 		$query .=	"`status`=? ";
 
         $last_updated = date('Y-m-d');
-        $status = 1;
+        $need_history = 1;
 
-        return ($this->postman->returnDataObject($query, array("si", &$last_updated, &$status)))->cnt;
+        return ($this->postman->returnDataObject($query, array("sii", &$last_updated, &$need_history, &$this->status)))->cnt;
+    }
+
+    public function getNeedHistoryCount() {
+
+        $query	= "SELECT ";
+        $query .=   " count(*) as cnt ";
+		$query .= "FROM ";
+        $query .=   "`company` ";
+		$query .= "WHERE ";
+        $query .=	"`need_history`=? AND ";
+		$query .=	"`status`=? ";
+
+        $need_history = 2;
+
+        return ($this->postman->returnDataObject($query, array("ii", &$need_history, &$this->status)))->cnt;
     }
 }
