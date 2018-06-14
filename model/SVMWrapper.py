@@ -52,24 +52,35 @@ class SVMWrapper:
         scaler = preprocessing.StandardScaler()
         test_data_x_scaled = scaler.fit_transform(self.test_data_x)
 
+        # predict value
+        pred_y = self.model.predict(test_data_x_scaled)
+
         # get predicted volumes
         score = self.model.score(test_data_x_scaled, self.test_data_y)
-        
+
         # Accuracy = (TP + TN) / (TP + TN + FP + FN)
-        # accuracy = accuracy_score(self.test_data_y, pred_y)
+        accuracy = accuracy_score(self.test_data_y, pred_y)
+        # print(score , ' ' , accuracy)
         # print(accuracy)
+        # print(len(self.test_data_y), type(self.test_data_y))
+        # print(len(pred_y), type(pred_y))
 
         # Recall = TP / (TP+FN)
-        # recall = recall_score(self.test_data_y, pred_y)
+        # print(len(self.test_data_y), type(self.test_data_y))
+        # print(len(pred_y), type(pred_y))
+        # recall = recall_score(self.test_data_y, pred_y, average = 'macro')
         # print(recall)
 
         # Precision = TP / (TP+FP)
-        #precise = precision_score(self.test_data_y, pred_y)
+        # precise = precision_score(self.test_data_y, pred_y)
+        # print(precise)
 
         # F1 = 2 (PxR/P+R)
-        #f1 = f1_score(self.test_data_y, pred_y)
+        # f1 = f1_score(self.test_data_y, pred_y)
+        # print(f1)
 
         # return precision/f1 score
         #return (accuracy, recall, f1, precise)
 
-        return score
+        # return score
+        return accuracy
