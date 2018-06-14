@@ -32,9 +32,9 @@ class Postman {
 			$config = json_decode(file_get_contents('/var/www/database.config'));
 
 			// create connection
-			if(mysqli_real_connect($this->mysqlConnection, $config->snu->host, $config->snu->user, $config->snu->password, 'stock', $config->snu->port)) {
-				mysqli_set_charset( $this->mysqlConnection, $config->snu->charset );
-				mysqli_query($this->mysqlConnection, 'SET NAMES ' . $config->snu->connection);
+			if(mysqli_real_connect($this->mysqlConnection, $config->aws_1->host, $config->aws_1->user, $config->aws_1->password, 'stock', $config->aws_1->port)) {
+				mysqli_set_charset( $this->mysqlConnection, $config->aws_1->charset );
+				mysqli_query($this->mysqlConnection, 'SET NAMES ' . $config->aws_1->connection);
 			}
 		}
 
@@ -77,7 +77,7 @@ class Postman {
 		$result = $stmt->execute();
 
 		if (!$result) {
-			exit(json_encode( array( 'code' => '400', 'msg' => $this->mysqlConnection->error, 'sql' => $query3 ) ));
+			exit(json_encode( array( 'code' => '400', 'msg' => $this->mysqlConnection->error, 'sql' => $query, 'params' => $params ) ));
 		}
 
 		$result = $stmt->get_result();

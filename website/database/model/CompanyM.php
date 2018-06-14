@@ -10,7 +10,7 @@ class CompanyM extends BusinessModel {
     public $need_history        = null;
     public $last_updated        = null;
     public $created_date_time   = null;
-    public $status              = null;
+    public $status              = 1;
 
     // help to create quick objects
     public static function new( $data = array() ) { return (new CompanyM())->extend($data); }
@@ -42,6 +42,36 @@ class CompanyM extends BusinessModel {
     public function getStatus() { return $this->status; }
 
     //// ------------------------------ action function
+
+    public function get($select = ' idx,name ') {
+
+        $query	= "SELECT ";
+        $query .=   $select." ";
+		$query .= "FROM ";
+        $query .=   "`company` ";
+		$query .= "WHERE ";
+        if ($this->idx != null){ $query .=	"`idx`=? AND "; }
+        if ($this->name != null && $this->code != null && ($this->name == $this->code)){ $query .=	"  ( `name`=? || `code`=? ) AND "; }
+		$query .=	"`status`=? ";
+
+        $fmt = "";
+        if ($this->idx != null){ $fmt .= "i"; }
+        if ($this->name != null && $this->code != null && ($this->name == $this->code)){
+            $fmt .= "s";
+            $fmt .= "s";
+        }
+        $fmt .= "i";
+
+        $params = array($fmt);
+        if ($this->idx != null){ $params[] = &$this->idx; }
+        if ($this->name != null && $this->code != null && ($this->name == $this->code)){
+            $params[] = &$this->name;
+            $params[] = &$this->code;
+        }
+        $params[] = &$this->status;
+
+        return CompanyM::new($this->postman->returnDataObject($query, $params));
+    }
 
     public function getDailyUpdateWaitingCount() {
 
