@@ -42,7 +42,7 @@
             </tbody>
         </table>
 
-        <br /><br /><br />
+        <br /><br />
 
         <div class="line-title">
             그룹 목록
@@ -57,7 +57,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($group_list as $group) { ?>
+                <?php foreach($linked_group_list as $group) { ?>
                     <tr>
                         <td>
                             <?php echo $group->getGroupName(); ?>
@@ -67,6 +67,32 @@
                         </td>
                     </tr>
                 <?php } ?>
+            </tbody>
+        </table>
+
+        <br /><br />
+
+        <div class="line-title">
+            그룹 등록
+        </div>
+        <!--/.line-title-->
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td style="padding: 0px;">
+                        <select style="padding: 5px; width: 100%;">
+                            <?php foreach($group_list as $group) { ?>
+                                <option value="<?php echo $group->getIdx(); ?>">
+                                    <?php echo $group->getName(); ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                    <td class="text-center" style="width: 80px;">
+                        <button class="btn btn-primary">등록</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

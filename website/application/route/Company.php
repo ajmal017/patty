@@ -2,16 +2,18 @@
 
 Map::path('company/view/{integer}', function($idx) {
 
-    $company = CompanyM::new()->setIdx($idx)->get();
-    $group_list = PlaylistM::new()->setCompanyIdx($company->getIdx())->getGroupList();
+    $company            = CompanyM::new()->setIdx($idx)->get();
+    $linked_group_list  = PlaylistM::new()->setCompanyIdx($company->getIdx())->getGroupList();
+    $group_list         = PlaylistGroupM::new()->getList();
 
-    $data                   = array();
-    $data['company']        = $company;
-    $data['group_list']     = $group_list;
-    $data['stock_list']     = ($company->getIdx()!=null)?CompanyStockM::new()->setCompanyIdx($company->getIdx())->getList():array();
-    $data['detail']         = $data['stock_list'][count($data['stock_list'])-1];
-    $data['ohlc_list']      = CompanyStockM::convertToCandleStick($data['stock_list']);
-    $data['top_playlist']   = ($company->getIdx()!=null)?PlaylistM::new()->setCompanyIdx($company->getIdx())->setType(PlaylistType::TOP)->getList():array();
+    $data                       = array();
+    $data['company']            = $company;
+    $data['linked_group_list']  = $linked_group_list;
+    $data['group_list']         = $group_list;
+    $data['stock_list']         = ($company->getIdx()!=null)?CompanyStockM::new()->setCompanyIdx($company->getIdx())->getList():array();
+    $data['detail']             = $data['stock_list'][count($data['stock_list'])-1];
+    $data['ohlc_list']          = CompanyStockM::convertToCandleStick($data['stock_list']);
+    $data['top_playlist']       = ($company->getIdx()!=null)?PlaylistM::new()->setCompanyIdx($company->getIdx())->setType(PlaylistType::TOP)->getList():array();
 
     $this->load->html('template/head', array('page' => ''));
     $this->load->html('page/company/view', $data);
