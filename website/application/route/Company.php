@@ -29,7 +29,7 @@ Map::path('company/search', function() {
 Map::path('POST', 'company/search', function() {
 
     $search = (isset($_POST['search'])) ? $_POST['search'] : null;
-    $company_list = CompanyM::new()->setName($search)->getList();
+    $company_list = CompanyM::new()->setSearchName($search)->getList();
 
     $data = array();
     $data['search'] = $search;
