@@ -18,6 +18,7 @@ class PlaylistM extends BusinessModel {
     public $created_date_time   = null;
     public $status              = 1;
 
+    public $group_name          = null;
     public $company_name        = null;
     public $price               = null;
     public $prev_diff           = null;
@@ -64,7 +65,10 @@ class PlaylistM extends BusinessModel {
 
     /* ---------------------- */
 
-    public function setCompanyName($status) { $this->company_name = $company_name; return $this; }
+    public function setGroupName($group_name) { $this->group_name = $group_name; return $this; }
+    public function getGroupName() { return $this->group_name; }
+
+    public function setCompanyName($company_name) { $this->company_name = $company_name; return $this; }
     public function getCompanyName() { return $this->company_name; }
 
     public function setPrice($price) { $this->price = $price; return $this; }
@@ -135,5 +139,35 @@ class PlaylistM extends BusinessModel {
                 return PlaylistM::new($item);
             }, $this->postman->returnDataList( $query, $params ));
 		}
+    }
+
+    public function getGroupList() {
+
+        $sortBy         = '`pg`.`name`';
+        $sortDirection  = 'asc';
+
+        $query	= "SELECT ";
+        $query .=   "`pg`.`idx`, `pg`.`name` as group_name,`p`.`created_date_time` ";
+		$query .= "FROM ";
+        $query .=   "`playlist` as `p`, ";
+        $query .=   "`playlist_group` as `pg` ";
+		$query .= "WHERE ";
+        $query .=  "`p`.`group_idx`=`pg`.`idx` AND ";
+        $query .=  "`p`.`company_idx`=? AND ";
+        $query .=  "`p`.`group_idx`!=? AND ";
+		$query .=  "`p`.`status`=? ";
+        $query .=	"GROUP BY `p`.`group_idx` ";
+		$query .=	"ORDER BY $sortBy $sortDirection ";
+
+        $not_group_idx = 0;
+
+		$params = array("iii");
+        $params[] = &$this->company_idx;
+		$params[] = &$not_group_idx;
+        $params[] = &$this->status;
+
+        return array_map(function($item) {
+            return PlaylistM::new($item);
+        }, $this->postman->returnDataList( $query, $params ));
     }
 }
