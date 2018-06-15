@@ -24,22 +24,32 @@
 		            <h1 class="title">Navigation</h1>
 		            <ul>
 						<li>
-		                    <a href="/calendar/">Calendar</a>
+		                    <a href="#">Dashboard</a>
+							<ul>
+								<li>
+				                    <a href="/calendar/" class="<?php echo ($page=='calendar')?'active':''; ?>">Calendar</a>
+				                </li>
+								<li>
+				                    <a href="/cron/" class="<?php echo ($page=='cron')?'active':''; ?>">Status</a>
+				                </li>
+							</ul>
 		                </li>
 						<li>
-		                    <a href="/company/search/">Company</a>
-		                </li>
-		                <li>
-		                    <a href="/cron/">Status</a>
+							<a href="#">Company</a>
+							<ul>
+								<li>
+				                    <a href="/company/search/" class="<?php echo ($page=='company=>search')?'active':''; ?>">Search</a>
+				                </li>
+							</ul>
 		                </li>
 						<li>
 		                    <a href="#">Playlist</a>
 							<ul>
 		                        <li>
-									<a href="/playlist/">Top 100</a>
+									<a href="/playlist/" class="<?php echo ($page=='playlist')?'active':''; ?>">Top 100</a>
 								</li>
 								<li>
-									<a href="/playlist/group/">Group Manage</a>
+									<a href="/playlist/group/" class="<?php echo ($page=='playlist=>group')?'active':''; ?>">Group Manage</a>
 								</li>
 		                    </ul>
 		                </li>

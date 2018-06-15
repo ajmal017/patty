@@ -13,13 +13,13 @@ Map::path('company/view/{integer}', function($idx) {
     $data['ohlc_list']      = CompanyStockM::convertToCandleStick($data['stock_list']);
     $data['top_playlist']   = ($company->getIdx()!=null)?PlaylistM::new()->setCompanyIdx($company->getIdx())->setType(PlaylistType::TOP)->getList():array();
 
-    $this->load->html('template/head');
+    $this->load->html('template/head', array('page' => ''));
     $this->load->html('page/company/view', $data);
     $this->load->html('template/foot');
 });
 
 Map::path('company/search', function() {
-    $this->load->html('template/head');
+    $this->load->html('template/head', array('page' => 'company=>search'));
     $this->load->html('page/company/search');
     $this->load->html('template/foot');
 });
@@ -33,7 +33,7 @@ Map::path('POST', 'company/search', function() {
     $data['search'] = $search;
     $data['company_list'] = $company_list;
 
-    $this->load->html('template/head');
+    $this->load->html('template/head', array('page' => 'company=>search'));
     $this->load->html('page/company/search', $data);
     $this->load->html('template/foot');
 });
@@ -65,7 +65,7 @@ Map::path('company/comparesvm/{integer}/{integer}', function($playlist_idx,$comp
     $data['model_result_list']  = $model_result_list;
     $data['target_company_list']= $target_company_list;
 
-    $this->load->html('template/head');
+    $this->load->html('template/head', array('page' => ''));
     $this->load->html('page/company/comparesvm', $data);
     $this->load->html('template/foot');
 });

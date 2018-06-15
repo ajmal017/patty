@@ -12,7 +12,7 @@ Map::path('playlist', function() {
     $data = array();
     $date['playlist_list'] = $playlist_list;
 
-    $this->load->html('template/head');
+    $this->load->html('template/head', array('page' => 'playlist'));
     $this->load->html('page/playlist/index', $date);
     $this->load->html('template/foot');
 });

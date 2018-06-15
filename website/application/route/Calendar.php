@@ -27,7 +27,7 @@ Map::path('calendar', function() {
     $data = array();
     $data['calender_list'] = $calender_list;
 
-    $this->load->html('template/head');
+    $this->load->html('template/head', array('page' => 'calendar'));
     $this->load->html('page/calendar/index', $data);
     $this->load->html('template/foot');
 });

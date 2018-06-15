@@ -7,7 +7,7 @@ Map::path('cron', function() {
     $data['company_history_count']              = CompanyM::new()->getNeedHistoryCount();
 
 
-    $this->load->html('template/head');
+    $this->load->html('template/head', array('page' => 'cron'));
     $this->load->html('page/cron/index', $data);
     $this->load->html('template/foot');
 });
