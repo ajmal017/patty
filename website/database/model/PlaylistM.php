@@ -8,6 +8,7 @@ class PlaylistM extends BusinessModel {
 
     // public variables
     public $idx                 = null;
+    public $group_idx           = null;
     public $type                = null;
     public $rank                = null;
     public $company_idx         = null;
@@ -33,6 +34,9 @@ class PlaylistM extends BusinessModel {
 
     public function setIdx( $idx ) { $this->idx = $idx; return $this; }
     public function getIdx() { return $this->idx; }
+
+    public function setGroupIdx( $group_idx ) { $this->group_idx = $group_idx; return $this; }
+    public function getGroupIdx() { return $this->group_idx; }
 
     public function setType($type) { $this->type = $type; return $this; }
     public function getType() { return $this->type; }
@@ -89,7 +93,7 @@ class PlaylistM extends BusinessModel {
     public function getList( $sortBy = '`p`.`rank`', $sortDirection = 'asc', $limit = '-1', $offset = '-1', $total_count = false ) {
 
         $query	= "SELECT ";
-        $query .=   ($total_count)?"count(*) as cnt ":"`p`.`idx`,`p`.`rank`,`p`.`date`, `p`.`company_idx`,`c`.`name` as company_name,`cs`.`price`,`cs`.`prev_diff`,`cs`.`percentage`,`cs`.`open`,`cs`.`high`,`cs`.`low`,`cs`.`volume` ";
+        $query .=   ($total_count)?"count(*) as cnt ":"`p`.`idx`,`p`.`group_idx`,`p`.`rank`,`p`.`date`, `p`.`company_idx`,`c`.`name` as company_name,`cs`.`price`,`cs`.`prev_diff`,`cs`.`percentage`,`cs`.`open`,`cs`.`high`,`cs`.`low`,`cs`.`volume` ";
 		$query .= "FROM ";
         $query .=   "`playlist` as `p`, ";
         $query .=   "`company` as `c`, ";
