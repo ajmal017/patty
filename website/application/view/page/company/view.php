@@ -3,6 +3,11 @@
 
 <div class="row col">
     <div class="col-3" style="padding-right: 10px;">
+        <div class="line-title">
+            기본 정보
+        </div>
+        <!--/.line-title-->
+
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -37,12 +42,39 @@
             </tbody>
         </table>
 
+        <br /><br /><br />
+
+        <div class="line-title">
+            그룹 목록
+        </div>
+        <!--/.line-title-->
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>이름</th>
+                    <th style="width: 140px;">날짜</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($group_list as $group) { ?>
+                    <tr>
+                        <td>
+                            <?php echo $group->getGroupName(); ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $group->getCreatedDateTime('Y년 m월 d일'); ?>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
     </div>
     <!--/.col-3-->
 
     <div class="col-9">
         <div class="graph">
-            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            <div id="chartContainer" style="height: 490px; width: 100%;"></div>
         </div>
     </div>
     <!--/.col-9-->
@@ -115,7 +147,7 @@
 <br /><br /><br />
 
 <div class="row col">
-    <div class="col-6">
+    <div class="col-6" style="padding-right: 10px;">
         <div class="line-title">
             SVM 정확도
         </div>

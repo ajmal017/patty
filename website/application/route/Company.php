@@ -2,14 +2,12 @@
 
 Map::path('company/view/{integer}', function($idx) {
 
-    $search = (isset($_GET['search'])) ? $_GET['search'] : null;
-    // $idx = (isset($_GET['idx'])) ? $_GET['idx'] : null;
-    // $idx = ($idx == null && $search == null) ? "-1" : $idx;
-
-    $company = CompanyM::new()->setIdx($idx)->setName($search)->setCode($search)->get();
+    $company = CompanyM::new()->setIdx($idx)->get();
+    $group_list = PlaylistM::new()->setCompanyIdx($company->getIdx())->getGroupList();
 
     $data                   = array();
     $data['company']        = $company;
+    $data['group_list']     = $group_list;
     $data['stock_list']     = ($company->getIdx()!=null)?CompanyStockM::new()->setCompanyIdx($company->getIdx())->getList():array();
     $data['detail']         = $data['stock_list'][count($data['stock_list'])-1];
     $data['ohlc_list']      = CompanyStockM::convertToCandleStick($data['stock_list']);
