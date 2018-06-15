@@ -12,6 +12,8 @@ class CompanyM extends BusinessModel {
     public $created_date_time   = null;
     public $status              = 1;
 
+    public $search_name         = null;
+
     // help to create quick objects
     public static function new( $data = array() ) { return (new CompanyM())->extend($data); }
 
@@ -40,6 +42,9 @@ class CompanyM extends BusinessModel {
 
     public function setStatus($status) { $this->status = $status; return $this; }
     public function getStatus() { return $this->status; }
+
+    public function setSearchName($search_name) { $this->search_name = $search_name; return $this; }
+    public function getSearchName() { return $this->search_name; }
 
     //// ------------------------------ action function
 
@@ -80,17 +85,20 @@ class CompanyM extends BusinessModel {
 		$query .= "FROM ";
         $query .=   "`company` ";
 		$query .= "WHERE ";
+        if ($this->search_name!=null){ $query .= "name LIKE ? AND "; }
         if ($this->name!=null){ $query .= "name=? AND "; }
 		$query .=	"status=? ";
 		$query .=	"ORDER BY $sortBy $sortDirection ";
         if (!$total_count) { $query .= (($limit=='-1')&&($offset=='-1'))?'':"limit ? offset ? "; }
 
 		$fmt = "";
+        if ($this->search_name!=null){ $fmt .= "s"; }
         if ($this->name!=null){ $fmt .= "s"; }
         $fmt .= "i";
         if (!$total_count) { $fmt .= (($limit=='-1')&&($offset=='-1'))?'':"ii";  }
 
 		$params = array($fmt);
+        if ($this->search_name!=null){ $s = $this->search_name.'%'; $params[] = &$s; }
         if ($this->name!=null){ $params[] = &$this->name; }
 		$params[] = &$this->status;
 
