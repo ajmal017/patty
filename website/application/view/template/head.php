@@ -38,6 +38,9 @@
 		                        <li>
 									<a href="/playlist/">Top 100</a>
 								</li>
+								<li>
+									<a href="/playlist/group/">Group Manage</a>
+								</li>
 		                    </ul>
 		                </li>
 		            </ul>
