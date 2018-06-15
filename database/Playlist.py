@@ -13,6 +13,7 @@ class PLAYLIST_PROCESS:
 class Playlist(DataModel, BusinessModel):
 
     idx                 = None
+    group_idx           = None
     type                = None
     rank                = None
     company_idx         = None
@@ -31,19 +32,20 @@ class Playlist(DataModel, BusinessModel):
     def create(self):
 
         # default values
+        self.group_idx     = 0
         self.svm_processed = PLAYLIST_PROCESS.WAIT
         self.hmm_processed = PLAYLIST_PROCESS.WAIT
 
         query  = "INSERT INTO `playlist` "
-        query +=    "( `type`, `rank`, `company_idx`, `company_stock_idx`, `date`, `svm_processed`, `hmm_processed`, `created_date_time`, `status` ) "
+        query +=    "( `group_idx`, `type`, `rank`, `company_idx`, `company_stock_idx`, `date`, `svm_processed`, `hmm_processed`, `created_date_time`, `status` ) "
         query += "VALUES "
-        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
+        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
 
         return self.postman.create(query, [
-            self.type, self.rank, self.company_idx, self.company_stock_idx, self.date, self.svm_processed, self.hmm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+            self.group_idx, self.type, self.rank, self.company_idx, self.company_stock_idx, self.date, self.svm_processed, self.hmm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
         ])
 
-    def get(self, select = ' idx,type,rank,company_idx,date '):
+    def get(self, select = ' idx,group_idx,type,rank,company_idx,date '):
 
         query  = "SELECT "
         query +=    select
@@ -75,7 +77,7 @@ class Playlist(DataModel, BusinessModel):
         nolimit     = kwargs['nolimit']         if 'nolimit'        in kwargs else False
         offset      = kwargs['offset']          if 'offset'         in kwargs else 0
         select      = kwargs['select']          if 'select'         in kwargs else ' idx,start_date,end_date,processed '
-        
+
         query  = "SELECT "
         query +=    select
         query += " FROM "
