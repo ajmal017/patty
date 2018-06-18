@@ -11,7 +11,8 @@ Stock Market Comparison
 10 5 * * * /usr/bin/python3 /~/patty/model.py daily
 ```
 2. Call hourly for updates requiring hourly check
-```
+`
+* * * * *  /usr/bin/python3 /~/patty/playlist.py minute
 10 * * * * /usr/bin/python3 /~/patty/company.py hourly
 30 * * * * /usr/bin/python3 /~/patty/playlist.py hourly
 50 * * * * /usr/bin/python3 /~/patty/model.py hourly
