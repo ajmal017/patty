@@ -14,6 +14,12 @@ class Calendar {
 		return Calendar::$singleton;
     }
 
+    public function setup($month, $year) {
+        $this->month    = $month;
+        $this->year     = $year;
+        return $this;
+    }
+
     public function generate($month, $year) {
         $this->month    = $month;
         $this->year     = $year;

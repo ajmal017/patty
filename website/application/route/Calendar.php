@@ -2,7 +2,10 @@
 
 Map::path('calendar', function() {
 
-    $date_list  = Calendar::new()->generate(date('m'), date('y'));
+    $rightnow_month = date('m');
+    $rightnow_year  = date('y');
+
+    $date_list  = Calendar::new()->generate($rightnow_month, $rightnow_year);
     $calender   = array();
     foreach($date_list as $date) {
         $s_date = new DateTime($date);
@@ -24,8 +27,17 @@ Map::path('calendar', function() {
         array_slice($calender, 28, 7),
     );
 
+    list($pre_month, $pre_year)     = Calendar::new()->setup($rightnow_month, $rightnow_year)->getPrevDate();
+    list($next_month, $next_year)   = Calendar::new()->setup($rightnow_month, $rightnow_year)->getNextDate();
+
     $data = array();
-    $data['calender_list'] = $calender_list;
+    $data['calender_list']  = $calender_list;
+    $data['pre_month']      = $pre_month;
+    $data['pre_year']       = $pre_year;
+    $data['next_month']     = $next_month;
+    $data['next_year']      = $next_year;
+    $data['today_month']    = $rightnow_month;
+    $data['today_year']     = $rightnow_year;
 
     $this->load->html('template/head', array('page' => 'calendar'));
     $this->load->html('page/calendar/index', $data);

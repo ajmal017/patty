@@ -2,6 +2,15 @@
 
 <div class="row">
     <h1>Report</h1>
+
+    <form method="GET" action="/calendar/">
+        <a href="/calendar/?month=<?php echo $pre_month; ?>&year=<?php echo $pre_year; ?>">
+            전달
+        </a>
+        <a href="/calendar/?month=<?php echo $next_month; ?>&year=<?php echo $next_year; ?>">
+            다음
+        </a>
+    </form>
 </div>
 <!--/.row-->
 
