@@ -77,24 +77,27 @@
         </div>
         <!--/.line-title-->
 
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td style="padding: 0px;">
-                        <select style="padding: 5px; width: 100%;">
-                            <?php foreach($group_list as $group) { ?>
-                                <option value="<?php echo $group->getIdx(); ?>">
-                                    <?php echo $group->getName(); ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </td>
-                    <td class="text-center" style="width: 80px;">
-                        <button class="btn btn-primary">등록</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <form method="POST" action="/company/add_group/<?php echo $company->getIdx(); ?>">
+            <input type="hidden" name="company_stock_idx" value="<?php echo $detail->getIdx(); ?>" />
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td style="padding: 0px;">
+                            <select style="padding: 5px; width: 100%;" name="group_idx">
+                                <?php foreach($group_list as $group) { ?>
+                                    <option value="<?php echo $group->getIdx(); ?>">
+                                        <?php echo $group->getName(); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                        <td class="text-center" style="width: 80px;">
+                            <button class="btn btn-primary" type="submit">등록</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </div>
     <!--/.col-3-->
 
