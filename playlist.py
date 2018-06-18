@@ -13,6 +13,11 @@ def hourly():
     pass
 
 
+def devforce():
+    """this function should be called by developer only in CLI"""
+    PlaylistFindTopVolume().mimic_date()
+
+
 """check if the function that needs to be called has been passed """
 if len(sys.argv) >= 2:
     locals()[sys.argv[1]]()
