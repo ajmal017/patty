@@ -146,7 +146,7 @@ class CompanyHistory:
                     }))
 
                 # update progress
-                progressbar(self.progress_sofar, self.progress_total, "검색:{0} ({1} / {2}) 시간: {3}  {4} ".format("{0} {1}".format(row["date"], company.name), self.progress_sofar, self.progress_total, Stopwatch.init().check("company_history"), msg))
+                # progressbar(self.progress_sofar, self.progress_total, "검색:{0} ({1} / {2}) 시간: {3}  {4} ".format("{0} {1}".format(row["date"], company.name), self.progress_sofar, self.progress_total, Stopwatch.init().check("company_history"), msg))
 
 
     def init(self):
@@ -224,7 +224,7 @@ class CompanyHistory:
             # create company
             company_stock.create()
 
-            progressbar(self.progress_sofar, self.progress_total, "createing..........")
+            # progressbar(self.progress_sofar, self.progress_total, "createing..........")
 
         # empty the list
         self.create_list.clear()
