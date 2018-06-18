@@ -1,6 +1,11 @@
 import sys
 from component import *
 
+def minute():
+    """this function should be called every minute!!"""
+    PlaylistCustomSVM().init()
+
+
 def daily():
     """this function should be called only once daily"""
 
