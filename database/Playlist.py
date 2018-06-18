@@ -84,12 +84,14 @@ class Playlist(DataModel, BusinessModel):
         query += " FROM "
         query +=    "`playlist` "
         query += "WHERE "
+        if self.type:           query += "`type`=%s AND "
         if self.svm_processed:  query += "`svm_processed`=%s AND "
         query +=    "`status`=%s "
         query += "ORDER BY {0} {1} ".format(sort_by, sdirection)
         if not nolimit:         query += "LIMIT %s offset %s "
 
         params = []
+        if self.type:           params.append(self.type)
         if self.svm_processed:  params.append(self.svm_processed)
         params.append('1')
         if not nolimit:         params.extend((limit, offset))
