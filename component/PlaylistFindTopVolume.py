@@ -4,16 +4,22 @@ from datetime import date, timedelta
 
 class PlaylistFindTopVolume:
 
-    def init():
-
-        # search limit
-        limit = 100
+    def init(self):
 
         # get yesterday's date
         yesterday = date.today() - timedelta(1)
 
         # convert date object to string date
         yesterday = str(yesterday.strftime("%Y-%m-%d"))
+
+        # run top list
+        self.runtext(yesterday)
+
+
+    def runtext(self, yesterday):
+
+        # search limit
+        limit = 100
 
         # get the top 100
         stock_list = CompanyStock.new({ "date" : yesterday }).getList(sort_by = 'percentage', sort_direction = 'desc', limit = limit)
@@ -37,3 +43,16 @@ class PlaylistFindTopVolume:
             # if not in database add it!
             if check.idx == None:
                 playlist.create()
+
+    def mimic_date(self):
+
+        for i in range(1000):
+
+            # get yesterday's date
+            yesterday = date.today() - timedelta(i)
+
+            # convert date object to string date
+            yesterday = str(yesterday.strftime("%Y-%m-%d"))
+
+            # find the top list!
+            self.runtext(yesterday)
