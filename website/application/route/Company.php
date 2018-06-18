@@ -41,7 +41,7 @@ Map::path('POST', 'company/search', function() {
 });
 
 Map::path('POST', 'company/add_group/{integer}', function($idx) {
-    
+
     $group_idx          = $_POST['group_idx'];
     $company_stock_idx  = $_POST['company_stock_idx'];
 
@@ -55,6 +55,8 @@ Map::path('POST', 'company/add_group/{integer}', function($idx) {
         ->setHmmProcessed(PlaylistProcess::WAIT)
         ->setDate(date('Y-m-d'))
         ->create();
+
+    $this->load->html('component/redirect', array('msg' => '등록 완료되었습니다.', 'url' => '/company/view/'.$idx));
 });
 
 Map::path('company/comparesvm/{integer}/{integer}', function($playlist_idx,$company_idx) {
