@@ -1,7 +1,8 @@
 <?php
 
 class PlaylistType {
-    const TOP = 1;
+    const TOP       = 1;
+    const CUSTOM    = 99;
 }
 
 class PlaylistM extends BusinessModel {
@@ -48,6 +49,9 @@ class PlaylistM extends BusinessModel {
     public function setCompanyIdx($company_idx) { $this->company_idx = $company_idx; return $this; }
     public function getCompanyIdx() { return $this->company_idx; }
 
+    public function setCompanyStockIdx($company_stock_idx) { $this->company_stock_idx = $company_stock_idx; return $this; }
+    public function getCompanyStockIdx() { return $this->company_stock_idx; }
+
     public function setDate($date) { $this->date = $date; return $this; }
     public function getDate() { return $this->date; }
 
@@ -93,6 +97,14 @@ class PlaylistM extends BusinessModel {
     public function getVolume() { return $this->volume; }
 
     //// ------------------------------ action function
+
+    public function create() {
+        $field  = array( 'group_idx', 'type', 'rank', 'company_idx', 'company_stock_idx', 'date', 'svm_processed', 'hmm_processed', 'created_date_time', 'status' );
+        $data   = array( $this->group_idx, $this->type, $this->rank, $this->company_idx, $this->company_stock_idx, $this->date, $this->svm_processed, $this->hmm_processed, date('Y-m-d H:i:s'), '1');
+        $fmt    = 'iiiiisiisi';
+
+        return $this->create_omr('playlist', $field, $data, $fmt);
+    }
 
     public function getList( $sortBy = '`p`.`rank`', $sortDirection = 'asc', $limit = '-1', $offset = '-1', $total_count = false ) {
 
