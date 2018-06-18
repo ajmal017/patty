@@ -40,6 +40,23 @@ Map::path('POST', 'company/search', function() {
     $this->load->html('template/foot');
 });
 
+Map::path('POST', 'company/add_group/{integer}', function($idx) {
+
+    $group_idx          = $_POST['group_idx'];
+    $company_stock_idx  = $_POST['company_stock_idx'];
+
+    PlaylistM::new()
+        ->setCompanyIdx($idx)
+        ->setCompanyStockIdx($company_stock_idx)
+        ->setGroupIdx($group_idx)
+        ->setType(PlaylistType::CUSTOM)
+        ->setRank(0)
+        ->setSvmProcessed(0)
+        ->setHmmProcessed(0)
+        ->setDate(date('Y-m-d'))
+        ->create();
+});
+
 Map::path('company/comparesvm/{integer}/{integer}', function($playlist_idx,$company_idx) {
 
     $company            = CompanyM::new()->setIdx($company_idx)->get();
