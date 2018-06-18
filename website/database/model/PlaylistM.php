@@ -5,6 +5,12 @@ class PlaylistType {
     const CUSTOM    = 99;
 }
 
+class PlaylistProcess {
+    const WAIT      = 1;
+    const PROCESS   = 2;
+    const DONE      = 3;
+}
+
 class PlaylistM extends BusinessModel {
 
     // public variables
@@ -99,10 +105,9 @@ class PlaylistM extends BusinessModel {
     //// ------------------------------ action function
 
     public function create() {
-        $field  = array( 'group_idx', 'type', 'rank', 'company_idx', 'company_stock_idx', 'date', 'svm_processed', 'hmm_processed', 'created_date_time', 'status' );
-        $data   = array( $this->group_idx, $this->type, $this->rank, $this->company_idx, $this->company_stock_idx, $this->date, $this->svm_processed, $this->hmm_processed, date('Y-m-d H:i:s'), '1');
-        $fmt    = 'iiiiisiisi';
-
+        $field  = array( 'group_idx', 'type', 'rank', 'company_idx', 'company_stock_idx', 'date', 'svm_processed', 'hmm_processed' );
+        $data   = array( $this->group_idx, $this->type, $this->rank, $this->company_idx, $this->company_stock_idx, $this->date, $this->svm_processed, $this->hmm_processed );
+        $fmt    = 'iiiiisii';
         return $this->create_omr('playlist', $field, $data, $fmt);
     }
 
