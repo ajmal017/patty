@@ -41,7 +41,7 @@ Map::path('POST', 'company/search', function() {
 });
 
 Map::path('POST', 'company/add_group/{integer}', function($idx) {
-
+    
     $group_idx          = $_POST['group_idx'];
     $company_stock_idx  = $_POST['company_stock_idx'];
 
@@ -51,8 +51,8 @@ Map::path('POST', 'company/add_group/{integer}', function($idx) {
         ->setGroupIdx($group_idx)
         ->setType(PlaylistType::CUSTOM)
         ->setRank(0)
-        ->setSvmProcessed(0)
-        ->setHmmProcessed(0)
+        ->setSvmProcessed(PlaylistProcess::WAIT)
+        ->setHmmProcessed(PlaylistProcess::WAIT)
         ->setDate(date('Y-m-d'))
         ->create();
 });
