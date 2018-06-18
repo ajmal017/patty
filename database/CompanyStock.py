@@ -49,6 +49,18 @@ class CompanyStock(DataModel, BusinessModel):
                 frontend.append(0)
         return frontend + list(map(lambda stock: round(stock.percentage), stock_list))
 
+    def checkCreate(self):
+
+        # check if data item exsits in the database
+        check = self.get('idx')
+
+        # check if item is found from database
+        if not check.idx:
+
+            # if not lets create it!
+            self.create()
+
+
     def create(self):
 
         query  = "INSERT INTO `company_stock` "
