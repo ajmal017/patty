@@ -3,7 +3,8 @@ from system.database.BusinessModel import BusinessModel
 from datetime import datetime
 
 class PLAYLIST_TYPE:
-    TOP  = 1
+    TOP     = 1
+    CUSTOM  = 99
 
 class PLAYLIST_PROCESS:
     WAIT    = 1
