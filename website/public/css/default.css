@@ -342,9 +342,12 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
 }
 .calender-table td .list-wrapper .list-title {
     box-sizing: border-box;
+    font-weight: 900;
+    text-align: center;
 }
 .calender-table td .list-wrapper ul {
     list-style: none;
+    font-weight: normal;
 }
 .calender-table td .list-wrapper ul li {
     box-sizing: border-box;
