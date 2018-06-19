@@ -80,6 +80,7 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
     padding: 40px 140px;
     font-size: 14px;
     min-height: 100%;
+    position: relative;
 }
 .container .content h1 {
     color: #172b4d;
@@ -127,6 +128,33 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
+.container .content .form {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    display: inline-block;
+    font-size: 0px;
+}
+.container .content .form select {
+    height: 40px;
+    box-sizing: border-box;
+    border: 1px solid #dfdfdf;
+    vertical-align: top;
+    padding: 0px 10px;
+    font-size: 12px;
+}
+.container .content .form .btn {
+    height: 40px;
+    box-sizing: border-box;
+    border: 1px solid #0946a6;
+    background-color: #0946a6;
+    padding: 0px 10px;
+    color: #fff;
+    vertical-align: top;
+    font-size: 12px;
+    line-height: 38px;
+}
+
 .dot-dot {
     width: 280px;
     overflow: hidden;
@@ -239,6 +267,20 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
 .table-bordered tbody tr td.img-std img {
 	width: 100px;
 	height: 100%;
+}
+.table-bordered tbody tr td.input {
+	font-size: 0px;
+    padding: 0px;
+}
+.table-bordered tbody tr td.input input {
+    height: 37px;
+    border: 0px;
+    width: 100%;
+    background-color: transparent;
+    box-sizing: border-box;
+    outline: 0px;
+    padding: 0px 15px;
+    font-size: 14px; 
 }
 .table-bordered tbody tr td.menu {
 	padding: 0px 10px;
