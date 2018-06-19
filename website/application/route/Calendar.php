@@ -2,8 +2,8 @@
 
 Map::path('calendar', function() {
 
-    $rightnow_month = date('m');
-    $rightnow_year  = date('y');
+    $rightnow_month = (isset($_GET['month'])) ? $_GET['month'] : date('m');
+    $rightnow_year  = (isset($_GET['year'])) ? $_GET['year'] : date('y');
 
     $date_list  = Calendar::new()->generate($rightnow_month, $rightnow_year);
     $calender   = array();
