@@ -31,6 +31,13 @@ class PlaylistGroupM extends BusinessModel {
 
     //// ------------------------------ action function
 
+    public function create() {
+        $field  = array( 'sort_idx', 'name' );
+        $data   = array( $this->sort_idx, $this->name );
+        $fmt    = 'is';
+        return $this->create_omr('playlist_group', $field, $data, $fmt);
+    }
+
     public function getList( $sortBy = 'sort_idx', $sortDirection = 'asc', $limit = '-1', $offset = '-1', $total_count = false ) {
 
         $query	= "SELECT ";
@@ -62,6 +69,23 @@ class PlaylistGroupM extends BusinessModel {
 		}
     }
 
+    public function get($select = ' idx,sort_idx,name ') {
+
+        $query	= "SELECT ";
+        $query .=   $select." ";
+		$query .= "FROM ";
+        $query .=   "`playlist_group` ";
+		$query .= "WHERE ";
+        $query .=	"`idx`=? AND ";
+		$query .=	"`status`=? ";
+
+		$params = array("ii");
+        $params[] = &$this->idx;
+		$params[] = &$this->status;
+
+        return PlaylistGroupM::new($this->postman->returnDataObject( $query, $params ));
+    }
+
     public function getCount() {
 
         $query	= "SELECT ";
@@ -77,5 +101,41 @@ class PlaylistGroupM extends BusinessModel {
 		$params[] = &$this->status;
 
         return $this->postman->returnDataObject( $query, $params );
+    }
+
+    public function update() {
+
+        $query	= "UPDATE ";
+        $query .=   "`playlist_group` ";
+		$query .= "SET ";
+		$query .=   "`sort_idx`=?, ";
+        $query .=   "`name`=? ";
+        $query .= "WHERE ";
+		$query .=   "`idx`=? ";
+
+		$params = array("isi");
+        $params[] = &$this->sort_idx;
+        $params[] = &$this->name;
+        $params[] = &$this->idx;
+
+        $this->postman->execute( $query, $params );
+    }
+
+    public function remove() {
+
+        $query	= "UPDATE ";
+        $query .=   "`playlist_group` ";
+		$query .= "SET ";
+		$query .=   "`status`=? ";
+        $query .= "WHERE ";
+		$query .=   "`idx`=? ";
+
+        $status = 0;
+
+		$params = array("ii");
+        $params[] = &$status;
+        $params[] = &$this->idx;
+
+        $this->postman->execute( $query, $params );
     }
 }
