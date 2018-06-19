@@ -25,9 +25,9 @@ class DataModel {
         $query .=	" ?, ?) ";
 
 		$created_date_time	= date('Y-m-d H:i:s');
-		$status				= 'A';
+		$status				= '1';
 
-		$params = array($fmt."ss");
+		$params = array($fmt."si");
         foreach($data_list as &$data) {
             $params[] = &$data;
         }
@@ -35,48 +35,5 @@ class DataModel {
 		$params[] = &$status;
         // echo $this->postman->sql( $query, $params );
         return $this->postman->execute( $query, $params, true );
-    }
-
-    public function check( $table_name, $idx, $select = '*' ) {
-
-        $query	= "SELECT ";
-		$query .=   "$select ";
-		$query .= "FROM ";
-        $query .=   "`$table_name` ";
-		$query .= "WHERE ";
-        $query .=	"`idx`=?          AND ";
-		$query .=	"`status`=? ";
-
-        $status = 'A';
-
-		$params = array("is");
-        $params[] = &$idx;
-        $params[] = &$status;
-
-		return $this->postman->returnDataObject( $query, $params );
-    }
-
-    public function remove( $table_name, $idx, $website_idx = '' ) {
-
-        $query	= "UPDATE ";
-		$query .=   "`$table_name` ";
-		$query .= "SET ";
-        $query .=	"`status`=? ";
-        $query .= "WHERE ";
-        if ( $website_idx != '' ) { $query .= "`website_idx`=? AND "; }
-        $query .=	"`idx`=? ";
-
-        $status = 'D';
-
-        $fmt = 's';
-        if ( $website_idx != '' ) { $fmt .= 'i'; }
-        $fmt .= 'i';
-
-		$params = array( $fmt );
-        $params[] = &$status;
-        if ( $website_idx != '' ) { $params[] = &$website_idx; }
-        $params[] = &$idx;
-
-        $this->postman->execute( $query, $params );
     }
 }
