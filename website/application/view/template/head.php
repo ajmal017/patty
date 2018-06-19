@@ -21,35 +21,43 @@
 		<div class="container">
 		    <div class="sidebar">
 		        <div class="section">
-		            <h1 class="title">Navigation</h1>
+		            <h1 class="title">메뉴</h1>
 		            <ul>
 						<li>
-		                    <a href="#">Dashboard</a>
+		                    <a href="#">관리</a>
 							<ul>
 								<li>
-				                    <a href="/calendar/" class="<?php echo ($page=='calendar')?'active':''; ?>">Calendar</a>
+				                    <a href="/calendar/" class="<?php echo ($page=='calendar')?'active':''; ?>">달력</a>
 				                </li>
 								<li>
-				                    <a href="/cron/" class="<?php echo ($page=='cron')?'active':''; ?>">Status</a>
+				                    <a href="/cron/" class="<?php echo ($page=='cron')?'active':''; ?>">시스템 상태</a>
 				                </li>
 							</ul>
 		                </li>
 						<li>
-							<a href="#">Company</a>
+							<a href="#">회사</a>
 							<ul>
 								<li>
-				                    <a href="/company/search/" class="<?php echo ($page=='company=>search')?'active':''; ?>">Search</a>
+				                    <a href="/company/search/" class="<?php echo ($page=='company=>search')?'active':''; ?>">검색하기</a>
 				                </li>
 							</ul>
 		                </li>
 						<li>
-		                    <a href="#">Playlist</a>
+		                    <a href="#">그룹</a>
 							<ul>
 		                        <li>
-									<a href="/playlist/" class="<?php echo ($page=='playlist')?'active':''; ?>">Top 100</a>
+									<a href="/playlist/" class="<?php echo ($page=='playlist')?'active':''; ?>">매일 상위 100</a>
 								</li>
+								<?php
+									$group_list = PlaylistGroupM::new()->getList();
+								?>
+								<?php foreach($group_list as $group) { ?>
+									<li>
+										<a href="/playlist/group/view/<?php echo $group->getIdx(); ?>" class="<?php echo ($page=='playlist=>group=>view=>'.$group->getIdx())?'active':''; ?>"><?php echo $group->getName(); ?></a>
+									</li>
+								<?php } ?>
 								<li>
-									<a href="/playlist/group/" class="<?php echo ($page=='playlist=>group')?'active':''; ?>">Group Manage</a>
+									<a href="/playlist/group/manage/" class="<?php echo ($page=='playlist=>group=>manage')?'active':''; ?>">그룹 관리</a>
 								</li>
 		                    </ul>
 		                </li>
