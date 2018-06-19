@@ -54,9 +54,14 @@ Map::path('POST', 'company/add_group/{integer}', function($idx) {
         ->setSvmProcessed(PlaylistProcess::WAIT)
         ->setHmmProcessed(PlaylistProcess::WAIT)
         ->setDate(date('Y-m-d'))
-        ->create();
+        ->checkCreate();
 
     $this->load->html('component/redirect', array('msg' => '등록 완료되었습니다.', 'url' => '/company/view/'.$idx));
+});
+
+Map::path('company/remove_group/{integer}/{integer}', function($company_idx, $playlist_idx) {
+    PlaylistM::new()->setIdx($playlist_idx)->remove();
+    $this->load->html('component/redirect', array('msg' => '삭제 완료되었습니다.', 'url' => '/company/view/'.$company_idx));
 });
 
 Map::path('company/comparesvm/{integer}/{integer}', function($playlist_idx,$company_idx) {
