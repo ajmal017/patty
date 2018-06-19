@@ -53,17 +53,23 @@
             <thead>
                 <tr>
                     <th>이름</th>
-                    <th style="width: 140px;">날짜</th>
+                    <th style="width: 120px;">날짜</th>
+                    <th style="width: 40px;">옵션</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($linked_group_list as $group) { ?>
                     <tr>
-                        <td>
+                        <td class="text-center" style="padding: 10px 0px;">
                             <?php echo $group->getGroupName(); ?>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center" style="padding: 10px 0px;">
                             <?php echo $group->getCreatedDateTime('Y년 m월 d일'); ?>
+                        </td>
+                        <td class="text-center" style="padding: 10px 0px;">
+                            <a href="/company/remove_group/<?php echo $company->getIdx(); ?>/<?php echo $group->getIdx(); ?>" onclick="return confirm('삭제하시겠습니까?');" style="cursor: pointer;">
+                                삭제
+                            </a>
                         </td>
                     </tr>
                 <?php } ?>
