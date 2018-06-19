@@ -1,16 +1,20 @@
 <style>.container .content{padding: 20px;}</style>
 
 <div class="row">
-    <h1>Report</h1>
+    <h1>달력 <?php echo $today_year."년 ". $today_month."월"; ?></h1>
 
-    <form method="GET" action="/calendar/">
+    <div class="form">
         <a href="/calendar/?month=<?php echo $pre_month; ?>&year=<?php echo $pre_year; ?>">
-            전달
+            <div class="btn" style="margin-right: 10px;">
+                << 전달
+            </div>
         </a>
         <a href="/calendar/?month=<?php echo $next_month; ?>&year=<?php echo $next_year; ?>">
-            다음
+            <div class="btn">
+                다음 >>
+            </div>
         </a>
-    </form>
+    </div>
 </div>
 <!--/.row-->
 
