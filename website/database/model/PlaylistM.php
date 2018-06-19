@@ -104,6 +104,13 @@ class PlaylistM extends BusinessModel {
 
     //// ------------------------------ action function
 
+    public function checkCreate() {
+        $check = $this->get(' idx ');
+        if ($check->getIdx() == null) {
+            $this->create();
+        }
+    }
+
     public function create() {
         $field  = array( 'group_idx', 'type', 'rank', 'company_idx', 'company_stock_idx', 'date', 'svm_processed', 'hmm_processed' );
         $data   = array( $this->group_idx, $this->type, $this->rank, $this->company_idx, $this->company_stock_idx, $this->date, $this->svm_processed, $this->hmm_processed );
@@ -122,6 +129,7 @@ class PlaylistM extends BusinessModel {
 		$query .= "WHERE ";
         $query .=  "`p`.`company_idx`=`c`.`idx` AND ";
         $query .=  "`p`.`company_stock_idx`=`cs`.`idx` AND ";
+        if ($this->group_idx!=null) { $query .= "`p`.`group_idx`=? AND "; }
         if ($this->date!=null) { $query .= "`p`.`date`=? AND "; }
         if ($this->company_idx!=null) { $query .= "`p`.`company_idx`=? AND "; }
         if ($this->svm_processed!=null) { $query .= "`p`.`svm_processed`=? AND "; }
@@ -131,6 +139,7 @@ class PlaylistM extends BusinessModel {
         if (!$total_count) { $query .= (($limit=='-1')&&($offset=='-1'))?'':"limit ? offset ? "; }
 
 		$fmt = "";
+        if ($this->group_idx!=null) { $fmt .= "i"; }
         if ($this->date!=null) { $fmt .= "s"; }
         if ($this->company_idx!=null) { $fmt .= "i"; }
         if ($this->svm_processed!=null) { $fmt .= "i"; }
@@ -139,6 +148,7 @@ class PlaylistM extends BusinessModel {
         if (!$total_count) { $fmt .= (($limit=='-1')&&($offset=='-1'))?'':"ii";  }
 
 		$params = array($fmt);
+        if ($this->group_idx!=null) { $params[] = &$this->group_idx; }
         if ($this->date!=null) { $params[] = &$this->date; }
         if ($this->company_idx!=null) { $params[] = &$this->company_idx; }
         if ($this->svm_processed!=null) { $params[] = &$this->svm_processed; }
@@ -158,6 +168,29 @@ class PlaylistM extends BusinessModel {
 		}
     }
 
+    public function get($select = " idx ") {
+
+        $query	= "SELECT ";
+        $query .=    $select;
+		$query .= "FROM ";
+        $query .=   "`playlist` ";
+		$query .= "WHERE ";
+        if ($this->company_idx!=null) { $query .= "`company_idx`=? AND "; }
+        if ($this->date!=null) { $query .= "`date`=? AND "; }
+		$query .=	"`status`=? ";
+
+        $fmt = "";
+        if ($this->company_idx!=null) { $fmt .= "i"; }
+        if ($this->date!=null) { $fmt .= "s"; }
+
+		$params = array($fmt."i");
+        if ($this->company_idx!=null) { $params[] = &$this->company_idx; }
+        if ($this->date!=null) { $params[] = &$this->date; }
+        $params[] = &$this->status;
+
+        return PlaylistM::new($this->postman->returnDataObject( $query, $params ));
+    }
+
     public function getGroupList() {
 
         $sortBy         = '`pg`.`name`';
@@ -173,7 +206,6 @@ class PlaylistM extends BusinessModel {
         $query .=  "`p`.`company_idx`=? AND ";
         $query .=  "`p`.`group_idx`!=? AND ";
 		$query .=  "`p`.`status`=? ";
-        $query .=	"GROUP BY `p`.`group_idx` ";
 		$query .=	"ORDER BY $sortBy $sortDirection ";
 
         $not_group_idx = 0;
@@ -186,5 +218,23 @@ class PlaylistM extends BusinessModel {
         return array_map(function($item) {
             return PlaylistM::new($item);
         }, $this->postman->returnDataList( $query, $params ));
+    }
+
+    public function remove() {
+
+        $query	= "UPDATE ";
+        $query .=   "`playlist` ";
+		$query .= "SET ";
+		$query .=   "`status`=? ";
+        $query .= "WHERE ";
+		$query .=   "`idx`=? ";
+
+        $status = 0;
+
+		$params = array("ii");
+        $params[] = &$status;
+        $params[] = &$this->idx;
+
+        $this->postman->execute( $query, $params );
     }
 }
