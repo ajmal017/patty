@@ -41,41 +41,46 @@
                                 </div>
                                 <!--/.date-->
 
-                                <div class="list-wrapper">
-                                    <div class="list-title">
-                                        상위 100개
+                                <?php if (count($day['top_list']) > 0) { ?>
+                                    <div class="list-wrapper">
+                                        <div class="list-title">
+                                            상위 100개
+                                        </div>
+                                        <!--/.list-title-->
+                                        <ul>
+                                            <?php foreach($day['top_list'] as $top) { ?>
+                                                <li>
+                                                    <a href="/company/view/<?php echo $top->getCompanyidx(); ?>">
+                                                        <?php echo $top->getCompanyName(); ?>(<?php echo number_format($top->getPercentage(), 2); ?>%)
+                                                    </a>
+                                                    <span><a href="/company/comparesvm/<?php echo $top->getIdx(); ?>/<?php echo $top->getCompanyidx(); ?>">SVM</a></span>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
                                     </div>
-                                    <!--/.list-title-->
-                                    <ul>
-                                        <?php foreach($day['top_list'] as $top) { ?>
-                                            <li>
-                                                <a href="/company/view/<?php echo $top->getCompanyidx(); ?>">
-                                                    <?php echo $top->getCompanyName(); ?>
-                                                </a>
-                                                <span><?php echo number_format($top->getPercentage(), 2); ?>%</span>
-                                                <span>
-                                                    <a href="/company/comparesvm/<?php echo $top->getIdx(); ?>/<?php echo $top->getCompanyidx(); ?>">SVM</a>
-                                                </span>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                </div>
-                                <!--/.list-wrapper-->
+                                    <!--/.list-wrapper-->
+                                <?php } ?>
 
-                                <div class="list-wrapper">
-                                    <div class="list-title">
-                                        와치
+                                <?php foreach($day['custom_list'] as $custom) { ?>
+                                    <?php if (!count($custom['list'])) continue;?>
+                                    <div class="list-wrapper">
+                                        <div class="list-title">
+                                            <?php echo $custom['name']; ?>
+                                        </div>
+                                        <!--/.list-title-->
+                                        <ul>
+                                            <?php foreach($custom['list'] as $item)  { ?>
+                                                <li>
+                                                    <a href="/company/view/<?php echo $item->getCompanyidx(); ?>">
+                                                        <?php echo $item->getCompanyName(); ?>(<?php echo number_format($item->getPercentage(), 2); ?>%)
+                                                    </a>
+                                                    <span><a href="/company/comparesvm/<?php echo $item->getIdx(); ?>/<?php echo $item->getCompanyidx(); ?>">SVM</a></span>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
                                     </div>
-                                    <!--/.list-title-->
-                                    <ul>
-                                        <?php foreach($day['top_list'] as $top) { ?>
-                                            <li>
-                                                <?php echo $top->getCompanyName(); ?>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                </div>
-                                <!--/.list-wrapper-->
+                                    <!--/.list-wrapper-->
+                                <?php } ?>
                             </div>
                             <!--/.day-wrapper-->
                         </td>
