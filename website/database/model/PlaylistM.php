@@ -19,6 +19,7 @@ class PlaylistM extends BusinessModel {
     public $type                = null;
     public $rank                = null;
     public $company_idx         = null;
+    public $company_stock_idx   = null;
     public $date                = null;
     public $svm_processed       = null;
     public $hmm_processed       = null;
@@ -189,35 +190,6 @@ class PlaylistM extends BusinessModel {
         $params[] = &$this->status;
 
         return PlaylistM::new($this->postman->returnDataObject( $query, $params ));
-    }
-
-    public function getGroupList() {
-
-        $sortBy         = '`pg`.`name`';
-        $sortDirection  = 'asc';
-
-        $query	= "SELECT ";
-        $query .=   "`pg`.`idx`, `pg`.`name` as group_name,`p`.`created_date_time` ";
-		$query .= "FROM ";
-        $query .=   "`playlist` as `p`, ";
-        $query .=   "`playlist_group` as `pg` ";
-		$query .= "WHERE ";
-        $query .=  "`p`.`group_idx`=`pg`.`idx` AND ";
-        $query .=  "`p`.`company_idx`=? AND ";
-        $query .=  "`p`.`group_idx`!=? AND ";
-		$query .=  "`p`.`status`=? ";
-		$query .=	"ORDER BY $sortBy $sortDirection ";
-
-        $not_group_idx = 0;
-
-		$params = array("iii");
-        $params[] = &$this->company_idx;
-		$params[] = &$not_group_idx;
-        $params[] = &$this->status;
-
-        return array_map(function($item) {
-            return PlaylistM::new($item);
-        }, $this->postman->returnDataList( $query, $params ));
     }
 
     public function remove() {
