@@ -12,27 +12,22 @@
         </tr>
     </thead>
     <tbody>
-        <?php if (!count($playlist_list)) { ?>
+        <?php if (!count($watch_list)) { ?>
             <tr>
                 <td class="text-center" colspan="3">
                     등록된 종목이 없습니다.
                 </td>
             </tr>
         <?php } ?>
-        <?php foreach($playlist_list as $playlist) { ?>
+        <?php foreach($watch_list as $watch) { ?>
             <tr>
                 <td class="text-left">
-                    <a href="/company/view/<?php echo $playlist->getCompanyIdx(); ?>">
-                        <?php echo $playlist->getCompanyName(); ?>
+                    <a href="/company/view/<?php echo $watch->getCompanyIdx(); ?>">
+                        <?php echo $watch->getCompanyName(); ?>
                     </a>
                 </td>
                 <td class="text-center">
-                    <a href="/company/comparesvm/<?php echo $playlist->getIdx(); ?>/<?php echo $playlist->getCompanyIdx(); ?>">
-                        SVM
-                    </a>
-                </td>
-                <td class="text-center">
-                    <?php echo $playlist->getCreatedDateTime('Y년 m월 d일'); ?>
+                    <?php echo $watch->getCreatedDateTime('Y년 m월 d일'); ?>
                 </td>
             </tr>
         <?php } ?>
