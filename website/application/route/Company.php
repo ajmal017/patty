@@ -3,7 +3,8 @@
 Map::path('company/view/{integer}', function($idx) {
 
     $company            = CompanyM::new()->setIdx($idx)->get();
-    $linked_group_list  = PlaylistM::new()->setCompanyIdx($company->getIdx())->getGroupList();
+
+    $linked_group_list  = WatchM::new()->setCompanyIdx($company->getIdx())->getGroupList();
     $group_list         = PlaylistGroupM::new()->getList();
 
     $data                       = array();
@@ -42,25 +43,22 @@ Map::path('POST', 'company/search', function() {
 
 Map::path('POST', 'company/add_group/{integer}', function($idx) {
 
+    $type               = $_POST['type'];
     $group_idx          = $_POST['group_idx'];
     $company_stock_idx  = $_POST['company_stock_idx'];
 
-    PlaylistM::new()
+    WatchM::new()
+        ->setGroupIdx($group_idx)
         ->setCompanyIdx($idx)
         ->setCompanyStockIdx($company_stock_idx)
-        ->setGroupIdx($group_idx)
-        ->setType(PlaylistType::CUSTOM)
-        ->setRank(0)
-        ->setSvmProcessed(PlaylistProcess::WAIT)
-        ->setHmmProcessed(PlaylistProcess::WAIT)
-        ->setDate(date('Y-m-d'))
-        ->checkCreate();
+        ->setType($type)
+        ->create();
 
     $this->load->html('component/redirect', array('msg' => '등록 완료되었습니다.', 'url' => '/company/view/'.$idx));
 });
 
-Map::path('company/remove_group/{integer}/{integer}', function($company_idx, $playlist_idx) {
-    PlaylistM::new()->setIdx($playlist_idx)->remove();
+Map::path('company/remove_group/{integer}/{integer}', function($company_idx, $watch_idx) {
+    WatchM::new()->setIdx($watch_idx)->remove();
     $this->load->html('component/redirect', array('msg' => '삭제 완료되었습니다.', 'url' => '/company/view/'.$company_idx));
 });
 
