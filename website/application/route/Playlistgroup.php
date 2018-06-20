@@ -14,7 +14,7 @@ Map::path('playlist/group/view/{integer}', function($idx) {
 
     $data = array();
     $date['playlist_group'] = PlaylistGroupM::new()->setIdx($idx)->get();
-    $date['playlist_list'] = PlaylistM::new()->setGroupIdx($idx)->getList('`p`.`rank`', 'asc', 40, 0);
+    $date['watch_list']     = WatchM::new()->setGroupIdx($idx)->getList('`w`.`idx`', 'asc', 40, 0);
 
     $this->load->html('template/head', array('page' => 'playlist=>group=>view=>'.$idx));
     $this->load->html('page/playlist_group/view', $date);
