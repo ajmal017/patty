@@ -8,3 +8,5 @@ from database.Playlist import PLAYLIST_PROCESS
 from database.ModelResult import ModelResult
 from database.ModelResult import MODEL_TYPE
 from database.PlaylistGroup import PlaylistGroup
+from database.Watch import Watch
+from database.Watch import WATCH_TYPE
