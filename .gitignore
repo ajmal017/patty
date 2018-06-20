@@ -103,3 +103,6 @@ ENV/
 
 # database config
 config/database.config
+
+# ignore logs
+log/*.log
