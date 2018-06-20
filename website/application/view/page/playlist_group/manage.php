@@ -12,7 +12,8 @@
     <thead>
         <tr>
             <th>그룹</th>
-            <th style="width: 100px;">개수</th>
+            <th style="width: 100px;">등록수</th>
+            <th style="width: 100px;">처리수</th>
             <th colspan="2">관리</th>
         </tr>
     </thead>
@@ -28,6 +29,9 @@
             <tr>
                 <td class="text-left">
                     <?php echo $playlist_group->getName(); ?>
+                </td>
+                <td class="text-center">
+                    <?php echo $playlist_group->getCount()->cnt; ?>
                 </td>
                 <td class="text-center">
                     <?php echo $playlist_group->getCount()->cnt; ?>
