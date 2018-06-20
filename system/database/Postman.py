@@ -2,6 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode
 import json
 import sys
+import time
 
 class Postman:
 
@@ -61,6 +62,9 @@ class Postman:
 
     def execute(self, sql, params = [], show_sql = False):
 
+        # save start time
+        start_time = time.time()
+
         try:
 
             # execute sql
@@ -72,6 +76,17 @@ class Postman:
 
         if show_sql:
             print(self.mysqlCursor.statement)
+
+        # get total time taken
+        result_time = (time.time() - start_time)
+
+        # check if time take is larger than 5 miliseconds
+        if result_time >= 0.05:
+
+            # save query to file
+            with open("log/slowquery.log", "a") as fp:
+                str_time = "{:.3f}".format(result_time)
+                fp.write(str_time + " py explain " + self.mysqlCursor.statement + "\n")
 
         return self.mysqlCursor
 
