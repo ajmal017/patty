@@ -60,7 +60,7 @@
             <tbody>
                 <?php foreach($linked_group_list as $group) { ?>
                     <tr>
-                        <td class="text-center" style="padding: 10px 0px;">
+                        <td style="padding: 10px 0px 10px 10px;">
                             <?php echo $group->getGroupName(); ?>
                         </td>
                         <td class="text-center" style="padding: 10px 0px;">
@@ -89,6 +89,17 @@
                 <tbody>
                     <tr>
                         <td style="padding: 0px;">
+                            <select style="padding: 5px; width: 100%;" name="type">
+                                <option value="<?php echo WatchType::DAILY; ?>">매일반복</option>
+                                <option value="<?php echo WatchType::ONCE; ?>">하루만</option>
+                            </select>
+                        </td>
+                        <td class="text-center" style="width: 80px;" rowspan="2">
+                            <button class="btn btn-primary" type="submit">등록</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0px;">
                             <select style="padding: 5px; width: 100%;" name="group_idx">
                                 <?php foreach($group_list as $group) { ?>
                                     <option value="<?php echo $group->getIdx(); ?>">
@@ -96,9 +107,6 @@
                                     </option>
                                 <?php } ?>
                             </select>
-                        </td>
-                        <td class="text-center" style="width: 80px;">
-                            <button class="btn btn-primary" type="submit">등록</button>
                         </td>
                     </tr>
                 </tbody>
