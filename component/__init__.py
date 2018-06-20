@@ -7,3 +7,6 @@ from component.CompanyHistory import CompanyHistory
 from component.PlaylistCustomSVM import PlaylistCustomSVM
 from component.PlaylistFindTopVolume import PlaylistFindTopVolume
 from component.PlaylistTopSVM import PlaylistTopSVM
+
+#  watch
+from component.WatchToPlaylist import WatchToPlaylist
