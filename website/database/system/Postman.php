@@ -70,6 +70,13 @@ class Postman {
 
 	function execute($query, $params, $return_insert_idx = false) {
 
+		$start_time	= 0;
+		$force_dev	= (isset($_GET['performance']) && ($_GET['performance'] == 'check'))?true:false;
+
+		if ($force_dev) {
+			$start_time = microtime(true);
+		}
+
 		$stmt = $this->mysqlConnection->stmt_init();
 		$stmt = $this->mysqlConnection->prepare($query);
 
@@ -81,6 +88,14 @@ class Postman {
 		}
 
 		$result = $stmt->get_result();
+
+		if ($force_dev) {
+			$q = $query;
+			for ($i = 1; $i <= (count($params) - 1); $i++) {
+				$q = $this->str_replace_first('?', '\''. $params[$i] . '\'', $q);
+			}
+			echo '<div style="display: block; font-size: 10px;"><b>'.number_format((microtime(true) - $start_time), 3)  . '</b> explain ' . $q . '; ' . '</div>';
+		}
 
 		if ( $return_insert_idx ) {
 			return $stmt->insert_id;
