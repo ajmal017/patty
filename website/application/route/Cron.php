@@ -11,3 +11,10 @@ Map::path('cron', function() {
     $this->load->html('page/cron/index', $data);
     $this->load->html('template/foot');
 });
+
+Map::path('cron/download_slowquery', function() {
+    $filepath = './../log/slowquery.log';
+    header('Content-Type: text/plain; charset=UTF-8');
+    header("Content-disposition: attachment; filename='slowquery.log'");
+    readfile($filepath);
+});
