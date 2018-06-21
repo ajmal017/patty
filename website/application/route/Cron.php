@@ -6,9 +6,9 @@ Map::path('cron', function() {
     $data['company_daily_update_waiting_count'] = CompanyM::new()->getDailyUpdateWaitingCount();
     $data['company_history_count']              = CompanyM::new()->getNeedHistoryCount();
 
-    $playlist_svm_wait                          = PlaylistM::new()->setSvmProcessed(PlaylistProcess::WAIT)->getList('`p`.`rank`', 'asc', '-1', '-1', true);
-    $playlist_svm_process                       = PlaylistM::new()->setSvmProcessed(PlaylistProcess::PROCESS)->getList('`p`.`rank`', 'asc', '-1', '-1', true);
-    $playlist_svm_done                          = PlaylistM::new()->setSvmProcessed(PlaylistProcess::DONE)->getList('`p`.`rank`', 'asc', '-1', '-1', true);
+    $playlist_svm_wait                          = PlaylistM::new()->setSvmProcessed(PlaylistProcess::WAIT)->getSimpleList('`p`.`rank`', 'asc', '-1', '-1', true);
+    $playlist_svm_process                       = PlaylistM::new()->setSvmProcessed(PlaylistProcess::PROCESS)->getSimpleList('`p`.`rank`', 'asc', '-1', '-1', true);
+    $playlist_svm_done                          = PlaylistM::new()->setSvmProcessed(PlaylistProcess::DONE)->getSimpleList('`p`.`rank`', 'asc', '-1', '-1', true);
     $data['playlist_svm']                       = [['프로세스', '처리개수'], ['대기', $playlist_svm_wait->cnt], ['처리중', $playlist_svm_process->cnt], ['완료', $playlist_svm_done->cnt]];
 
     $this->load->html('template/head', array('page' => 'cron'));
