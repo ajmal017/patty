@@ -7,7 +7,6 @@
     <thead>
         <tr>
             <th>회사명</th>
-            <th style="width: 80px;">SVM</th>
             <th style="width: 180px;">등록일</th>
         </tr>
     </thead>
