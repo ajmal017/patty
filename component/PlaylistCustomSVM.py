@@ -40,7 +40,7 @@ class PlaylistCustomSVM:
 
         # ----
 
-        playlist_list       = playlist.getList(sort_by = "idx", sort_direction = "desc", limit = 10, select = " idx,company_idx ")
+        playlist_list       = playlist.getList(sort_by = "idx", sort_direction = "desc", limit = 3, select = " idx,company_idx ")
         skip_company_idx    = []
 
         for playlist in playlist_list:
