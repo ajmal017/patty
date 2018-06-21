@@ -11,8 +11,8 @@
         <table class="table table-bordered">
             <tbody>
                 <tr>
-                    <td colspan="2">
-                        <?php echo $company->getName(); ?>
+                    <td colspan="2" style="font-size: 22px;">
+                        <b><?php echo $company->getName(); ?></b>
                     </td>
                 </tr>
                 <tr>
@@ -59,6 +59,13 @@
                 </tr>
             </thead>
             <tbody>
+                <?php if (!count($linked_group_list)) { ?>
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            등록된 그룹이 없습니다.
+                        </td>
+                    </tr>
+                <?php } ?>
                 <?php foreach($linked_group_list as $group) { ?>
                     <tr>
                         <td style="padding: 10px 0px 10px 10px;">
