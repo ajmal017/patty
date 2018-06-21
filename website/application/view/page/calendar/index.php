@@ -41,7 +41,9 @@
                         <td class="<?php echo ($day['current_month'])?'':'off'; ?>">
                             <div class="day-wrapper">
                                 <div class="date">
-                                    <?php echo $d->format('d'); ?>
+                                    <a href="/playlist/?date=<?php echo $day['date']; ?>">
+                                        <?php echo $d->format('d'); ?>
+                                    </a>
                                 </div>
                                 <!--/.date-->
 
