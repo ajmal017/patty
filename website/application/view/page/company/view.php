@@ -53,6 +53,7 @@
             <thead>
                 <tr>
                     <th>이름</th>
+                    <th style="width: 70px;">방식</th>
                     <th style="width: 120px;">날짜</th>
                     <th style="width: 40px;">옵션</th>
                 </tr>
@@ -62,6 +63,13 @@
                     <tr>
                         <td style="padding: 10px 0px 10px 10px;">
                             <?php echo $group->getGroupName(); ?>
+                        </td>
+                        <td class="text-center" style="padding: 10px 0px;">
+                            <?php if ($group->getType() == WatchType::DAILY) { ?>
+                                매일
+                            <?php } else if ($group->getType() == WatchType::ONCE) { ?>
+                                한번만
+                            <?php } ?>
                         </td>
                         <td class="text-center" style="padding: 10px 0px;">
                             <?php echo $group->getCreatedDateTime('Y년 m월 d일'); ?>
