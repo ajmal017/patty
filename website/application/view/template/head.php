@@ -46,7 +46,7 @@
 		                    <a href="#">그룹</a>
 							<ul>
 		                        <li>
-									<a href="/playlist/" class="<?php echo ($page=='playlist')?'active':''; ?>">매일 상위 100</a>
+									<a href="/playlist/" class="<?php echo ($page=='playlist')?'active':''; ?>">일별 분석</a>
 								</li>
 								<?php
 									$group_list = PlaylistGroupM::new()->getList();
