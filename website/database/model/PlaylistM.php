@@ -169,6 +169,52 @@ class PlaylistM extends BusinessModel {
 		}
     }
 
+    public function getSimpleList( $sortBy = '`p`.`rank`', $sortDirection = 'asc', $limit = '-1', $offset = '-1', $total_count = false ) {
+
+        $query	= "SELECT ";
+        $query .=   ($total_count)?"count(*) as cnt ":"`p`.`idx`,`p`.`group_idx`,`p`.`rank`,`p`.`date`, `p`.`company_idx`,`c`.`name` as company_name,`cs`.`price`,`cs`.`prev_diff`,`cs`.`percentage`,`cs`.`open`,`cs`.`high`,`cs`.`low`,`cs`.`volume` ";
+		$query .= "FROM ";
+        $query .=   "`playlist` as `p` ";
+		$query .= "WHERE ";
+        if ($this->group_idx!=null) { $query .= "`p`.`group_idx`=? AND "; }
+        if ($this->date!=null) { $query .= "`p`.`date`=? AND "; }
+        if ($this->company_idx!=null) { $query .= "`p`.`company_idx`=? AND "; }
+        if ($this->svm_processed!=null) { $query .= "`p`.`svm_processed`=? AND "; }
+        if ($this->hmm_processed!=null) { $query .= "`p`.`hmm_processed`=? AND "; }
+		$query .=	"`p`.`status`=? ";
+		$query .=	"ORDER BY $sortBy $sortDirection ";
+        if (!$total_count) { $query .= (($limit=='-1')&&($offset=='-1'))?'':"limit ? offset ? "; }
+
+		$fmt = "";
+        if ($this->group_idx!=null) { $fmt .= "i"; }
+        if ($this->date!=null) { $fmt .= "s"; }
+        if ($this->company_idx!=null) { $fmt .= "i"; }
+        if ($this->svm_processed!=null) { $fmt .= "i"; }
+        if ($this->hmm_processed!=null) { $fmt .= "i"; }
+        $fmt .= "i";
+        if (!$total_count) { $fmt .= (($limit=='-1')&&($offset=='-1'))?'':"ii";  }
+
+		$params = array($fmt);
+        if ($this->group_idx!=null) { $params[] = &$this->group_idx; }
+        if ($this->date!=null) { $params[] = &$this->date; }
+        if ($this->company_idx!=null) { $params[] = &$this->company_idx; }
+        if ($this->svm_processed!=null) { $params[] = &$this->svm_processed; }
+        if ($this->hmm_processed!=null) { $params[] = &$this->hmm_processed; }
+		$params[] = &$this->status;
+        
+		if ( $total_count ) {
+            return $this->postman->returnDataObject( $query, $params );
+        } else {
+            if (($limit!='-1')&&($offset!='-1')) {
+                $params[] = &$limit;
+                $params[] = &$offset;
+            }
+            return array_map(function($item) {
+                return PlaylistM::new($item);
+            }, $this->postman->returnDataList( $query, $params ));
+		}
+    }
+
     public function get($select = " idx ") {
 
         $query	= "SELECT ";
