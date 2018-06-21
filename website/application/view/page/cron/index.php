@@ -21,6 +21,18 @@
         <!--/.pie-graph-->
     </div>
     <!--/.col-3-->
+
+    <div class="col-3">
+        <div class="line-title">Slow Query 로그</div>
+        <!--/.line-title-->
+        <br />
+        <a href="/cron/download_slowquery/">
+            <div class="btn btn-primary">
+                다운로드
+            </div>
+        </a>
+    </div>
+    <!--/.col-3-->
 </div>
 <!--/.row-->
 
