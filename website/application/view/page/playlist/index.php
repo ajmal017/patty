@@ -1,105 +1,87 @@
 <div class="row">
-    <h1>상위 100 거래량</h1>
+    <h1>일별 분석 <?php echo $date; ?></h1>
+
+    <div class="form">
+        <a href="/playlist/?date=<?php echo $yesterday; ?>">
+            <div class="btn" style="margin-right: 10px;">
+                << 전달
+            </div>
+        </a>
+        <a href="/playlist/?date=<?php echo $tomorrow; ?>">
+            <div class="btn">
+                다음 >>
+            </div>
+        </a>
+    </div>
 </div>
 <!--/.row-->
 
 <div class="row">
-    <?php foreach($playlist_list as $playlist) { ?>
-        <?php
-        if (!count($playlist['list'])) {
-            continue;
-        }
-        ?>
-        <table class="table-group">
-            <thead>
+    <br /><br />
+    <div class="line-title">
+        상위 거래량
+    </div>
+    <!--/.line-title-->
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>순서</th>
+                <th>회사</th>
+                <th>변화율</th>
+                <th>가격</th>
+                <th>차이</th>
+                <th>고가</th>
+                <th>저가</th>
+                <th>거래량</th>
+                <th>모델</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!count($playlist_list)) { ?>
                 <tr>
-                    <th>날짜</th>
-                    <th>순서</th>
-                    <th>회사</th>
-                    <th>변화율</th>
-                    <th>가격</th>
-                    <th>차이</th>
-                    <th>고가</th>
-                    <th>저가</th>
-                    <th>거래량</th>
-                    <th>모델</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="text-center" rowspan="<?php echo count($playlist['list']); ?>">
-                        <?php echo $playlist['date']; ?>
+                    <td colspan="9" class="text-center">
+                        등록된 종목이 없습니다.
                     </td>
+                </tr>
+            <?php } ?>
+            <?php foreach($playlist_list as $playlist) { ?>
+                <tr>
                     <td class="text-center">
-                        <?php echo $playlist['list'][0]->getRank(); ?>
+                        <?php echo $playlist->getRank(); ?>
                     </td>
                     <td>
-                        <a href="/company/view/<?php echo $playlist['list'][0]->getCompanyIdx(); ?>">
-                            <?php echo $playlist['list'][0]->getCompanyName(); ?>
+                        <a href="/company/view/<?php echo $playlist->getCompanyIdx(); ?>">
+                            <?php echo $playlist->getCompanyName(); ?>
                         </a>
                     </td>
                     <td class="text-right">
-                        <?php echo number_format($playlist['list'][0]->getPercentage(), 2); ?>
+                        <?php echo number_format($playlist->getPercentage(), 2); ?>
                     </td>
                     <td class="text-right">
-                        <?php echo number_format($playlist['list'][0]->getPrice()); ?>
+                        <?php echo number_format($playlist->getPrice()); ?>
                     </td>
                     <td class="text-right">
-                        <?php echo number_format($playlist['list'][0]->getPrevDiff()); ?>
+                        <?php echo number_format($playlist->getPrevDiff()); ?>
                     </td>
                     <td class="text-right">
-                        <?php echo number_format($playlist['list'][0]->getHigh()); ?>
+                        <?php echo number_format($playlist->getHigh()); ?>
                     </td>
                     <td class="text-right">
-                        <?php echo number_format($playlist['list'][0]->getLow()); ?>
+                        <?php echo number_format($playlist->getLow()); ?>
                     </td>
                     <td class="text-right">
-                        <?php echo number_format($playlist['list'][0]->getVolume()); ?>
+                        <?php echo number_format($playlist->getVolume()); ?>
                     </td>
                     <td class="text-center">
-                        <a href="/company/comparesvm/<?php echo $playlist['list'][0]->getIdx(); ?>/<?php echo $playlist['list'][0]->getCompanyIdx(); ?>">SVM</a>
+                        <a href="/company/comparesvm/<?php echo $playlist->getIdx(); ?>/<?php echo $playlist->getCompanyIdx(); ?>">SVM</a>
                         <a href="#">HHM</a>
                     </td>
                 </tr>
-                <?php foreach(array_slice($playlist['list'], 1) as $item) { ?>
-                    <tr>
-                        <td class="text-center">
-                            <?php echo $item->getRank(); ?>
-                        </td>
-                        <td>
-                            <a href="/company/view/<?php echo $item->getCompanyIdx(); ?>">
-                                <?php echo $item->getCompanyName(); ?>
-                            </a>
-                        </td>
-                        <td class="text-right">
-                            <?php echo number_format($item->getPercentage(), 2); ?>
-                        </td>
-                        <td class="text-right">
-                            <?php echo number_format($item->getPrice()); ?>
-                        </td>
-                        <td class="text-right">
-                            <?php echo number_format($item->getPrevDiff()); ?>
-                        </td>
-                        <td class="text-right">
-                            <?php echo number_format($item->getHigh()); ?>
-                        </td>
-                        <td class="text-right">
-                            <?php echo number_format($item->getLow()); ?>
-                        </td>
-                        <td class="text-right">
-                            <?php echo number_format($item->getVolume()); ?>
-                        </td>
-                        <td class="text-center">
-                            <a href="/company/comparesvm/<?php echo $item->getIdx(); ?>/<?php echo $item->getCompanyIdx(); ?>">SVM</a>
-                            <a href="#">HHM</a>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-        <!--/.table-group-->
-
-        <br /><br /><br />
-    <?php } ?>
+            <?php } ?>
+        </tbody>
+    </table>
+    <!--/.table-group-->
+    <br /><br /><br />
 </div>
 <!--/.row-->

@@ -2,17 +2,22 @@
 
 Map::path('playlist', function() {
 
-    $playlist_list = array_map(function($date) {
-        return array(
-            'date' => $date,
-            'list' => PlaylistM::new()->setDate($date)->getList()
-        );
-    }, get_date_list(200));
+    $date = (isset($_GET['date'])) ? $_GET['date'] : date('Y-m-d');
+    $d = new DateTime($date);
+    $d->modify("-1 day");
+    $yesterday = $d->format("Y-m-d");
+    $d->modify("+2 day");
+    $tomrrow = $d->format("Y-m-d");
+
+    $playlist_list = PlaylistM::new()->setDate($date)->getList();
 
     $data = array();
-    $date['playlist_list'] = $playlist_list;
+    $data['date']           = $date;
+    $data['yesterday']      = $yesterday;
+    $data['tomorrow']       = $tomrrow;
+    $data['playlist_list']  = $playlist_list;
 
     $this->load->html('template/head', array('page' => 'playlist'));
-    $this->load->html('page/playlist/index', $date);
+    $this->load->html('page/playlist/index', $data);
     $this->load->html('template/foot');
 });
