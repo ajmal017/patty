@@ -36,7 +36,7 @@ class PlaylistCustomSVM:
 
         playlist = Playlist.new()
         playlist.svm_processed  = PLAYLIST_PROCESS.WAIT
-        playlist.type           = PLAYLIST_TYPE.CUSTOM
+        #playlist.type           = PLAYLIST_TYPE.CUSTOM
 
         # ----
 
