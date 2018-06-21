@@ -1,4 +1,5 @@
 <script type="text/javascript" src="/public/js/vendor/jquery.easypiechart.min.js"></script>
+<script type="text/javascript" src="/public/js/vendor/google.chart.js"></script>
 
 <div class="row">
     <h1>처리 상태</h1>
@@ -33,6 +34,18 @@
         </a>
     </div>
     <!--/.col-3-->
+
+    <div class="col-3">
+        <div class="line-title">SVM 프로세스</div>
+        <!--/.line-title-->
+        <div id="svm_pie"></div>
+        <div class="">
+            <?php echo $playlist_svm[1][0]; ?>: <?php echo $playlist_svm[1][1]; ?>
+            <?php echo $playlist_svm[2][0]; ?>: <?php echo $playlist_svm[2][1]; ?>
+            <?php echo $playlist_svm[3][0]; ?>: <?php echo $playlist_svm[3][1]; ?>
+        </div>
+    </div>
+    <!--/.col-3-->
 </div>
 <!--/.row-->
 
@@ -49,6 +62,13 @@
                     $(this.el).find('.pie-value').text(Math.round(percent) + '%');
                 }
             });
+        });
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(function() {
+            var data = google.visualization.arrayToDataTable(<?php echo json_encode($playlist_svm); ?>);
+            var chart = new google.visualization.PieChart(document.getElementById('svm_pie'));
+            chart.draw(data, { title: '', pieHole: 0.4 });
         });
     });
 </script>
