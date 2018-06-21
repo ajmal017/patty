@@ -72,7 +72,7 @@ class Postman {
 
 		$start_time	= 0;
 		$force_dev	= (isset($_GET['performance']) && ($_GET['performance'] == 'check'))?true:false;
-
+		$force_dev = true;
 		if ($force_dev) {
 			$start_time = microtime(true);
 		}
@@ -94,7 +94,13 @@ class Postman {
 			for ($i = 1; $i <= (count($params) - 1); $i++) {
 				$q = $this->str_replace_first('?', '\''. $params[$i] . '\'', $q);
 			}
-			echo '<div style="display: block; font-size: 10px;"><b>'.number_format((microtime(true) - $start_time), 3)  . '</b> explain ' . $q . '; ' . '</div>';
+			$result_time = (microtime(true) - $start_time);
+			if ($result_time >= 0.005) {
+				$str_time = number_format($result_time, 3);
+				$fp = fopen("./../log/slowquery.log", 'a');
+				fwrite($fp, $str_time." php explain ".$q."\n");
+				fclose($fp);
+			}
 		}
 
 		if ( $return_insert_idx ) {
