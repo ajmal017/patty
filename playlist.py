@@ -3,7 +3,9 @@ from component import *
 
 def minute():
     """this function should be called every minute!!"""
-    pass
+
+    # solve SVM problems every minute
+    PlaylistProcessSVM().init()
 
 
 def daily():
@@ -14,8 +16,7 @@ def daily():
 def hourly():
     """this function should be called hourly"""
 
-    # solve SVM problems every hours
-    PlaylistProcessSVM().init()
+    pass
 
 
 def devforce():
