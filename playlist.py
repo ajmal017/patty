@@ -8,16 +8,14 @@ def minute():
 
 def daily():
     """this function should be called only once daily"""
-
-    # get the top volume from yesterday's market
-    PlaylistFindTopVolume().init()
+    pass
 
 
 def hourly():
     """this function should be called hourly"""
 
     # solve SVM problems every hours
-    PlaylistCustomSVM().init()
+    PlaylistProcessSVM().init()
 
 
 def devforce():
