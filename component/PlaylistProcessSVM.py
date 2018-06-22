@@ -98,7 +98,8 @@ class PlaylistProcessSVM:
                     "recall"            : "0",
                     "precise"           : "0",
                     "score"             : float(score),
-                    "type"              : MODEL_TYPE.SVM
+                    "type"              : MODEL_TYPE.SVM,
+                    "duration"          : size
                 }).checkCreate()
 
             playlist.svm_processed = PLAYLIST_PROCESS.DONE
