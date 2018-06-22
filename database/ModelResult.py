@@ -18,6 +18,7 @@ class ModelResult(DataModel, BusinessModel):
     accuracy            = None
     precise             = None
     score               = None
+    duration            = None
     created_date_time   = None
     status              = 1
 
@@ -38,12 +39,12 @@ class ModelResult(DataModel, BusinessModel):
     def create(self):
 
         query  = "INSERT INTO `model_result` "
-        query +=    "( `playlist_idx`, `train_company_idx`, `test_company_idx`, `type`, `f1`, `recall`, `accuracy`, `precise`, `score`, `created_date_time`, `status` ) "
+        query +=    "( `playlist_idx`, `train_company_idx`, `test_company_idx`, `type`, `f1`, `recall`, `accuracy`, `precise`, `score`,`duration`,`created_date_time`, `status` ) "
         query += "VALUES "
-        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
+        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
 
         return self.postman.create(query, [
-            self.playlist_idx, self.train_company_idx, self.test_company_idx, self.type, self.f1, self.recall, self.accuracy, self.precise, self.score, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+            self.playlist_idx, self.train_company_idx, self.test_company_idx, self.type, self.f1, self.recall, self.accuracy, self.precise, self.score, self.duration, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
         ])
 
 

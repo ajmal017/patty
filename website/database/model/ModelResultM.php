@@ -13,6 +13,7 @@ class ModelResultM extends BusinessModel {
     public $accuracy            = null;
     public $precise             = null;
     public $score               = null;
+    public $duration            = null;
     public $created_date_time   = null;
     public $status              = 1;
 
@@ -51,6 +52,9 @@ class ModelResultM extends BusinessModel {
     public function setScore($score) { $this->score = $score; return $this; }
     public function getScore() { return $this->score; }
 
+    public function setDuration($duration) { $this->duration = $duration; return $this; }
+    public function getDuration() { return $this->duration; }
+
     public function setCreatedDateTime( $created_date_time ) { $this->created_date_time = $created_date_time; return $this; }
     public function getCreatedDateTime($format = 'Y-m-d H:i:s') { $d = new DateTime($this->created_date_time); return $d->format($format); }
 
@@ -62,7 +66,7 @@ class ModelResultM extends BusinessModel {
     public function getList( $sortBy = '`score`', $sortDirection = 'desc', $limit = '-1', $offset = '-1', $total_count = false ) {
 
         $query	= "SELECT ";
-        $query .=   ($total_count)?"count(*) as cnt ":"idx,playlist_idx,train_company_idx,test_company_idx,type,f1,recall,accuracy,precise,score ";
+        $query .=   ($total_count)?"count(*) as cnt ":"idx,playlist_idx,train_company_idx,test_company_idx,type,f1,recall,accuracy,precise,score,duration ";
 		$query .= "FROM ";
         $query .=   "`model_result` ";
 		$query .= "WHERE ";
