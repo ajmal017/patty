@@ -65,8 +65,8 @@ class PlaylistProcessSVM:
 
             train_stock_list = CompanyStock.new({
                 "company_idx"       : playlist.company_idx,
-                "search_start_date" : dsformat(playlist.date, size),
-                "search_end_date"   : dsformat(playlist.date)
+                "search_start_date" : dsformat(str(playlist.date), size),
+                "search_end_date"   : dsformat(str(playlist.date))
             }).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
             svm_model = SVMWrapper()
@@ -81,8 +81,8 @@ class PlaylistProcessSVM:
 
                 predict_stock_list = CompanyStock.new({
                     "company_idx"       : company.idx,
-                    "search_start_date" : dsformat(playlist.date, size),
-                    "search_end_date"   : dsformat(playlist.date)
+                    "search_start_date" : dsformat(str(playlist.date), size),
+                    "search_end_date"   : dsformat(str(playlist.date))
                 }).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
                 svm_model.test_data_x = CompanyStock.getOCHLV(predict_stock_list, size)
