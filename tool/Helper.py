@@ -17,8 +17,8 @@ def dformat(format = "%Y-%m-%d", subtract_date = 0):
     find_date = date.today() - timedelta(subtract_date)
     return str(find_date.strftime("%Y-%m-%d"))
 
-def dsformat(date, subtract_date = 0, format = "%Y-%m-%d"):
-    a = datetime.strptime(date, format)
+def dsformat(date_str, subtract_date = 0, format = "%Y-%m-%d"):
+    a = datetime.strptime(date_str, format)
     dd = datetime.date(a)
     if subtract_date == 0:
        return str(dd.strftime(format))
