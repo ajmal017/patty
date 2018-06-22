@@ -3,10 +3,7 @@ from component import *
 
 def daily():
     """this function should be called only once daily"""
-
-    # run the SVM modeling again playlist top list
-    PlaylistTopSVM().init()
-
+    pass
 
 def hourly():
     """this function should be called hourly"""
