@@ -1,5 +1,5 @@
 import sys
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
 
 def progressbar(count, total, status=''):
     bar_len = 60
