@@ -16,3 +16,6 @@ def dformat(format = "%Y-%m-%d", subtract_date = 0):
         return str(date.today().strftime(format))
     find_date = date.today() - timedelta(subtract_date)
     return str(find_date.strftime("%Y-%m-%d"))
+
+def getDateTime():
+    return str(datetime.now().strftime("%Y-%m-%d %H:%I:%S"))
