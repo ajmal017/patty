@@ -49,7 +49,7 @@ class PlaylistProcessSVM:
 
         # ---
 
-        size = 1424
+        size = 100
 
         # ---
 
