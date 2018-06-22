@@ -26,4 +26,4 @@ def dsformat(date_str, subtract_date = 0, format = "%Y-%m-%d"):
     return str(find_date.strftime(format))
 
 def getDateTime():
-    return str(datetime.now().strftime("%Y-%m-%d %H:%I:%S"))
+    return str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
