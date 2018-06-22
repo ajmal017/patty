@@ -14,17 +14,19 @@ class PlaylistProcess {
 class PlaylistM extends BusinessModel {
 
     // public variables
-    public $idx                 = null;
-    public $group_idx           = null;
-    public $type                = null;
-    public $rank                = null;
-    public $company_idx         = null;
-    public $company_stock_idx   = null;
-    public $date                = null;
-    public $svm_processed       = null;
-    public $hmm_processed       = null;
-    public $created_date_time   = null;
-    public $status              = 1;
+    public $idx                     = null;
+    public $group_idx               = null;
+    public $type                    = null;
+    public $rank                    = null;
+    public $company_idx             = null;
+    public $company_stock_idx       = null;
+    public $date                    = null;
+    public $svm_processed           = null;
+    public $svm_processed_wait      = null;
+    public $svm_processed_complete  = null;
+    public $hmm_processed           = null;
+    public $created_date_time       = null;
+    public $status                  = 1;
 
     public $group_name          = null;
     public $company_name        = null;
@@ -64,6 +66,12 @@ class PlaylistM extends BusinessModel {
 
     public function setSvmProcessed($svm_processed) { $this->svm_processed = $svm_processed; return $this; }
     public function getSvmProcessed() { return $this->svm_processed; }
+
+    public function setSvmProcessedWait($svm_processed_wait) { $this->svm_processed_wait = $svm_processed_wait; return $this; }
+    public function getSvmProcessedWait() { return $this->svm_processed_wait; }
+
+    public function setSvmProcessedComplete($svm_processed_complete) { $this->svm_processed_complete = $svm_processed_complete; return $this; }
+    public function getSvmProcessedComplete() { return $this->svm_processed_complete; }
 
     public function setHmmProcessed($hmm_processed) { $this->hmm_processed = $hmm_processed; return $this; }
     public function getHmmProcessed() { return $this->hmm_processed; }
@@ -113,9 +121,13 @@ class PlaylistM extends BusinessModel {
     }
 
     public function create() {
-        $field  = array( 'group_idx', 'type', 'rank', 'company_idx', 'company_stock_idx', 'date', 'svm_processed', 'hmm_processed' );
-        $data   = array( $this->group_idx, $this->type, $this->rank, $this->company_idx, $this->company_stock_idx, $this->date, $this->svm_processed, $this->hmm_processed );
-        $fmt    = 'iiiiisii';
+
+        $this->svm_processed_wait       = '0000-00-00 00:00:00';
+        $this->svm_processed_complete   = '0000-00-00 00:00:00';
+
+        $field  = array( 'group_idx', 'type', 'rank', 'company_idx', 'company_stock_idx', 'date', 'svm_processed', `svm_processed_wait`, `svm_processed_complete`, 'hmm_processed' );
+        $data   = array( $this->group_idx, $this->type, $this->rank, $this->company_idx, $this->company_stock_idx, $this->date, $this->svm_processed, $this->svm_processed_wait, $this->svm_processed_complete, $this->hmm_processed );
+        $fmt    = 'iiiiisissi';
         return $this->create_omr('playlist', $field, $data, $fmt);
     }
 
@@ -201,7 +213,7 @@ class PlaylistM extends BusinessModel {
         if ($this->svm_processed!=null) { $params[] = &$this->svm_processed; }
         if ($this->hmm_processed!=null) { $params[] = &$this->hmm_processed; }
 		$params[] = &$this->status;
-        
+
 		if ( $total_count ) {
             return $this->postman->returnDataObject( $query, $params );
         } else {
