@@ -10,18 +10,15 @@ def minute():
 
 def daily():
     """this function should be called only once daily"""
-    pass
+
+    # solve the top volumen daily
+    PlaylistFindTopVolume().init()
 
 
 def hourly():
     """this function should be called hourly"""
 
     pass
-
-
-def devforce():
-    """this function should be called by developer only in CLI"""
-    PlaylistFindTopVolume().mimic_date()
 
 
 """check if the function that needs to be called has been passed """
