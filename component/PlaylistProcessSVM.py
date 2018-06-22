@@ -2,7 +2,7 @@ from database import *
 from tool import *
 from model import *
 
-class PlaylistCustomSVM:
+class PlaylistProcessSVM:
 
     def get_company_list(self, skip_company_idx):
 
@@ -36,7 +36,6 @@ class PlaylistCustomSVM:
 
         playlist = Playlist.new()
         playlist.svm_processed  = PLAYLIST_PROCESS.WAIT
-        #playlist.type           = PLAYLIST_TYPE.CUSTOM
 
         # ----
 
@@ -59,6 +58,10 @@ class PlaylistCustomSVM:
         # ---
 
         for playlist in playlist_list:
+
+            # set update date time for svm weight
+            playlist.svm_processed_wait = dformat("%Y-%m-%d")
+            playlist.update_svm_processed_wait()
 
             train_stock_list = CompanyStock.new({
                 "company_idx"       : playlist.company_idx,
@@ -100,3 +103,7 @@ class PlaylistCustomSVM:
 
             playlist.svm_processed = PLAYLIST_PROCESS.DONE
             playlist.update_svm_process()
+
+            # set update date time for svm weight
+            playlist.svm_processed_complete = dformat("%Y-%m-%d")
+            playlist.update_svm_processed_complete()
