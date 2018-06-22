@@ -13,16 +13,18 @@ class PLAYLIST_PROCESS:
 
 class Playlist(DataModel, BusinessModel):
 
-    idx                 = None
-    group_idx           = None
-    type                = None
-    rank                = None
-    company_idx         = None
-    company_stock_idx   = None
-    date                = None
-    svm_processed       = None
-    hmm_processed       = None
-    created_date_time   = None
+    idx                     = None
+    group_idx               = None
+    type                    = None
+    rank                    = None
+    company_idx             = None
+    company_stock_idx       = None
+    date                    = None
+    svm_processed           = None
+    svm_processed_wait      = None
+    svm_processed_complete  = None
+    hmm_processed           = None
+    created_date_time       = None
 
     @staticmethod
     def new(data = {}):
@@ -33,17 +35,19 @@ class Playlist(DataModel, BusinessModel):
     def create(self):
 
         # default values
-        self.group_idx     = 0
-        self.svm_processed = PLAYLIST_PROCESS.WAIT
-        self.hmm_processed = PLAYLIST_PROCESS.WAIT
+        self.group_idx              = 0
+        self.svm_processed          = PLAYLIST_PROCESS.WAIT
+        self.hmm_processed          = PLAYLIST_PROCESS.WAIT
+        self.svm_processed_wait     = "0000-00-00 00:00:00"
+        self.svm_processed_complete = "0000-00-00 00:00:00"
 
         query  = "INSERT INTO `playlist` "
-        query +=    "( `group_idx`, `type`, `rank`, `company_idx`, `company_stock_idx`, `date`, `svm_processed`, `hmm_processed`, `created_date_time`, `status` ) "
+        query +=    "( `group_idx`, `type`, `rank`, `company_idx`, `company_stock_idx`, `date`, `svm_processed`, `svm_processed_wait`, `svm_processed_complete`, `hmm_processed`, `created_date_time`, `status` ) "
         query += "VALUES "
-        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
+        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) "
 
         return self.postman.create(query, [
-            self.group_idx, self.type, self.rank, self.company_idx, self.company_stock_idx, self.date, self.svm_processed, self.hmm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+            self.group_idx, self.type, self.rank, self.company_idx, self.company_stock_idx, self.date, self.svm_processed, self.svm_processed_wait, self.svm_processed_complete,  self.hmm_processed, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
         ])
 
     def get(self, select = ' idx,group_idx,type,rank,company_idx,date '):
@@ -104,4 +108,16 @@ class Playlist(DataModel, BusinessModel):
         self.postman.execute(
             " UPDATE `playlist` SET `svm_processed`=%s WHERE `idx`=%s ",
             [self.svm_processed, self.idx]
+        )
+
+    def update_svm_processed_wait(self):
+        self.postman.execute(
+            " UPDATE `playlist` SET `svm_processed_wait`=%s WHERE `idx`=%s ",
+            [self.svm_processed_wait, self.idx]
+        )
+
+    def update_svm_processed_complete(self):
+        self.postman.execute(
+            " UPDATE `playlist` SET `svm_processed_complete`=%s WHERE `idx`=%s ",
+            [self.svm_processed_complete, self.idx]
         )
