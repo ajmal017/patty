@@ -15,6 +15,9 @@ class Postman:
     # mysql cursor
     mysqlCursor = None
 
+    # connection start time
+    connection_start = None
+
     @staticmethod
     def init():
 
@@ -46,6 +49,9 @@ class Postman:
         # set names
         self.mysqlCursor.execute("SET NAMES " + config["connection"])
 
+        # save the connection start time
+        self.connection_start = time.time()
+
 
     def get_config(self):
 
@@ -60,7 +66,31 @@ class Postman:
             sys.exit("[Error] Cannot find database config file (location: " + "/../config/database.config" +")")
 
 
+    def check_connection_time(self):
+
+        # get current time
+        current_time = time.time()
+
+        # subtract save time
+        result = current_time - self.connection_start
+
+        # check if time diff is larger than 5 minutes
+        if result >= 20:
+
+            # clean up cursor
+            self.mysqlCursor.close()
+
+            # clean up mysql
+            self.mysqlConnection.close()
+
+            # re connect
+            self.connect()
+
+
     def execute(self, sql, params = [], show_sql = False):
+
+        # check if connection time has been too long
+        self.check_connection_time()
 
         # save start time
         start_time = time.time()
@@ -71,8 +101,13 @@ class Postman:
             self.mysqlCursor.execute( sql, tuple(params) )
 
         except  mysql.connector.Error as err:
-            print("[MYSQL ERROR] " , err)
-            pass
+            # check type of error is server has gone away
+            if 'MySQL server has gone away' in str(err):
+                # reconnect MySQL
+                self.connect()
+            else:
+                print("[MYSQL ERROR] " , err)
+                pass
 
         if show_sql:
             print(self.mysqlCursor.statement)
