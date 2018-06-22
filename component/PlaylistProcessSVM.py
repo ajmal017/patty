@@ -60,7 +60,7 @@ class PlaylistProcessSVM:
         for playlist in playlist_list:
 
             # set update date time for svm weight
-            playlist.svm_processed_wait = dformat("%Y-%m-%d")
+            playlist.svm_processed_wait = dformat("%Y-%m-%d %H:%i:%s")
             playlist.update_svm_processed_wait()
 
             train_stock_list = CompanyStock.new({
@@ -106,5 +106,5 @@ class PlaylistProcessSVM:
             playlist.update_svm_process()
 
             # set update date time for svm weight
-            playlist.svm_processed_complete = dformat("%Y-%m-%d")
+            playlist.svm_processed_complete = dformat("%Y-%m-%d %H:%i:%s")
             playlist.update_svm_processed_complete()
