@@ -39,7 +39,7 @@ class PlaylistProcessSVM:
 
         # ----
 
-        playlist_list       = playlist.getList(sort_by = "idx", sort_direction = "desc", limit = 2, select = " idx,company_idx,date ")
+        playlist_list       = playlist.getList(sort_by = "date", sort_direction = "desc", limit = 2, select = " idx,company_idx,date ")
         skip_company_idx    = []
 
         for playlist in playlist_list:
