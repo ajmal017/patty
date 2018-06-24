@@ -15,7 +15,7 @@ class PlaylistJsonSolve:
 
     def initmultiple(self):
         onlyfiles = self.get_files()
-        with Pool(15) as p:
+        with Pool(20) as p:
             print(p.map(solving, onlyfiles))
 
     def init(self):
