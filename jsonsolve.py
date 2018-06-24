@@ -7,6 +7,9 @@ def dump():
 def solve():
     PlaylistJsonSolve().init()
 
+def feed():
+    ModelReadMatch().init()
+
 """check if the function that needs to be called has been passed """
 if len(sys.argv) >= 2:
     locals()[sys.argv[1]]()
