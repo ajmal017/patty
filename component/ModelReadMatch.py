@@ -10,10 +10,10 @@ class ModelReadMatch:
 
     def init(self):
 
-        filepath = "/mnt/wwwroot/afreecatv/jsonout/"
+        filepath = "/mnt/wwwroot/afreecatv/jsonout/jsonout/"
 
         count = 0
-        maxcount = 10
+        maxcount = 3
 
         onlyfiles = [f for f in listdir(filepath) if isfile(join(filepath, f))]
 
@@ -42,7 +42,7 @@ class ModelReadMatch:
                     "score"             : float(item["score"]),
                     "type"              : item["type"],
                     "duration"          : item["duration"]
-                }).checkCreate()
+                }).create()
 
             if os.path.isfile(filepath + file):
                 os.remove(filepath + file)
