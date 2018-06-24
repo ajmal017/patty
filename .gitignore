@@ -109,3 +109,4 @@ log/*.log
 
 # hide json files
 json/*.json
+jsonout/*.json
