@@ -6,6 +6,7 @@ from os import listdir
 from os.path import isfile, join
 import json
 from multiprocessing import Pool
+from datetime import datetime
 
 class PlaylistJsonSolve:
 
@@ -48,22 +49,30 @@ class PlaylistJsonSolve:
             svm_model.test_data_y = CompanyStock.getP(predict_stock_list, jsonObject["size"])
             score = svm_model.test()
 
-            list_to_save.append({
-                "playlist_idx"      : jsonObject["playlist"]["idx"],
-                "train_company_idx" : jsonObject["playlist"]["company_idx"],
-                "test_company_idx"  : away["company_idx"],
-                "score"             : float(score),
-                "type"              : MODEL_TYPE.SVM,
-                "duration"          : jsonObject["size"]
-            })
+            query  = "INSERT INTO `model_result` "
+            query +=    "( `playlist_idx`, `train_company_idx`, `test_company_idx`, `type`, `f1`, `recall`, `accuracy`, `precise`, `score`,`duration`,`created_date_time`, `status` ) "
+            query += "VALUES "
+            query +=    "( '"+str(jsonObject["playlist"]["idx"])+"', "
+            query +=    "'" + str(jsonObject["playlist"]["company_idx"]) + "', "
+            query +=    "'" + str(away["company_idx"]) + "', "
+            query +=    "'" + str(MODEL_TYPE.SVM) + "', "
+            query +=    "'0', "
+            query +=    "'0', "
+            query +=    "'0', "
+            query +=    "'0', "
+            query +=    "'"+str(score)+"', "
+            query +=    "'"+str(jsonObject["size"])+"', "
+            query +=    "'"+str(datetime.now().strftime("%Y-%m-%d %H:%I:%S"))+"', "
+            query +=    "'1'); \n"
+            list_to_save.append(query)
 
         if os.path.isfile("./json/" + file):
             os.remove("./json/" + file)
 
-        filename = "solved_playlist_" + str(jsonObject["playlist"]["idx"]) + ".json"
-        j = json.dumps(list_to_save)
+        filename = "solved_playlist_" + str(jsonObject["playlist"]["idx"]) + ".sql"
         f = open("./jsonout/" + filename, "w")
-        f.write(j)
+        for line in list_to_save:
+            f.write(line)
         f.close()
 
 
