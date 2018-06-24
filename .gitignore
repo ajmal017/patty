@@ -106,3 +106,6 @@ config/database.config
 
 # ignore logs
 log/*.log
+
+# hide json files
+json/*.json
