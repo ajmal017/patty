@@ -10,10 +10,12 @@ class ModelReadMatch:
 
     def init(self):
 
+        filepath = "/mnt/wwwroot/afreecatv/jsonout/"
+
         count = 0
         maxcount = 10
 
-        onlyfiles = [f for f in listdir("./jsonout/") if isfile(join("./jsonout/", f))]
+        onlyfiles = [f for f in listdir(filepath) if isfile(join(filepath, f))]
 
         for file in onlyfiles:
 
@@ -26,7 +28,7 @@ class ModelReadMatch:
             if file == "README.md":
                 continue
 
-            jsonObject = self.load_json("./jsonout/" + file)
+            jsonObject = self.load_json(filepath + file)
 
             for item in jsonObject:
                 ModelResult.new({
@@ -42,8 +44,8 @@ class ModelReadMatch:
                     "duration"          : item["duration"]
                 }).checkCreate()
 
-            if os.path.isfile("./jsonout/" + file):
-                os.remove("./jsonout/" + file)
+            if os.path.isfile(filepath + file):
+                os.remove(filepath + file)
 
     def load_json(self, filename):
 
