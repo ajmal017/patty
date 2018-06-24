@@ -7,6 +7,9 @@ def dump():
 def solve():
     PlaylistJsonSolve().init()
 
+def solve2():
+    PlaylistJsonSolve().initmultiple()
+
 def feed():
     ModelReadMatch().init()
 
