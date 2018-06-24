@@ -1,6 +1,7 @@
 from database import *
 from tool import *
 from model import *
+import os
 from os import listdir
 from os.path import isfile, join
 import json
@@ -45,9 +46,12 @@ class PlaylistJsonSolve:
                     "duration"          : jsonObject["size"]
                 })
 
+            if os.path.isfile("./json/" + file):
+                os.remove("./json/" + file)
+
             filename = "solved_playlist_" + str(jsonObject["playlist"]["idx"]) + ".json"
             j = json.dumps(list_to_save)
-            f = open("./json/" + filename, "w")
+            f = open("./jsonout/" + filename, "w")
             f.write(j)
             f.close()
 
