@@ -11,7 +11,7 @@ Map::path('company/view/{integer}', function($idx) {
     $data['company']            = $company;
     $data['linked_group_list']  = $linked_group_list;
     $data['group_list']         = $group_list;
-    $data['stock_list']         = ($company->getIdx()!=null)?CompanyStockM::new()->setCompanyIdx($company->getIdx())->getList():array();
+    $data['stock_list']         = ($company->getIdx()!=null)?CompanyStockM::new()->setCompanyIdx($company->getIdx())->getList('date', 'desc', 100, 0):array();
     $data['detail']             = $data['stock_list'][count($data['stock_list'])-1];
     $data['ohlc_list']          = CompanyStockM::convertToCandleStick($data['stock_list']);
     $data['top_playlist']       = ($company->getIdx()!=null)?PlaylistM::new()->setCompanyIdx($company->getIdx())->setType(PlaylistType::TOP)->getList('`p`.`rank`', 'asc', 100, 0):array();
