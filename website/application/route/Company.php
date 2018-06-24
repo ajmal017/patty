@@ -65,7 +65,7 @@ Map::path('company/remove_group/{integer}/{integer}', function($company_idx, $wa
 Map::path('company/comparesvm/{integer}/{integer}', function($playlist_idx,$company_idx) {
 
     $company            = CompanyM::new()->setIdx($company_idx)->get();
-    $model_result_list  = ModelResultM::new()->setPlaylistIdx($playlist_idx)->setTrainCompanyIdx($company_idx)->getList();
+    $model_result_list  = ModelResultM::new()->setPlaylistIdx($playlist_idx)->setTrainCompanyIdx($company_idx)->getList( 'score', 'desc', 100, 0 );
 
     $graph_list = array();
     $target_company_list = array();
