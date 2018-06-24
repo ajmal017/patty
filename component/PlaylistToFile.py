@@ -100,7 +100,8 @@ class PlaylistToFile:
 
             filename = "need_to_solve_playlist_" + str(playlist.idx) + ".json"
             j = json.dumps(json_to_save)
-            f = open("./json/" + filename, "w")
+            #f = open("./json/" + filename, "w")
+            f = open("/mnt/wwwroot/afreecatv/json/" + filename, "w")
             f.write(j)
             f.close()
 
