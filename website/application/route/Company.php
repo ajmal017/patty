@@ -70,7 +70,7 @@ Map::path('company/comparesvm/{integer}/{integer}', function($playlist_idx,$comp
     $graph_list = array();
     $target_company_list = array();
     foreach($model_result_list as $model_result) {
-        $stock_list = CompanyStockM::new()->setCompanyIdx($model_result->getTestCompanyIdx())->getList();
+        $stock_list = CompanyStockM::new()->setCompanyIdx($model_result->getTestCompanyIdx())->getList('date', 'desc', 100, 0);
         $ohlc_list = CompanyStockM::convertToCandleStick($stock_list);
         array_push($graph_list, $ohlc_list);
         array_push($target_company_list, array(
@@ -84,7 +84,7 @@ Map::path('company/comparesvm/{integer}/{integer}', function($playlist_idx,$comp
 
     $data = array();
     $data['company']            = $company;
-    $data['stock_list']         = CompanyStockM::new()->setCompanyIdx($company->getIdx())->getList();
+    $data['stock_list']         = CompanyStockM::new()->setCompanyIdx($company->getIdx())->getList('date', 'desc', 100, 0);
     $data['ohlc_list']          = CompanyStockM::convertToCandleStick($data['stock_list']);
     $data['model_result_list']  = $model_result_list;
     $data['target_company_list']= $target_company_list;
