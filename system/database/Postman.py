@@ -172,7 +172,10 @@ class Postman:
 
     def __del__(self):
 
-        if self.mysqlCursor:
+        if not self.mysqlCursor:
+            return
+
+        if not self.mysqlConnection:
             return
 
         try:
