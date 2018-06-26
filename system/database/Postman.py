@@ -176,7 +176,7 @@ class Postman:
             # clean up mysql
             self.mysqlConnection.close()
 
-        except ReferenceError:
+        except (ReferenceError, TypeError):
             pass
 
     def __exit__(self, exc_type, exc_value, traceback):
