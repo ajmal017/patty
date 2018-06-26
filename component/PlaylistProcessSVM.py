@@ -39,25 +39,28 @@ class PlaylistProcessSVM:
     def initMultiCore(self):
 
         # get playlist
-        playlist_list = self.preprocess();
+        playlist_list = []
+
+        for i in range(100):
+            playlist_list = playlist_list + self.preprocess(100);
 
         # release db connection
         Postman.init().close()
 
-        with Pool(27) as p:
+        with Pool(29) as p:
             list(p.map(self.mainprocess_precall, playlist_list))
 
     def initSingleCore(self):
         playlist_list = self.preprocess();
         list(map(self.mainprocess, playlist_list))
 
-    def preprocess(self):
+    def preprocess(self, limit = 3):
 
         self.get_company_list()
 
         playlist_list = Playlist.new({
             "svm_processed":PLAYLIST_PROCESS.WAIT
-        }).getList(sort_by = "date", sort_direction = "desc", limit = 3, select = " idx,company_idx,date ")
+        }).getList(sort_by = "date", sort_direction = "desc", limit = limit, select = " idx,company_idx,date ")
 
         for playlist in playlist_list:
             playlist.svm_processed = PLAYLIST_PROCESS.PROCESS
