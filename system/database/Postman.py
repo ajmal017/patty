@@ -97,6 +97,10 @@ class Postman:
         # clean up mysql
         self.mysqlConnection.close()
 
+        # clear variable
+        self.mysqlCursor = None
+        self.mysqlConnection = None
+
 
     def execute(self, sql, params = [], show_sql = False):
 
@@ -167,6 +171,9 @@ class Postman:
 
 
     def __del__(self):
+
+        if self.mysqlCursor:
+            return
 
         try:
 
