@@ -36,9 +36,15 @@ class PlaylistProcessSVM:
 
 
     def initMultiCore(self):
+
+        # get playlist
         playlist_list = self.preprocess();
+
+        # release db connection
+        Postman.init().close()
+
         with Pool(27) as p:
-            list(p.map(self.mainprocess, playlist_list))
+            list(p.map(self.mainprocess_precall, playlist_list))
 
     def initSingleCore(self):
         playlist_list = self.preprocess();
@@ -58,17 +64,37 @@ class PlaylistProcessSVM:
 
         return playlist_list
 
-    def mainprocess(self, playlist):
+    def mainprocess_precall(self, playlist):
+        self.mainprocess(playlist, True)
+
+    def mainprocess(self, playlist, multicore = False):
+
+        # new postman instance variable
+        instance_postman = None
+
+        # check if multicore is enabled
+        if multicore:
+
+            # create new object
+            instance_postman = Postman.new()
+
+            # create new connection
+            instance_postman.connect()
+
+        # ------------------------------------------
 
         # set update date time for svm weight
-        playlist.svm_processed_wait = getDateTime()
-        playlist.update_svm_processed_wait()
+        Playlist.new({
+            "idx"                   : playlist.idx,
+            "svm_processed_wait"    : getDateTime()
+        }).multicore(instance_postman, multicore).update_svm_processed_wait()
 
         train_stock_list = CompanyStock.new({
             "company_idx"       : playlist.company_idx,
             "search_start_date" : dsformat(str(playlist.date), size),
             "search_end_date"   : dsformat(str(playlist.date))
-        }).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
+        }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
+
 
         svm_model = SVMWrapper()
         svm_model.train_data_x = CompanyStock.getOCHLV(train_stock_list, size)
@@ -84,7 +110,7 @@ class PlaylistProcessSVM:
                 "company_idx"       : company.idx,
                 "search_start_date" : dsformat(str(playlist.date), size),
                 "search_end_date"   : dsformat(str(playlist.date))
-            }).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
+            }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
             svm_model.test_data_x = CompanyStock.getOCHLV(predict_stock_list, size)
             svm_model.test_data_y = CompanyStock.getP(predict_stock_list, size)
@@ -101,11 +127,16 @@ class PlaylistProcessSVM:
                 "score"             : float(score),
                 "type"              : MODEL_TYPE.SVM,
                 "duration"          : size
-            }).checkCreate()
+            }).multicore(instance_postman, multicore).create()
 
-        playlist.svm_processed = PLAYLIST_PROCESS.DONE
-        playlist.update_svm_process()
+
+        Playlist.new({
+            "svm_processed" : PLAYLIST_PROCESS.DONE,
+            "idx"           : playlist.idx
+        }).multicore(instance_postman, multicore).update_svm_process()
 
         # set update date time for svm weight
-        playlist.svm_processed_complete = getDateTime()
-        playlist.update_svm_processed_complete()
+        Playlist.new({
+            "svm_processed_complete"    : getDateTime(),
+            "idx"                       : playlist.idx
+        }).multicore(instance_postman, multicore).update_svm_processed_complete()
