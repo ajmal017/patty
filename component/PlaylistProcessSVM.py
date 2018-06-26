@@ -37,8 +37,8 @@ class PlaylistProcessSVM:
 
     def initMultiCore(self):
         playlist_list = self.preprocess();
-        with Pool as p:
-            list(p.map(self.mainprocess, sleep_time_list))
+        with Pool(27) as p:
+            list(p.map(self.mainprocess, playlist_list))
 
     def initSingleCore(self):
         playlist_list = self.preprocess();
