@@ -104,7 +104,7 @@ class PlaylistProcessSVM:
         svm_model.train_data_y = CompanyStock.getP(train_stock_list, size)
         svm_model.train()
 
-        for company in company_list:
+        for company in self.company_list:
 
             if company.idx == playlist.company_idx:
                 continue
