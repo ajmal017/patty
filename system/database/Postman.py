@@ -76,7 +76,7 @@ class Postman:
 
         # check if time diff is larger than 5 minutes
         if result >= 20:
-            
+
             try:
                 # clean up cursor
                 self.mysqlCursor.close()
@@ -88,6 +88,14 @@ class Postman:
 
             # re connect
             self.connect()
+
+    def close(self):
+
+        # clean up cursor
+        self.mysqlCursor.close()
+
+        # clean up mysql
+        self.mysqlConnection.close()
 
 
     def execute(self, sql, params = [], show_sql = False):
