@@ -80,7 +80,7 @@ class PlaylistProcessSVM:
         if multicore:
 
             # create new object
-            instance_postman = Postman.new()
+            instance_postman = Postman()
 
             # create new connection
             instance_postman.connect()
