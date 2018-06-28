@@ -29,6 +29,11 @@ class SVMWrapper:
     model = None
 
 
+    # kernal function for SVM
+    # default: rbf
+    kernel = 'linear'
+
+
     def init(self):
         pass
 
@@ -40,7 +45,7 @@ class SVMWrapper:
         train_data_x_scaled = scaler.fit_transform(self.train_data_x)
 
         # create SVC object
-        self.model = svm.SVC()
+        self.model = svm.SVC(kernel=self.kernel)
 
         # fit training data
         self.model.fit(train_data_x_scaled, self.train_data_y)
