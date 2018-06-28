@@ -34,6 +34,14 @@ def multiCore():
     PlaylistProcessSVM().initMultiCore()
 
 
+def dev():
+    """this function should be called only by dev"""
+
+    # solve the top volumen daily
+    # but developer set days
+    PlaylistFindTopVolume().mimic_date()
+
+
 """check if the function that needs to be called has been passed """
 if len(sys.argv) >= 2:
     locals()[sys.argv[1]]()
