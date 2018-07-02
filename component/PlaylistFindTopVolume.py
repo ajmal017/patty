@@ -19,7 +19,7 @@ class PlaylistFindTopVolume:
     def runtext(self, yesterday):
 
         # search limit
-        limit = 100
+        limit = 30
 
         # get the top 100
         stock_list = CompanyStock.new({ "date" : yesterday }).getList(sort_by = 'percentage', sort_direction = 'desc', limit = limit)
