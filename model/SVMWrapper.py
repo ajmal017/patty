@@ -33,6 +33,9 @@ class SVMWrapper:
     # default: rbf
     kernel = 'linear'
 
+    # random seed
+    random_state = 1000
+
 
     def init(self):
         pass
@@ -45,7 +48,7 @@ class SVMWrapper:
         train_data_x_scaled = scaler.fit_transform(self.train_data_x)
 
         # create SVC object
-        self.model = svm.SVC(kernel=self.kernel)
+        self.model = svm.SVC(kernel = self.kernel, random_state = self.random_state)
 
         # fit training data
         self.model.fit(train_data_x_scaled, self.train_data_y)
