@@ -123,14 +123,14 @@ class PlaylistProcessSVM:
 
             svm_model.test_data_x = CompanyStock.getOCHLV(predict_stock_list, size)
             svm_model.test_data_y = CompanyStock.getP(predict_stock_list, size)
-            score = svm_model.test()
+            score, accuracy = svm_model.test()
 
             ModelResult.new({
                 "playlist_idx"      : playlist.idx,
                 "train_company_idx" : playlist.company_idx,
                 "test_company_idx"  : company.idx,
                 "f1"                : "0",
-                "accuracy"          : "0",
+                "accuracy"          : float(accuracy),
                 "recall"            : "0",
                 "precise"           : "0",
                 "score"             : float(score),
