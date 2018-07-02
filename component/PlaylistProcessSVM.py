@@ -31,6 +31,8 @@ class PlaylistProcessSVM:
 
                 # append main list with temp list
                 company_list = company_list + t
+            else:
+                break
 
         # return main company list
         self.company_list = company_list
