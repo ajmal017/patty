@@ -91,4 +91,4 @@ class SVMWrapper:
         #return (accuracy, recall, f1, precise)
 
         # return score
-        return accuracy
+        return (score, accuracy)
