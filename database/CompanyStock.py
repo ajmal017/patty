@@ -40,6 +40,17 @@ class CompanyStock(DataModel, BusinessModel):
         ], stock_list))
 
     @staticmethod
+    def getCV(stock_list, match_size):
+        a = len(stock_list)
+        frontend = []
+        if match_size > a:
+            frontend = [[0,0]] * (match_size - a)
+        return frontend + list(map(lambda stock:[
+            int(stock.price), # close
+            int(stock.volume)
+        ], stock_list))
+
+    @staticmethod
     def getP(stock_list, match_size):
         a = len(stock_list)
         frontend = []
