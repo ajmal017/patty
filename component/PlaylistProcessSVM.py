@@ -80,7 +80,7 @@ class PlaylistProcessSVM:
     def mainprocess(self, playlist, multicore = False):
 
         # number of days to use
-        duration = 200
+        duration = 300
 
         # new postman instance variable
         instance_postman = None
