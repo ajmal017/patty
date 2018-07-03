@@ -43,7 +43,7 @@ class PlaylistProcessSVM:
         # get playlist
         playlist_list = []
 
-        for i in range(100):
+        for i in range(200):
             additional_list = self.preprocess(100);
             if len(additional_list) > 0:
                 playlist_list = playlist_list + additional_list
