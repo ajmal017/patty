@@ -30,8 +30,7 @@ class CompanyStock(DataModel, BusinessModel):
         a = len(stock_list)
         frontend = []
         if match_size > a:
-            for i in range(match_size - a):
-                frontend.append([0,0,0,0,0])
+            frontend = [[0,0,0,0,0]] * (match_size - a)
         return frontend + list(map(lambda stock:[
             int(stock.open),
             int(stock.high),
