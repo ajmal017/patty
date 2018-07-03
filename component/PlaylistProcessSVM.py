@@ -80,7 +80,7 @@ class PlaylistProcessSVM:
     def mainprocess(self, playlist, multicore = False):
 
         # number of days to use
-        size = 200
+        duration = 200
 
         # new postman instance variable
         instance_postman = None
@@ -104,14 +104,14 @@ class PlaylistProcessSVM:
 
         train_stock_list = CompanyStock.new({
             "company_idx"       : playlist.company_idx,
-            "search_start_date" : dsformat(str(playlist.date), size),
+            "search_start_date" : dsformat(str(playlist.date), duration),
             "search_end_date"   : dsformat(str(playlist.date))
         }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
 
         svm_model = SVMWrapper()
-        svm_model.train_data_x = CompanyStock.getOCHLV(train_stock_list, size)
-        svm_model.train_data_y = CompanyStock.getP(train_stock_list, size)
+        svm_model.train_data_x = CompanyStock.getOCHLV(train_stock_list, duration)
+        svm_model.train_data_y = CompanyStock.getP(train_stock_list, duration)
         svm_model.train()
 
         for company in self.company_list:
@@ -121,12 +121,12 @@ class PlaylistProcessSVM:
 
             predict_stock_list = CompanyStock.new({
                 "company_idx"       : company.idx,
-                "search_start_date" : dsformat(str(playlist.date), size),
+                "search_start_date" : dsformat(str(playlist.date), duration),
                 "search_end_date"   : dsformat(str(playlist.date))
             }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
-            svm_model.test_data_x = CompanyStock.getOCHLV(predict_stock_list, size)
-            svm_model.test_data_y = CompanyStock.getP(predict_stock_list, size)
+            svm_model.test_data_x = CompanyStock.getOCHLV(predict_stock_list, duration)
+            svm_model.test_data_y = CompanyStock.getP(predict_stock_list, duration)
             score, accuracy = svm_model.test()
 
             ModelResult.new({
@@ -139,7 +139,7 @@ class PlaylistProcessSVM:
                 "precise"           : "0",
                 "score"             : float(score),
                 "type"              : MODEL_TYPE.SVM,
-                "duration"          : size
+                "duration"          : duration
             }).multicore(instance_postman, multicore).create()
 
 
