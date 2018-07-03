@@ -57,6 +57,36 @@ class Company(DataModel, BusinessModel):
         if "kodex" in self.name:
             return
 
+        if "ANKOR" in self.name:
+            return
+
+        if "ankor" in self.name:
+            return
+
+        if "KBSTAR" in self.name:
+            return
+
+        if "kbstar" in self.name:
+            return
+
+        if "TIGER" in self.name:
+            return
+
+        if "tiger" in self.name:
+            return
+
+        if "KINDEX" in self.name:
+            return
+
+        if "kindex" in self.name:
+            return
+
+        if "KOSEF" in self.name:
+            return
+
+        if "kosef" in self.name:
+            return
+
         query  = "INSERT INTO `company` "
         query +=    "( `name`, `code`, `market`, `need_history`, `last_updated`, `created_date_time`, `status` ) "
         query += "VALUES "
