@@ -44,7 +44,11 @@ class PlaylistProcessSVM:
         playlist_list = []
 
         for i in range(100):
-            playlist_list = playlist_list + self.preprocess(100);
+            additional_list = self.preprocess(100);
+            if len(additional_list) > 0:
+                playlist_list = playlist_list + additional_list
+            else:
+                break
 
         # release db connection
         Postman.init().close()
