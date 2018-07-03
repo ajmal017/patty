@@ -109,7 +109,7 @@ class PlaylistProcessSVM:
         }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
         svm_model = SVMWrapper()
-        svm_model.train_data_x = CompanyStock.getOCHLV(train_stock_list, duration)
+        svm_model.train_data_x = CompanyStock.getCV(train_stock_list, duration)
         svm_model.train_data_y = CompanyStock.getP(train_stock_list, duration)
         svm_model.train()
 
@@ -124,7 +124,7 @@ class PlaylistProcessSVM:
                 "search_end_date"   : dsformat(str(playlist.date))
             }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
-            svm_model.test_data_x = CompanyStock.getOCHLV(predict_stock_list, duration)
+            svm_model.test_data_x = CompanyStock.getCV(predict_stock_list, duration)
             svm_model.test_data_y = CompanyStock.getP(predict_stock_list, duration)
             score, accuracy = svm_model.test()
 
