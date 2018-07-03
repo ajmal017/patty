@@ -34,7 +34,7 @@ class SVMWrapper:
     kernel = 'linear'
 
     # random seed
-    random_state = 1000
+    random_state = 1
 
 
     def init(self):
