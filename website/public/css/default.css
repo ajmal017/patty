@@ -280,7 +280,7 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
     box-sizing: border-box;
     outline: 0px;
     padding: 0px 15px;
-    font-size: 14px; 
+    font-size: 14px;
 }
 .table-bordered tbody tr td.menu {
 	padding: 0px 10px;
@@ -397,6 +397,21 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
 }
 .calender-table td .list-wrapper ul li span {
     float: right;
+}
+.calender-table td .list-wrapper ul li .svm-match {
+    display: block;
+    box-sizing: border-box;
+    padding-left: 15px;
+    box-sizing: border-box;
+    padding-bottom: 8px;
+}
+.calender-table td .list-wrapper ul li .svm-match .match-item {
+    display: block;
+    box-sizing: border-box;
+    padding-top: 3px;
+}
+.calender-table td .list-wrapper ul li .svm-match .match-item .score {
+    float:right;
 }
 
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10 {

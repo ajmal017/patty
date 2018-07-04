@@ -50,7 +50,7 @@
                                 <?php if (count($day['top_list']) > 0) { ?>
                                     <div class="list-wrapper">
                                         <div class="list-title">
-                                            상위 100개
+                                            상위
                                         </div>
                                         <!--/.list-title-->
                                         <ul>
@@ -60,6 +60,19 @@
                                                         <?php echo $top->getCompanyName(); ?>(<?php echo number_format($top->getPercentage(), 2); ?>%)
                                                     </a>
                                                     <span><a href="/company/comparesvm/<?php echo $top->getIdx(); ?>/<?php echo $top->getCompanyidx(); ?>">SVM</a></span>
+
+                                                    <div class="svm-match">
+                                                        <?php foreach($top->result_list as $result) { ?>
+                                                            <div class="match-item">
+                                                                <?php echo $result->getName(); ?>
+                                                                <div class="score">
+                                                                    <?php echo number_format($result->getScore()*100, 2); ?>%
+                                                                </div>
+                                                                <!--/.score-->
+                                                            </div>
+                                                            <!--/.match-item-->
+                                                        <?php } ?>
+                                                    </div>
                                                 </li>
                                             <?php } ?>
                                         </ul>
