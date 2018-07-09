@@ -125,6 +125,6 @@
         });
     };
     var get_random_color = function() {
-        return Math.floor(Math.random()*16777215).toString(16) + "33";
+        return "#"+Math.floor(Math.random()*16777215).toString(16) + "33";
     }
 </script>
