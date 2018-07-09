@@ -60,7 +60,7 @@
                                         상위
                                     </div>
                                     <!--/.list-title-->
-                                    <ul data-date="<?php echo $d->format('Y-m-d'); ?>" class="date-to-load" data-processed="0">
+                                    <ul data-date="<?php echo $d->format('Y-m-d'); ?>" class="date-to-load">
 
                                     </ul>
                                 </div>
