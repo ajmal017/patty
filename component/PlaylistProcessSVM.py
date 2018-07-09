@@ -82,6 +82,9 @@ class PlaylistProcessSVM:
         # number of days to use
         duration = 300
 
+        # minimum number of days to use
+        minimum_duration = 240
+
         # new postman instance variable
         instance_postman = None
 
@@ -123,6 +126,10 @@ class PlaylistProcessSVM:
                 "search_start_date" : dsformat(str(playlist.date), duration),
                 "search_end_date"   : dsformat(str(playlist.date))
             }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
+
+            # check if the number of days equals the minimum amount
+            if len(predict_stock_list) < minimum_duration:
+                continue
 
             svm_model.test_data_x = CompanyStock.getCV(predict_stock_list, duration)
             svm_model.test_data_y = CompanyStock.getP(predict_stock_list, duration)
