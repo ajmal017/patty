@@ -62,7 +62,7 @@
                                                     <span><a href="/company/comparesvm/<?php echo $top->getIdx(); ?>/<?php echo $top->getCompanyidx(); ?>">SVM</a></span>
 
                                                     <div class="svm-match">
-                                                        <?php foreach($top->result_list as $result) { ?>
+                                                        <?php foreach($top->top_list as $result) { ?>
                                                             <div class="match-item">
                                                                 <?php echo $result->company->getName(); ?>
                                                                 <div class="score">
@@ -73,27 +73,6 @@
                                                             <!--/.match-item-->
                                                         <?php } ?>
                                                     </div>
-                                                </li>
-                                            <?php } ?>
-                                        </ul>
-                                    </div>
-                                    <!--/.list-wrapper-->
-                                <?php } ?>
-
-                                <?php foreach($day['custom_list'] as $custom) { ?>
-                                    <?php if (!count($custom['list'])) continue;?>
-                                    <div class="list-wrapper">
-                                        <div class="list-title">
-                                            <?php echo $custom['name']; ?>
-                                        </div>
-                                        <!--/.list-title-->
-                                        <ul>
-                                            <?php foreach($custom['list'] as $item)  { ?>
-                                                <li>
-                                                    <a href="/company/view/<?php echo $item->getCompanyidx(); ?>">
-                                                        <?php echo $item->getCompanyName(); ?>(<?php echo number_format($item->getPercentage(), 2); ?>%)
-                                                    </a>
-                                                    <span><a href="/company/comparesvm/<?php echo $item->getIdx(); ?>/<?php echo $item->getCompanyidx(); ?>">SVM</a></span>
                                                 </li>
                                             <?php } ?>
                                         </ul>

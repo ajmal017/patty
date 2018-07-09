@@ -11,27 +11,19 @@ Map::path('calendar', function() {
     foreach($date_list as $date) {
         $s_date         = new DateTime($date);
         $c_date         = new DateTime(date('Y-m-d'));
-        $day_group_list = array();
 
-        foreach($group_list as $group) {
-            $playlist_list = PlaylistM::new()->setType(PlaylistType::CUSTOM)->setDate($date)->setGroupIdx($group->idx)->getList('`p`.`rank`', 'asc', 40, 0);
-            foreach($playlist_list as $playlist) {
-                $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 15, 0 );
-                foreach($playlist->top_list as $top) {
-                    $top->company = CompanyM::new()->setIdx($top->getTestCompanyIdx())->get();
-                }
+        $playlist_list = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 40, 0);
+        foreach($playlist_list as $playlist) {
+            $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 15, 0 );
+            foreach($playlist->top_list as $top) {
+                $top->company = CompanyM::new()->setIdx($top->getTestCompanyIdx())->get();
             }
-            array_push($day_group_list, array(
-                'idx'   => $group->idx,
-                'name'  => $group->name,
-                'list'  => $playlist_list
-            ));
         }
 
         array_push($calender, array(
             'date'          => $date,
             'current_month' => ($s_date->format('m') == $rightnow_month)?true:false,
-            'custom_list'   => $day_group_list
+            'top_list'      => $playlist_list
         ));
     }
     $calender_list = array(
