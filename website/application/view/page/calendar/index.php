@@ -101,6 +101,18 @@
                 $(this).hide();
             }
         });
+
+        $(".top-item").each(function() {
+            var need_to_hide = true;
+            $(".svm-match").each(function() {
+                if ($(this).is(":visible")) {
+                    need_to_hide = false;
+                }
+            });
+            if (need_to_hide) {
+                $(this).hide();
+            }
+        });
     };
     var highlight_matches = function() {
         $(".company-color").each(function() {

@@ -1,5 +1,5 @@
 <?php foreach($top_list as $top) { ?>
-    <li>
+    <li class="top-item">
         <a href="/company/view/<?php echo $top->getCompanyidx(); ?>" class="company-color company-<?php echo $top->getCompanyIdx(); ?>" data-company="<?php echo $top->getCompanyIdx(); ?>">
             <?php echo $top->getCompanyName(); ?>(<?php echo number_format($top->getPercentage(), 2); ?>%)
         </a>
