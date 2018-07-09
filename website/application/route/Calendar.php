@@ -7,7 +7,6 @@ Map::path('calendar', function() {
 
     $date_list  = Calendar::new()->generate($rightnow_month, $rightnow_year);
     $calender   = array();
-    $group_list = PlaylistGroupM::new()->getList();
     foreach($date_list as $date) {
         $s_date         = new DateTime($date);
         $c_date         = new DateTime(date('Y-m-d'));
