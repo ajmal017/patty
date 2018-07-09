@@ -22,20 +22,22 @@
     <table class="calender-table">
         <thead>
             <tr>
-                <th>일요일</th>
                 <th>월요일</th>
                 <th>화요일</th>
                 <th>수요일</th>
                 <th>목요일</th>
                 <th>금요일</th>
-                <th>토요일</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach($calender_list as $calender) { ?>
                 <tr>
-                    <?php foreach($calender as $day) { ?>
+                    <?php foreach($calender as $key => $day) { ?>
                         <?php
+                            // 주말안 빼지 너무 자리 읍다.
+                            if ($key == 0 || $key == 6)
+                                continue;
+
                             $d = new DateTime($day['date']);
                         ?>
                         <td class="<?php echo ($day['current_month'])?'':'off'; ?>">
