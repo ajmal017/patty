@@ -64,7 +64,7 @@
                                                     <div class="svm-match">
                                                         <?php foreach($top->result_list as $result) { ?>
                                                             <div class="match-item">
-                                                                <?php echo $result->getName(); ?>
+                                                                <?php echo $result->company->getName(); ?>
                                                                 <div class="score">
                                                                     <?php echo number_format($result->getScore()*100, 2); ?>%
                                                                 </div>
