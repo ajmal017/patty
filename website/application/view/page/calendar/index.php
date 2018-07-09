@@ -4,6 +4,9 @@
     <h1>달력 <?php echo $today_year."년 ". $today_month."월"; ?></h1>
 
     <div class="form">
+        <div class="btn" style="margin-right: 10px;" onclick="hide_no_parents();">
+            X 부모
+        </div>
         <div class="btn" style="margin-right: 10px;" onclick="highlight_matches();">
             ** 표시
         </div>
@@ -74,9 +77,7 @@
 <!--/.row-->
 
 <script>
-    var company_color = {
-
-    };
+    var company_color = { };
     $(function() {
         $(".date-to-load").each(function() {
             var element = $(this);
@@ -93,6 +94,14 @@
             $.ajax(query);
         });
     });
+    var hide_no_parents = function() {
+        $(".match-item").each(function() {
+            var company_idx = $(this).data("company-idx");
+            if (!$(".company-" + company_idx).length) {
+                $(this).hide();
+            }
+        });
+    };
     var highlight_matches = function() {
         $(".company-color").each(function() {
             var company = $(this);
