@@ -403,12 +403,12 @@ a:link, a:visited, visited, active, hover, focus { color:#000 ; text-decoration:
     box-sizing: border-box;
     padding-left: 15px;
     box-sizing: border-box;
-    padding-bottom: 8px;
 }
 .calender-table td .list-wrapper ul li .svm-match .match-item {
     display: block;
     box-sizing: border-box;
-    padding-top: 3px;
+    padding-top: 1px;
+    font-size: 10px;
 }
 .calender-table td .list-wrapper ul li .svm-match .match-item .score {
     float:right;
