@@ -13,18 +13,19 @@ Map::path('calendar', function() {
         $c_date         = new DateTime(date('Y-m-d'));
         $day_group_list = array();
 
-        $top_list       = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 10, 0);
-
         foreach($group_list as $group) {
+            $playlist_list = PlaylistM::new()->setType(PlaylistType::CUSTOM)->setDate($date)->setGroupIdx($group->idx)->getList('`p`.`rank`', 'asc', 40, 0);
+            foreach($playlist_list as $playlist) {
+                $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 15, 0 );
+                foreach($playlist->top_list as $top) {
+                    $top->company = CompanyM::new()->setIdx($top->getTestCompanyIdx())->get();
+                }
+            }
             array_push($day_group_list, array(
                 'idx'   => $group->idx,
                 'name'  => $group->name,
-                'list'  => PlaylistM::new()->setType(PlaylistType::CUSTOM)->setDate($date)->setGroupIdx($group->idx)->getList('`p`.`rank`', 'asc', 40, 0)
+                'list'  => $playlist_list
             ));
-        }
-
-        foreach ($top_list as $top) {
-            $top->result_list = ModelResultM::new()->setPlaylistIdx($group->idx)->setTrainCompanyIdx($top->company_idx)->getList( 'score', 'desc', 15, 0 );
         }
 
         array_push($calender, array(
@@ -54,7 +55,7 @@ Map::path('calendar', function() {
     $data['today_month']    = $rightnow_month;
     $data['today_year']     = $rightnow_year;
 
-    $this->load->html('template/head', array('page' => 'calendar'));
-    $this->load->html('page/calendar/index', $data);
-    $this->load->html('template/foot');
+    // $this->load->html('template/head', array('page' => 'calendar'));
+    // $this->load->html('page/calendar/index', $data);
+    // $this->load->html('template/foot');
 });
