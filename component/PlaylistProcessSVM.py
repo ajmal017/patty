@@ -83,7 +83,7 @@ class PlaylistProcessSVM:
         duration = 300
 
         # minimum number of days to use
-        minimum_duration = 240
+        minimum_duration = 120
 
         # new postman instance variable
         instance_postman = None
