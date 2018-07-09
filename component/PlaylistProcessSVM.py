@@ -111,47 +111,51 @@ class PlaylistProcessSVM:
             "search_end_date"   : dsformat(str(playlist.date))
         }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
+        # below minimum, skip
+        below_minimun_skip = False
+
         # check if the number of days equals the minimum amount
         if len(train_stock_list) < minimum_duration:
-            return
+            below_minimun_skip = True
 
-        svm_model = SVMWrapper()
-        svm_model.train_data_x = CompanyStock.getCV(train_stock_list, duration)
-        svm_model.train_data_y = CompanyStock.getP(train_stock_list, duration)
-        svm_model.train()
+        if  not below_minimun_skip:
 
-        for company in self.company_list:
+            svm_model = SVMWrapper()
+            svm_model.train_data_x = CompanyStock.getCV(train_stock_list, duration)
+            svm_model.train_data_y = CompanyStock.getP(train_stock_list, duration)
+            svm_model.train()
 
-            if company.idx == playlist.company_idx:
-                continue
+            for company in self.company_list:
 
-            predict_stock_list = CompanyStock.new({
-                "company_idx"       : company.idx,
-                "search_start_date" : dsformat(str(playlist.date), duration),
-                "search_end_date"   : dsformat(str(playlist.date))
-            }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
+                if company.idx == playlist.company_idx:
+                    continue
 
-            # check if the number of days equals the minimum amount
-            if len(predict_stock_list) < minimum_duration:
-                continue
+                predict_stock_list = CompanyStock.new({
+                    "company_idx"       : company.idx,
+                    "search_start_date" : dsformat(str(playlist.date), duration),
+                    "search_end_date"   : dsformat(str(playlist.date))
+                }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
-            svm_model.test_data_x = CompanyStock.getCV(predict_stock_list, duration)
-            svm_model.test_data_y = CompanyStock.getP(predict_stock_list, duration)
-            score, accuracy = svm_model.test()
+                # check if the number of days equals the minimum amount
+                if len(predict_stock_list) < minimum_duration:
+                    continue
 
-            ModelResult.new({
-                "playlist_idx"      : playlist.idx,
-                "train_company_idx" : playlist.company_idx,
-                "test_company_idx"  : company.idx,
-                "f1"                : "0",
-                "accuracy"          : float(accuracy),
-                "recall"            : "0",
-                "precise"           : "0",
-                "score"             : float(score),
-                "type"              : MODEL_TYPE.SVM,
-                "duration"          : duration
-            }).multicore(instance_postman, multicore).create()
+                svm_model.test_data_x = CompanyStock.getCV(predict_stock_list, duration)
+                svm_model.test_data_y = CompanyStock.getP(predict_stock_list, duration)
+                score, accuracy = svm_model.test()
 
+                ModelResult.new({
+                    "playlist_idx"      : playlist.idx,
+                    "train_company_idx" : playlist.company_idx,
+                    "test_company_idx"  : company.idx,
+                    "f1"                : "0",
+                    "accuracy"          : float(accuracy),
+                    "recall"            : "0",
+                    "precise"           : "0",
+                    "score"             : float(score),
+                    "type"              : MODEL_TYPE.SVM,
+                    "duration"          : duration
+                }).multicore(instance_postman, multicore).create()
 
         Playlist.new({
             "svm_processed" : PLAYLIST_PROCESS.DONE,
