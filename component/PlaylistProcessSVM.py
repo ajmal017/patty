@@ -111,6 +111,10 @@ class PlaylistProcessSVM:
             "search_end_date"   : dsformat(str(playlist.date))
         }).multicore(instance_postman, multicore).getList(sort_by = 'date', sort_direction = 'desc', nolimit = True)
 
+        # check if the number of days equals the minimum amount
+        if len(train_stock_list) < minimum_duration:
+            return
+
         svm_model = SVMWrapper()
         svm_model.train_data_x = CompanyStock.getCV(train_stock_list, duration)
         svm_model.train_data_y = CompanyStock.getP(train_stock_list, duration)
