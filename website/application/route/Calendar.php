@@ -31,7 +31,6 @@ Map::path('calendar', function() {
         array_push($calender, array(
             'date'          => $date,
             'current_month' => ($s_date->format('m') == $rightnow_month)?true:false,
-            'top_list'      => $top_list,
             'custom_list'   => $day_group_list
         ));
     }
