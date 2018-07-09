@@ -7,7 +7,7 @@
 
         <div class="svm-match">
             <?php foreach($top->top_list as $result) { ?>
-                <div class="match-item" data-company-idx="<?php echo $result->company->getIdx(); ?>">
+                <div class="match-item company-color-<?php echo $result->company->getIdx(); ?>" data-company-idx="<?php echo $result->company->getIdx(); ?>">
                     <a href="/company/view/<?php echo $result->company->getIdx(); ?>">
                         <?php echo $result->company->getName(); ?>
                     </a>
