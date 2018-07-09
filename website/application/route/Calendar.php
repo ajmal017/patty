@@ -54,7 +54,7 @@ Map::path('calendar', function() {
     $data['today_month']    = $rightnow_month;
     $data['today_year']     = $rightnow_year;
 
-    // $this->load->html('template/head', array('page' => 'calendar'));
-    // $this->load->html('page/calendar/index', $data);
-    // $this->load->html('template/foot');
+    $this->load->html('template/head', array('page' => 'calendar'));
+    $this->load->html('page/calendar/index', $data);
+    $this->load->html('template/foot');
 });
