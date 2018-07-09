@@ -4,6 +4,9 @@
     <h1>달력 <?php echo $today_year."년 ". $today_month."월"; ?></h1>
 
     <div class="form">
+        <div class="btn" style="margin-right: 10px;" onclick="highlight_matches();">
+            ** 표시
+        </div>
         <a href="/calendar/?month=<?php echo $pre_month; ?>&year=<?php echo $pre_year; ?>">
             <div class="btn" style="margin-right: 10px;">
                 << 전달
@@ -49,38 +52,16 @@
                                 </div>
                                 <!--/.date-->
 
-                                <?php if (count($day['top_list']) > 0) { ?>
-                                    <div class="list-wrapper">
-                                        <div class="list-title">
-                                            상위
-                                        </div>
-                                        <!--/.list-title-->
-                                        <ul>
-                                            <?php foreach($day['top_list'] as $top) { ?>
-                                                <li>
-                                                    <a href="/company/view/<?php echo $top->getCompanyidx(); ?>">
-                                                        <?php echo $top->getCompanyName(); ?>(<?php echo number_format($top->getPercentage(), 2); ?>%)
-                                                    </a>
-                                                    <span><a href="/company/comparesvm/<?php echo $top->getIdx(); ?>/<?php echo $top->getCompanyidx(); ?>">SVM</a></span>
-
-                                                    <div class="svm-match">
-                                                        <?php foreach($top->top_list as $result) { ?>
-                                                            <div class="match-item">
-                                                                <?php echo $result->company->getName(); ?>
-                                                                <div class="score">
-                                                                    <?php echo number_format($result->getScore()*100, 2); ?>%
-                                                                </div>
-                                                                <!--/.score-->
-                                                            </div>
-                                                            <!--/.match-item-->
-                                                        <?php } ?>
-                                                    </div>
-                                                </li>
-                                            <?php } ?>
-                                        </ul>
+                                <div class="list-wrapper">
+                                    <div class="list-title">
+                                        상위
                                     </div>
-                                    <!--/.list-wrapper-->
-                                <?php } ?>
+                                    <!--/.list-title-->
+                                    <ul data-date="<?php echo $d->format('Y-m-d'); ?>" class="date-to-load" data-processed="0">
+
+                                    </ul>
+                                </div>
+                                <!--/.list-wrapper-->
                             </div>
                             <!--/.day-wrapper-->
                         </td>
@@ -91,3 +72,55 @@
     </table>
 </div>
 <!--/.row-->
+
+<script>
+    var company_color = {
+
+    };
+    $(function() {
+        $(".date-to-load").each(function() {
+            var element = $(this);
+            var date = element.data("date");
+            var query = {
+                "type"      : "GET",
+                "url"       : "/calendar/date/" + date,
+                "data"      : {},
+                "dataType"  : "html",
+                "success"   : function(result) {
+                    element.html(result);
+                }
+            }
+            $.ajax(query);
+        });
+    });
+    var highlight_matches = function() {
+        $(".company-color").each(function() {
+            var company = $(this);
+            var company_idx = company.data("company");
+
+            var color = get_random_color();
+            if (!company_color[company_idx]) {
+                company_color[company_idx] = color;
+            } else {
+                color = company_color[company_idx];
+            }
+
+            var child_list = $(".company-color-" + company_idx);
+            if (child_list.length) {
+                company.css('background-color', color);
+                child_list.each(function() {
+                    var child = $(this);
+                    child.css('background-color', color);
+                });
+            }
+        });
+    };
+    var get_random_color = function() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color + "33";
+    }
+</script>

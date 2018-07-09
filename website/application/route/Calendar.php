@@ -11,6 +11,7 @@ Map::path('calendar', function() {
         $s_date         = new DateTime($date);
         $c_date         = new DateTime(date('Y-m-d'));
 
+        /*
         $playlist_list = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 15, 0);
         foreach($playlist_list as $playlist) {
             $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 15, 0 );
@@ -18,6 +19,8 @@ Map::path('calendar', function() {
                 $top->company = CompanyM::new()->setIdx($top->getTestCompanyIdx())->get();
             }
         }
+        */
+        $playlist_list = array();
 
         array_push($calender, array(
             'date'          => $date,
@@ -48,4 +51,22 @@ Map::path('calendar', function() {
     $this->load->html('template/head', array('page' => 'calendar'));
     $this->load->html('page/calendar/index', $data);
     $this->load->html('template/foot');
+});
+
+Map::path('calendar/date/{string}', function($date) {
+
+    $playlist_list = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 15, 0);
+    foreach($playlist_list as $playlist) {
+        $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 15, 0 );
+        foreach($playlist->top_list as $top) {
+            $top->company = CompanyM::new()->setIdx($top->getTestCompanyIdx())->get();
+        }
+    }
+
+    $data = array();
+    $data['date']           = $date;
+    $data['current_month']  = ((new DateTime($date))->format('m') == date('m'))?true:false;
+    $data['top_list']       = $playlist_list;
+
+    $this->load->html('page/calendar/date', $data);
 });
