@@ -12,7 +12,7 @@ Map::path('calendar', function() {
         $s_date         = new DateTime($date);
         $c_date         = new DateTime(date('Y-m-d'));
 
-        $playlist_list = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 40, 0);
+        $playlist_list = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 15, 0);
         foreach($playlist_list as $playlist) {
             $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 15, 0 );
             foreach($playlist->top_list as $top) {
