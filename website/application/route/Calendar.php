@@ -10,22 +10,10 @@ Map::path('calendar', function() {
     foreach($date_list as $date) {
         $s_date         = new DateTime($date);
         $c_date         = new DateTime(date('Y-m-d'));
-
-        /*
-        $playlist_list = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 15, 0);
-        foreach($playlist_list as $playlist) {
-            $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 15, 0 );
-            foreach($playlist->top_list as $top) {
-                $top->company = CompanyM::new()->setIdx($top->getTestCompanyIdx())->get();
-            }
-        }
-        */
-        $playlist_list = array();
-
         array_push($calender, array(
             'date'          => $date,
             'current_month' => ($s_date->format('m') == $rightnow_month)?true:false,
-            'top_list'      => $playlist_list
+            'top_list'      => array()
         ));
     }
     $calender_list = array(
