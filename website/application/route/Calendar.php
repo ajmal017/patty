@@ -16,7 +16,7 @@ Map::path('calendar', function() {
             'top_list'      => array()
         ));
     }
-    
+
     $calender_list = array(
         array_slice($calender,  0, 7),
         array_slice($calender,  7, 7),
@@ -44,9 +44,9 @@ Map::path('calendar', function() {
 
 Map::path('calendar/date/{string}', function($date) {
 
-    $playlist_list = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 15, 0);
+    $playlist_list = PlaylistM::new()->setType(PlaylistType::TOP)->setDate($date)->getList('`p`.`rank`', 'asc', 30, 0);
     foreach($playlist_list as $playlist) {
-        $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 15, 0 );
+        $playlist->top_list = ModelResultM::new()->setPlaylistIdx($playlist->idx)->setTrainCompanyIdx($playlist->company_idx)->getList( 'score', 'desc', 30, 0 );
         foreach($playlist->top_list as $top) {
             $top->company = CompanyM::new()->setIdx($top->getTestCompanyIdx())->get();
         }
