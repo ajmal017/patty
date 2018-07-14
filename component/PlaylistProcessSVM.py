@@ -121,7 +121,7 @@ class PlaylistProcessSVM:
         if  not below_minimun_skip:
 
             svm_model = SVMWrapper()
-            svm_model.train_data_x = CompanyStock.getCV(train_stock_list, duration)
+            svm_model.train_data_x = CompanyStock.getOCHLV(train_stock_list, duration)
             svm_model.train_data_y = CompanyStock.getP(train_stock_list, duration)
             svm_model.train()
 
@@ -140,7 +140,7 @@ class PlaylistProcessSVM:
                 if len(predict_stock_list) < minimum_duration:
                     continue
 
-                svm_model.test_data_x = CompanyStock.getCV(predict_stock_list, duration)
+                svm_model.test_data_x = CompanyStock.getOCHLV(predict_stock_list, duration)
                 svm_model.test_data_y = CompanyStock.getP(predict_stock_list, duration)
                 score, accuracy = svm_model.test()
 
