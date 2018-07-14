@@ -16,6 +16,7 @@ Map::path('calendar', function() {
             'top_list'      => array()
         ));
     }
+    
     $calender_list = array(
         array_slice($calender,  0, 7),
         array_slice($calender,  7, 7),
