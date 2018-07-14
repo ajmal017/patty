@@ -46,7 +46,7 @@ class PlaylistFindTopVolume:
 
     def mimic_date(self):
 
-        for i in range(100):
+        for i in range(140):
 
             # get yesterday's date
             yesterday = date.today() - timedelta(i)
