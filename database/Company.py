@@ -6,6 +6,9 @@ class COMPANY_NEED_HISTORY:
     NO  = 1
     YES = 2
 
+class COMPANY_EXCLUDE_LEARN:
+    NO  = 1
+    YES = 2
 
 class COMPANY_MARKET:
     UNKNOWN     = 0
@@ -22,7 +25,9 @@ class Company(DataModel, BusinessModel):
     market              = None
     need_history        = None
     last_updated        = None
+    exclude_learn       = None
     created_date_time   = None
+    status              = None
 
     @staticmethod
     def new(data = {}):
@@ -88,12 +93,12 @@ class Company(DataModel, BusinessModel):
             return
 
         query  = "INSERT INTO `company` "
-        query +=    "( `name`, `code`, `market`, `need_history`, `last_updated`, `created_date_time`, `status` ) "
+        query +=    "( `name`, `code`, `market`, `need_history`, `last_updated`, `exclude_learn`, `created_date_time`, `status` ) "
         query += "VALUES "
-        query +=    "( %s, %s, %s, %s, %s, %s, %s ) "
+        query +=    "( %s, %s, %s, %s, %s, %s, %s, %s ) "
 
         return self.postman.create(query, [
-            self.name, self.code, self.market, COMPANY_NEED_HISTORY.YES, str(datetime.now().strftime("%Y-%m-%d")), str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
+            self.name, self.code, self.market, COMPANY_NEED_HISTORY.YES, str(datetime.now().strftime("%Y-%m-%d")), COMPANY_EXCLUDE_LEARN.NO, str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), '1'
         ])
 
     def get(self, select = ' idx,name,code '):
@@ -133,6 +138,7 @@ class Company(DataModel, BusinessModel):
         if self.need_history:   query += "`need_history`=%s AND "
         if self.market:         query += "`market`=%s AND "
         if self.last_updated:   query += "`last_updated`<%s AND "
+        if self.exclude_learn:  query += "`exclude_learn`=%s AND "
         if skip_idx:            query += "`idx` NOT IN (%s) AND "
         query +=    "`status`=%s "
         query += "ORDER BY {0} {1} ".format(sort_by, sdirection)
@@ -142,6 +148,7 @@ class Company(DataModel, BusinessModel):
         if self.need_history:   params.append(self.need_history)
         if self.market:         params.append(self.market)
         if self.last_updated:   params.append(self.last_updated)
+        if self.exclude_learn:  params.append(self.exclude_learn)
         if skip_idx:            params.append(','.join(map(str, skip_idx)) )
         params.append('1')
         if not nolimit:         params.extend((limit, offset))
