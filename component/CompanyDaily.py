@@ -95,17 +95,32 @@ class CompanyDaily:
                     except ZeroDivisionError as err:
                         percentage = 0
 
-                self.addcreate(CompanyStock.new({
-                    "company_idx"   : company.idx,
-                    "price"         : row["price"],
-                    "prev_diff"     : row["prev_diff"],
-                    "percentage"    : str(percentage),
-                    "open"          : row["open"],
-                    "high"          : row["high"],
-                    "low"           : row["low"],
-                    "volume"        : row["volume"],
-                    "date"          : row["date"]
-                }))
+                all_zero_check = row["price"]
+
+                if row["high"] == '0' and row["low"] == '0' and row["volume"] == '0':
+                    self.addcreate(CompanyStock.new({
+                        "company_idx"   : company.idx,
+                        "price"         : row["price"],
+                        "prev_diff"     : row["prev_diff"],
+                        "percentage"    : str(percentage),
+                        "open"          : row["price"],
+                        "high"          : row["price"],
+                        "low"           : row["price"],
+                        "volume"        : row["volume"],
+                        "date"          : row["date"]
+                    }))
+                else:
+                    self.addcreate(CompanyStock.new({
+                        "company_idx"   : company.idx,
+                        "price"         : row["price"],
+                        "prev_diff"     : row["prev_diff"],
+                        "percentage"    : str(percentage),
+                        "open"          : row["open"],
+                        "high"          : row["high"],
+                        "low"           : row["low"],
+                        "volume"        : row["volume"],
+                        "date"          : row["date"]
+                    }))
 
     def init(self):
 
