@@ -95,4 +95,8 @@ class ModelResultM extends BusinessModel {
             return ModelResultM::new($item);
         }, $this->postman->returnDataList( $query, $params ));
     }
+
+    public function clear() {
+        $this->postman->execute( "TRUNCATE TABLE `model_result` ", array() );
+    }
 }
