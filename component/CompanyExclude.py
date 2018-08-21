@@ -58,6 +58,15 @@ class CompanyExclude:
             if "China" in company.name:
                 need_to_remove = True
 
+            if "TRUE" in company.name:
+                need_to_remove = True
+            if "true" in company.name:
+                need_to_remove = True
+            if "인버스" in company.name:
+                need_to_remove = True
+            if "ETN(H)" in company.name:
+                need_to_remove = True
+
             if need_to_remove:
                 self.change_exlucde(company)
                 continue
