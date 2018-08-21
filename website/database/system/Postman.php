@@ -80,7 +80,9 @@ class Postman {
 		$stmt = $this->mysqlConnection->stmt_init();
 		$stmt = $this->mysqlConnection->prepare($query);
 
-		$this->db_bind_param($stmt, $params);
+		if (count($params)) {
+			$this->db_bind_param($stmt, $params);
+		}
 		$result = $stmt->execute();
 
 		if (!$result) {
