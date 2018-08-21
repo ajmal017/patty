@@ -7,6 +7,7 @@ Stock Market Comparison
 1. Call for daily processing features
 ```
 10 1 * * * /usr/bin/python3 /~/patty/company.py daily
+10 2 * * * /usr/bin/python3 /~/patty/company.py baily
 10 3 * * * /usr/bin/python3 /~/patty/playlist.py daily
 10 5 * * * /usr/bin/python3 /~/patty/model.py daily
 10 7 * * * /usr/bin/python3 /~/patty/watch.py daily
