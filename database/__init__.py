@@ -1,6 +1,7 @@
 from database.Company import Company
 from database.Company import COMPANY_NEED_HISTORY
 from database.Company import COMPANY_MARKET
+from database.Company import COMPANY_EXCLUDE_LEARN
 from database.CompanyStock import CompanyStock
 from database.Playlist import Playlist
 from database.Playlist import PLAYLIST_TYPE
