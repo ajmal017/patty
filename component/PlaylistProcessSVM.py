@@ -14,7 +14,7 @@ class PlaylistProcessSVM:
         company_list = []
 
         # company list object
-        c = Company.new({"need_history" : COMPANY_NEED_HISTORY.NO})
+        c = Company.new({"need_history" : COMPANY_NEED_HISTORY.NO, "exclude_learn" : COMPANY_EXCLUDE_LEARN.NO})
 
         # check if skip idx is long enough
         if  len(skip_company_idx) <= 0:
