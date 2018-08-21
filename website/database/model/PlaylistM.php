@@ -267,4 +267,8 @@ class PlaylistM extends BusinessModel {
 
         $this->postman->execute( $query, $params );
     }
+
+    public function clear() {
+        $this->postman->execute( "TRUNCATE TABLE `playlist` ", array() );
+    }
 }
