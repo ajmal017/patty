@@ -11,6 +11,13 @@ def daily():
     # do not need to get stock information (Do this after daily)
     CompanySearch().init()
 
+def baily():
+    """this function should be called only once daily but only after daily is called"""
+
+    # check if the company's currently used are all good to go.
+    # or if they should be excluded from training or testing phase
+    CompanyExclude().init()
+
 
 def hourly():
     """this function should be called hourly"""
