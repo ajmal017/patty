@@ -120,3 +120,9 @@ class Company(DataModel, BusinessModel):
             " UPDATE `company` SET `need_history`=%s WHERE `idx`=%s ",
             [self.need_history, self.idx]
         )
+
+    def updateExcludeLearn(self):
+        self.postman.execute(
+            " UPDATE `company` SET `exclude_learn`=%s WHERE `idx`=%s ",
+            [self.exclude_learn, self.idx]
+        )
