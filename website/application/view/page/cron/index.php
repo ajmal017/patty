@@ -46,6 +46,18 @@
         </div>
     </div>
     <!--/.col-3-->
+
+    <div class="col-3">
+        <div class="line-title">초기화 ML</div>
+        <!--/.line-title-->
+        <br />
+        <a href="/cron/clear_ml/" onclick="return confirm('확실합니까?');">
+            <div class="btn btn-primary">
+                리셋팅
+            </div>
+        </a>
+    </div>
+    <!--/.col-3-->
 </div>
 <!--/.row-->
 
