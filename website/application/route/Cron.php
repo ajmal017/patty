@@ -22,3 +22,9 @@ Map::path('cron/download_slowquery', function() {
     header("Content-disposition: attachment; filename='slowquery.log'");
     readfile($filepath);
 });
+
+Map::path('cron/clear_ml', function() {
+    PlaylistM::new()->clear();
+    ModelResultM::new()->clear();
+    $this->load->html('component/redirect', array('msg' => '초기화 되었습니다.', 'url' => '/cron/'));
+});
