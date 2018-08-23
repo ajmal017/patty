@@ -138,6 +138,9 @@ class Postman:
                 str_time = "{:.3f}".format(result_time)
                 fp.write(str_time + " py explain " + self.mysqlCursor.statement + "\n")
 
+        # apply transaction to database
+        self.mysqlConnection.commit()
+
         return self.mysqlCursor
 
 
