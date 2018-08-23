@@ -238,8 +238,8 @@ class CompanySearch:
 
     def addcreate(self, item):
 
-        if item.code not in self.create_list:
-            self.create_list[item.code] = item
+        # add to list to create
+        self.create_list.append(item)
 
         # loop through list
         if len(self.create_list) > 1000:
@@ -247,10 +247,11 @@ class CompanySearch:
             # create item
             self.loop_createlist()
 
+
     def loop_createlist(self):
 
         # go through create list
-        for k,company in self.create_list.items():
+        for company in self.create_list:
 
             # create company
             company.create()
