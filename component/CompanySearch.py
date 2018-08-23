@@ -242,7 +242,7 @@ class CompanySearch:
         self.create_list.append(item)
 
         # loop through list
-        if len(self.create_list) > 1000:
+        if len(self.create_list) > 300:
 
             # create item
             self.loop_createlist()
