@@ -10,7 +10,7 @@ class CompanySearch:
 
     progress_sofar = 0
     progress_total = 0
-    create_list = {}
+    create_list = []
     result_list = []
 
     def search_key(self):
