@@ -40,8 +40,9 @@ class CompanyDaily:
                 if i == 2:
                     s = s.replace(',','').strip()
                     img = element.find('img')
-                    if img != None and img.has_attr('alt') and img['alt'] == '하락':
-                        s = "-" + s
+                    if img != None and img.has_attr('src'):
+                        if 'down' in img['src']:
+                            s = "-" + s
                 row.append(s)
             if len(row) > 2:
                 if skip:
