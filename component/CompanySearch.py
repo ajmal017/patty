@@ -4,6 +4,7 @@ import requests
 import sys
 from database import *
 from tool import *
+import time
 
 class CompanySearch:
 
@@ -31,17 +32,36 @@ class CompanySearch:
 
     def getPage(self, name, page, repeat = 0):
 
-        # change byte encoding
-        partialNameEncoded = name.encode("euc-kr")
+        document = ""
 
-        # encode the name for url
-        enc_name = quote_plus(partialNameEncoded)
+        try:
 
-        # create url to page
-        url = "http://finance.naver.com/search/searchList.nhn?query={0}&page={1}".format(enc_name, page)
+            # change byte encoding
+            partialNameEncoded = name.encode("euc-kr")
 
-        # get page
-        document = requests.get(url).content
+            # encode the name for url
+            enc_name = quote_plus(partialNameEncoded)
+
+            # create url to page
+            url = "http://finance.naver.com/search/searchList.nhn?query={0}&page={1}".format(enc_name, page)
+
+            # get page
+            document = requests.get(url).content
+
+        except:
+
+            # check if error has happened more than once
+            if repeat >= 2:
+                return None
+
+            # add to one
+            repeat += 1
+
+            # sleep for 6 seconds to make sure naver is stop tracking you
+            time.sleep(6)
+
+            # re-call getPage recursively
+            return self.getPage(name, page, repeat)
 
         # return page content
         return BeautifulSoup(document, "html.parser")
@@ -110,7 +130,22 @@ class CompanySearch:
         # set total search count
         self.progress_total = (self.progress_total + (max_page + page))
 
+        # every 10 sleep for 300 ms
+        sleep_for_300 = 0
+
         for page_num in range(page, max_page):
+
+            # add one each time
+            sleep_for_300 += 1
+
+            # check if it has happen for more than 5
+            if sleep_for_300 >= 5:
+
+                # reset counter
+                sleep_for_300 = 0
+
+                # sleep for one second
+                time.sleep(1)
 
             # get page with soup as result
             soup = self.getPage(key, page_num)
