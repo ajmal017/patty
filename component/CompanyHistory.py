@@ -9,7 +9,7 @@ class CompanyHistory:
 
     progress_sofar = 0
     progress_total = 0
-    create_list = {}
+    create_list = []
 
     def getPage(self, company, page):
 
@@ -205,9 +205,11 @@ class CompanyHistory:
 
     def addcreate(self, item):
 
-        if item.date not in self.create_list:
-            self.create_list[item.date] = item
+        # add item to create list
+        self.create_list.append(item)
 
+        # if we have more than 1000,
+        # process them
         if len(self.create_list) > 1000:
 
             # go create list
@@ -216,10 +218,11 @@ class CompanyHistory:
 
     def loop_createlist(self):
 
+        # get total process count
         self.progress_total = (self.progress_total + len(self.create_list))
 
         # loop through and create list
-        for k,company_stock in self.create_list.items():
+        for company_stock in self.create_list:
 
             # create company
             company_stock.create()
