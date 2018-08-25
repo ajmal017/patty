@@ -3,6 +3,7 @@ from database import *
 from tool import *
 from model import *
 from multiprocessing import Pool
+from datetime import datetime
 
 class PlaylistProcessSVM:
 
@@ -40,6 +41,9 @@ class PlaylistProcessSVM:
 
     def initMultiCore(self):
 
+        mth = ModelTrainingHistory.new({"startt":str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), "endt" : "0000-00-00 00:00:00"})
+        mth.idx = mth.create()
+
         # get playlist
         playlist_list = []
 
@@ -51,10 +55,13 @@ class PlaylistProcessSVM:
                 break
 
         # release db connection
-        Postman.init().close()
+        # Postman.init().close()
 
         with Pool(29) as p:
             list(p.map(self.mainprocess_precall, playlist_list))
+
+        mth.endt = str(datetime.now().strftime("%Y-%m-%d %H:%I:%S"))
+        mth.update_endt()
 
     def initSingleCore(self):
         playlist_list = self.preprocess();
