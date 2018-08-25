@@ -4,6 +4,7 @@ import requests
 import sys
 from database import *
 from tool import *
+import time
 
 class CompanyDaily:
 
@@ -11,13 +12,35 @@ class CompanyDaily:
     progress_total = 0
     create_list = []
 
-    def getPage(self, company):
+    def getPage(self, company, repeat = 0):
 
-        # create url to page
-        url = "http://finance.naver.com/item/sise_day.nhn?code={0}".format(company.code)
+        document = ""
 
-        # get page
-        document = requests.get(url).content
+        try:
+
+            # make page string
+            page_str = "&page={0}".format(page) if page > 0 else ""
+
+            # create url to page
+            url = "http://finance.naver.com/item/sise_day.nhn?code={0}".format(company.code)
+
+            # get page
+            document = requests.get(url).content
+
+        except:
+
+            # check if its attempted more than 2 times
+            if repeat >= 2:
+                return None
+
+            # increase repeat count by one
+            repeat  += 1
+
+            # sleep for 6 seconds to make sure naver is stop tracking me
+            time.sleep(6)
+
+            # re-call getPage recursively
+            return self.getPage(company, repeat)
 
         # return page content
         return BeautifulSoup(document, "html.parser")
