@@ -11,3 +11,4 @@ from database.ModelResult import MODEL_TYPE
 from database.PlaylistGroup import PlaylistGroup
 from database.Watch import Watch
 from database.Watch import WATCH_TYPE
+from database.ModelTrainingHistory import ModelTrainingHistory
