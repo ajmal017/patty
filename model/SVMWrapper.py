@@ -31,10 +31,23 @@ class SVMWrapper:
 
     # kernal function for SVM
     # default: rbf
-    kernel = 'linear'
+    # options:  rbf, linear, poly, signmoid, precomputed
+    kernel = 'rbf'
 
     # random seed
     random_state = 1
+
+    # gamma: how far the influence of a single training examples reaches
+    # low values mean far
+    # high value mean close
+    # (inverse of the radius of influence)
+    # * ONLY FOR rbf, poly, sigmoid
+    gamma = 0.5
+
+    # C: trades off misclassification of training examples against simplicity
+    # low value be decision surface smooth
+    # high values aims to classifying all training examples correctly
+    valC = 10
 
 
     def init(self):
@@ -48,7 +61,7 @@ class SVMWrapper:
         train_data_x_scaled = scaler.fit_transform(self.train_data_x)
 
         # create SVC object
-        self.model = svm.SVC(kernel = self.kernel, random_state = self.random_state)
+        self.model = svm.SVC(kernel = self.kernel, random_state = self.random_state, gamma=self.gamma, C=self.valC)
 
         # fit training data
         self.model.fit(train_data_x_scaled, self.train_data_y)
