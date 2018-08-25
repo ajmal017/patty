@@ -32,6 +32,9 @@
 								<li>
 				                    <a href="/cron/" class="<?php echo ($page=='cron')?'active':''; ?>">시스템 상태</a>
 				                </li>
+								<li>
+				                    <a href="/training/history" class="<?php echo ($page=='training=>history')?'active':''; ?>">기계학습</a>
+				                </li>
 							</ul>
 		                </li>
 						<li>
