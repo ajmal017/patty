@@ -47,7 +47,7 @@ class SVMWrapper:
     # C: trades off misclassification of training examples against simplicity
     # low value be decision surface smooth
     # high values aims to classifying all training examples correctly
-    valC = 10
+    valC = 1
 
 
     def init(self):
