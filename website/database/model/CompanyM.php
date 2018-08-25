@@ -9,6 +9,7 @@ class CompanyM extends BusinessModel {
     public $market              = null;
     public $need_history        = null;
     public $last_updated        = null;
+    public $exclude_learn       = null;
     public $created_date_time   = null;
     public $status              = 1;
 
@@ -36,6 +37,9 @@ class CompanyM extends BusinessModel {
 
     public function setLastUpdated($last_updated) { $this->last_updated = $last_updated; return $this; }
     public function getLastUpdated() { return $this->last_updated; }
+
+    public function setExcludeLearn($exclude_learn) { $this->exclude_learn = $exclude_learn; return $this; }
+    public function getExcludeLearn() { return $this->exclude_learn; }
 
     public function setCreatedDateTime( $created_date_time ) { $this->created_date_time = $created_date_time; return $this; }
     public function getCreatedDateTime($format = 'Y-m-d H:i:s') { $d = new DateTime($this->created_date_time); return $d->format($format); }
@@ -145,5 +149,15 @@ class CompanyM extends BusinessModel {
         $need_history = 2;
 
         return ($this->postman->returnDataObject($query, array("ii", &$need_history, &$this->status)))->cnt;
+    }
+
+    public function getTotalCompanyCount() {
+        $query = "SELECT count(idx) as cnt FROM `company` WHERE `status`=? ";
+        return ($this->postman->returnDataObject($query, array("i", &$this->status)))->cnt;
+    }
+
+    public function getTotalExcludeLearnCount() {
+        $query = "SELECT count(idx) as cnt FROM `company` WHERE `exclude_learn`=? AND `status`=? ";
+        return ($this->postman->returnDataObject($query, array("ii", &$this->exclude_learn, &$this->status)))->cnt;
     }
 }
