@@ -27,44 +27,44 @@ class CompanyExclude:
             #
             #
             # Check If Taboo Name
-            if "ETN" in company.name:
+            if company.name.find("ETN") != -1:
                 need_to_remove = True
-            if "etn" in company.name:
+            if company.name.find("etn") != -1:
                 need_to_remove = True
-            if "KODEX" in company.name:
+            if company.name.find("KODEX") != -1:
                 need_to_remove = True
-            if "kodex" in company.name:
+            if company.name.find("kodex") != -1:
                 need_to_remove = True
-            if "ANKOR" in company.name:
+            if company.name.find("ANKOR") != -1:
                 need_to_remove = True
-            if "ankor" in company.name:
+            if company.name.find("ankor") != -1:
                 need_to_remove = True
-            if "KBSTAR" in company.name:
+            if company.name.find("KBSTAR") != -1:
                 need_to_remove = True
-            if "kbstar" in company.name:
+            if company.name.find("kbstar") != -1:
                 need_to_remove = True
-            if "TIGER" in company.name:
+            if company.name.find("TIGER") != -1:
                 need_to_remove = True
-            if "tiger" in company.name:
+            if company.name.find("tiger") != -1:
                 need_to_remove = True
-            if "KINDEX" in company.name:
+            if company.name.find("KINDEX") != -1:
                 need_to_remove = True
-            if "kindex" in company.name:
+            if company.name.find("kindex") != -1:
                 need_to_remove = True
-            if "KOSEF" in company.name:
+            if company.name.find("KOSEF") != -1:
                 need_to_remove = True
-            if "kosef" in company.name:
+            if company.name.find("kosef") != -1:
                 need_to_remove = True
-            if "China" in company.name:
+            if company.name.find("China") != -1:
                 need_to_remove = True
 
-            if "TRUE" in company.name:
+            if company.name.find("TRUE") != -1:
                 need_to_remove = True
-            if "true" in company.name:
+            if company.name.find("true") != -1:
                 need_to_remove = True
-            if "인버스" in company.name:
+            if company.name.find("인버스") != -1:
                 need_to_remove = True
-            if "ETN(H)" in company.name:
+            if company.name.find("ETN(H)") != -1:
                 need_to_remove = True
 
             if need_to_remove:
