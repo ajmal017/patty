@@ -58,6 +58,15 @@
         </a>
     </div>
     <!--/.col-3-->
+
+    <div class="col-3">
+        <div class="line-title">Company Status</div>
+        <!--/.line-title-->
+        <br />
+        <b>Total: </b> <?php echo number_format($company_total_count); ?><br />
+        <b>Exclude Learn: </b> <?php echo number_format($company_exclude_learn_count); ?><br />
+    </div>
+    <!--/.col-3-->
 </div>
 <!--/.row-->
 

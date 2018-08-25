@@ -5,6 +5,8 @@ Map::path('cron', function() {
     $data                                       = array();
     $data['company_daily_update_waiting_count'] = CompanyM::new()->getDailyUpdateWaitingCount();
     $data['company_history_count']              = CompanyM::new()->getNeedHistoryCount();
+    $data['company_total_count']                = CompanyM::new()->getTotalCompanyCount();
+    $data['company_exclude_learn_count']        = CompanyM::new()->getTotalExcludeLearnCount();
 
     $playlist_svm_wait                          = PlaylistM::new()->setSvmProcessed(PlaylistProcess::WAIT)->getSimpleList('`p`.`rank`', 'asc', '-1', '-1', true);
     $playlist_svm_process                       = PlaylistM::new()->setSvmProcessed(PlaylistProcess::PROCESS)->getSimpleList('`p`.`rank`', 'asc', '-1', '-1', true);
