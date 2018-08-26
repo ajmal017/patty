@@ -32,7 +32,7 @@ class SVMWrapper:
     # kernal function for SVM
     # default: rbf
     # options:  rbf, linear, poly, signmoid, precomputed
-    kernel = 'rbf'
+    kernel = 'linear'
 
     # random seed
     random_state = 1
