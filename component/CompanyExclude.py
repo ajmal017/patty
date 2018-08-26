@@ -67,6 +67,9 @@ class CompanyExclude:
             if company.name.find("ETN(H)") != -1:
                 need_to_remove = True
 
+            if company.name.find("ARIRANG") != -1:
+                need_to_remove = True
+
             if need_to_remove:
                 self.change_exlucde(company)
                 continue
