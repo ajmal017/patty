@@ -64,8 +64,15 @@ class PlaylistProcessSVM:
         mth.update_endt()
 
     def initSingleCore(self):
+
+        mth = ModelTrainingHistory.new({"startt":str(datetime.now().strftime("%Y-%m-%d %H:%I:%S")), "endt" : "0000-00-00 00:00:00"})
+        mth.idx = mth.create()
+
         playlist_list = self.preprocess();
         list(map(self.mainprocess, playlist_list))
+
+        mth.endt = str(datetime.now().strftime("%Y-%m-%d %H:%I:%S"))
+        mth.update_endt()
 
     def preprocess(self, limit = 3):
 
